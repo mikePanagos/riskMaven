@@ -1,15 +1,14 @@
 package mojo;
 import java.util.*;
-import risk.Player;
-import risk.Territory;
+import mojo.risk.*;
 
 public class Setup {
     // set up borad
     private List<Territory> board = new ArrayList<>();
     private List<Continent> continents = new ArrayList<>();
     private List<Player> playersList = new ArrayList<>();
-
-
+    
+    
     /*
     *
     *
@@ -17,21 +16,21 @@ public class Setup {
     public void setup(int numPlayers) {
         makeTerritory();
         makePLayers(numPlayers);
-
+        
     }
-
-
+    
+    
     /**
-     * this function makes all the territory all makes the Continent then calles a
-     * funtion that will make the neighbors
-     */
+    * this function makes all the territory all makes the Continent then calles a
+    * funtion that will make the neighbors
+    */
     private void makeTerritory() {
         // String[] NorthA = {"Alaska", "Alberta", "Central America", "Eastern United
         // States",
         // "Greenland", "Northwest", "Ontario", "Quebec", "Western United States"};
-
+        
         List<Territory> northAmericaList = new ArrayList<>();
-
+        
         Territory alaska = new Territory("Alaska", "North America", " ", 0);
         northAmericaList.add(alaska);
         board.add(alaska);
@@ -59,12 +58,12 @@ public class Setup {
         Territory westernUnitedStates = new Territory("Western United States", "North America", " ", 0);
         northAmericaList.add(westernUnitedStates);
         board.add(westernUnitedStates);
-
+        
         Continent northAmerica = new Continent("North America", northAmericaList);
         continents.add(northAmerica);
-
+        
         // String[] SouthA = {"Argentina", "Brazil", "Peru", "Venexuela"};
-
+        
         List<Territory> southAmericaList = new ArrayList<>();
         Territory argentina = new Territory("Argentina", "South America", " ", 0);
         southAmericaList.add(argentina);
@@ -78,13 +77,13 @@ public class Setup {
         Territory venexuela = new Territory("Venexuela", "South America", " ", 0);
         southAmericaList.add(venexuela);
         board.add(venexuela);
-
+        
         Continent southAmerica = new Continent("South America", southAmericaList);
         continents.add(southAmerica);
-
+        
         // String[] Europe = {"Britain", "Iceland", "Northern Europe", "Scandinavia",
         // "Southern Europe", "Ukraine", "Western Europe"};
-
+        
         List<Territory> europeList = new ArrayList<>();
         Territory britain = new Territory("Britain", "Europe", " ", 0);
         europeList.add(britain);
@@ -107,14 +106,14 @@ public class Setup {
         Territory westernEurope = new Territory("Western Europe", "Europe", " ", 0);
         europeList.add(westernEurope);
         board.add(westernEurope);
-
+        
         Continent europe = new Continent("Europe", europeList);
         continents.add(europe);
-
+        
         // String[] Africa = {"Congo", "East Africa", "Egypt", "Madagascar", "North
         // Africa", "South Africa"};
         List<Territory> afticaList = new ArrayList<>();
-
+        
         Territory congo = new Territory("Congo", "Africa", " ", 0);
         afticaList.add(congo);
         board.add(congo);
@@ -133,16 +132,16 @@ public class Setup {
         Territory southAfrica = new Territory("South Africa", "Africa", " ", 0);
         afticaList.add(southAfrica);
         board.add(southAfrica);
-
+        
         Continent africa = new Continent("Africa", afticaList);
         continents.add(africa);
-
+        
         // String[] Asia = {"Afganistan", "China", "India", "Irkutsk", "Japan",
         // "Kamchatka", "Middle East",
         // "Mongolia", "Slam", "Siberia", "ural", "Yakutsk"};
-
+        
         List<Territory> asiaList = new ArrayList<>();
-
+        
         Territory afganistan = new Territory("Afganistan", "Asia", " ", 0);
         asiaList.add(afganistan);
         board.add(afganistan);
@@ -179,13 +178,13 @@ public class Setup {
         Territory yakutsk = new Territory("Yakutsk", "Asia", " ", 0);
         asiaList.add(yakutsk);
         board.add(yakutsk);
-
+        
         Continent asia = new Continent("Asia", asiaList);
         continents.add(asia);
-
+        
         // String[] Australia = {"Eastern Australia", "Indonesia", "New Guinea",
         // "Western Australia"};
-
+        
         List<Territory> australiaList = new ArrayList<>();
         Territory easternAustralia = new Territory("Eastern Australia", "Australia", " ", 0);
         australiaList.add(easternAustralia);
@@ -201,52 +200,52 @@ public class Setup {
         board.add(westernAustralia);
         Continent australia = new Continent("Asia", asiaList);
         continents.add(australia);
-
+        
         /**
-         * this fills each territory with its surrounding neighbors
-         */
-
+        * this fills each territory with its surrounding neighbors
+        */
+        
         // north america
         List<Territory> alaskaList = new ArrayList<>();
         alaskaList.add(kamchatka);
         alaskaList.add(northwest);
         alaskaList.add(alberta);
         alaska.setNeighboringTerritories(alaskaList);
-
+        
         List<Territory> albertaList = new ArrayList<>();
         albertaList.add(alaska);
         albertaList.add(northwest);
         albertaList.add(ontario);
         albertaList.add(westernUnitedStates);
         alberta.setNeighboringTerritories(albertaList);
-
+        
         List<Territory> centralAmericaList = new ArrayList<>();
         centralAmericaList.add(easternUnitedStates);
         centralAmericaList.add(westernUnitedStates);
         centralAmericaList.add(venexuela);
         centralAmerica.setNeighboringTerritories(centralAmericaList);
-
+        
         List<Territory> easternUnitedStatesList = new ArrayList<>();
         easternUnitedStatesList.add(quebec);
         easternUnitedStatesList.add(ontario);
         easternUnitedStatesList.add(westernUnitedStates);
         easternUnitedStatesList.add(centralAmerica);
         easternUnitedStates.setNeighboringTerritories(easternUnitedStatesList);
-
+        
         List<Territory> greenlandList = new ArrayList<>();
         greenlandList.add(iceland);
         greenlandList.add(northwest);
         greenlandList.add(ontario);
         greenlandList.add(quebec);
         greenland.setNeighboringTerritories(greenlandList);
-
+        
         List<Territory> northwestList = new ArrayList<>();
         northwestList.add(greenland);
         northwestList.add(ontario);
         northwestList.add(alaska);
         northwestList.add(alberta);
         northwest.setNeighboringTerritories(northwestList);
-
+        
         List<Territory> ontarioList = new ArrayList<>();
         ontarioList.add(greenland);
         ontarioList.add(quebec);
@@ -255,45 +254,45 @@ public class Setup {
         ontarioList.add(alberta);
         ontarioList.add(northwest);
         ontario.setNeighboringTerritories(ontarioList);
-
+        
         List<Territory> quebecList = new ArrayList<>();
         quebecList.add(greenland);
         quebecList.add(ontario);
         quebecList.add(easternUnitedStates);
         quebec.setNeighboringTerritories(quebecList);
-
+        
         List<Territory> westernUnitedStatesList = new ArrayList<>();
         westernUnitedStatesList.add(ontario);
         westernUnitedStatesList.add(alberta);
         westernUnitedStatesList.add(easternUnitedStates);
         westernUnitedStatesList.add(centralAmerica);
         westernUnitedStates.setNeighboringTerritories(westernUnitedStatesList);
-
+        
         // south america
         List<Territory> argentinaList = new ArrayList<>();
         argentinaList.add(brazil);
         argentinaList.add(peru);
         argentina.setNeighboringTerritories(argentinaList);
-
+        
         List<Territory> peruList = new ArrayList<>();
         peruList.add(brazil);
         peruList.add(argentina);
         peruList.add(venexuela);
         peru.setNeighboringTerritories(peruList);
-
+        
         List<Territory> venexuelaList = new ArrayList<>();
         venexuelaList.add(centralAmerica);
         venexuelaList.add(brazil);
         venexuelaList.add(peru);
         venexuela.setNeighboringTerritories(venexuelaList);
-
+        
         List<Territory> brazilList = new ArrayList<>();
         brazilList.add(northAfrica);
         brazilList.add(peru);
         brazilList.add(argentina);
         brazilList.add(venexuela);
         brazil.setNeighboringTerritories(brazilList);
-
+        
         // eurpoe
         List<Territory> britainList = new ArrayList<>();
         britainList.add(iceland);
@@ -301,13 +300,13 @@ public class Setup {
         britainList.add(northernEurope);
         britainList.add(scandinavia);
         britain.setNeighboringTerritories(britainList);
-
+        
         List<Territory> icelandList = new ArrayList<>();
         icelandList.add(greenland);
         icelandList.add(britain);
         icelandList.add(scandinavia);
         iceland.setNeighboringTerritories(icelandList);
-
+        
         List<Territory> northernEuropeList = new ArrayList<>();
         northernEuropeList.add(ukraine);
         northernEuropeList.add(southernEurope);
@@ -315,14 +314,14 @@ public class Setup {
         northernEuropeList.add(britain);
         northernEuropeList.add(scandinavia);
         northernEurope.setNeighboringTerritories(northernEuropeList);
-
+        
         List<Territory> scandinaviaList = new ArrayList<>();
         scandinaviaList.add(ukraine);
         scandinaviaList.add(britain);
         scandinaviaList.add(northernEurope);
         scandinaviaList.add(iceland);
         scandinavia.setNeighboringTerritories(scandinaviaList);
-
+        
         List<Territory> southernEuropeList = new ArrayList<>();
         southernEuropeList.add(northernEurope);
         southernEuropeList.add(ukraine);
@@ -331,7 +330,7 @@ public class Setup {
         southernEuropeList.add(middleEast);
         southernEuropeList.add(egypt);
         southernEurope.setNeighboringTerritories(southernEuropeList);
-
+        
         List<Territory> ukraineList = new ArrayList<>();
         ukraineList.add(ural);
         ukraineList.add(afganistan);
@@ -340,21 +339,21 @@ public class Setup {
         ukraineList.add(northernEurope);
         ukraineList.add(scandinavia);
         ukraine.setNeighboringTerritories(ukraineList);
-
+        
         List<Territory> westernEuropeList = new ArrayList<>();
         westernEuropeList.add(britain);
         westernEuropeList.add(northernEurope);
         westernEuropeList.add(southernEurope);
         westernEuropeList.add(northAfrica);
         westernEurope.setNeighboringTerritories(westernEuropeList);
-
+        
         // africa
         List<Territory> congoList = new ArrayList<>();
         congoList.add(northAfrica);
         congoList.add(eastAfrica);
         congoList.add(southAfrica);
         congo.setNeighboringTerritories(congoList);
-
+        
         List<Territory> eastAfricaList = new ArrayList<>();
         eastAfricaList.add(middleEast);
         eastAfricaList.add(madagascar);
@@ -363,19 +362,19 @@ public class Setup {
         eastAfricaList.add(southAfrica);
         eastAfricaList.add(egypt);
         eastAfrica.setNeighboringTerritories(eastAfricaList);
-
+        
         List<Territory> egyptList = new ArrayList<>();
         egyptList.add(middleEast);
         egyptList.add(eastAfrica);
         egyptList.add(northAfrica);
         egyptList.add(southernEurope);
         egypt.setNeighboringTerritories(egyptList);
-
+        
         List<Territory> madagascarList = new ArrayList<>();
         madagascarList.add(eastAfrica);
         madagascarList.add(southAfrica);
         madagascar.setNeighboringTerritories(madagascarList);
-
+        
         List<Territory> northAfricaList = new ArrayList<>();
         northAfricaList.add(congo);
         northAfricaList.add(egypt);
@@ -384,7 +383,7 @@ public class Setup {
         northAfricaList.add(brazil);
         northAfricaList.add(eastAfrica);
         northAfrica.setNeighboringTerritories(northAfricaList);
-
+        
         // asia
         List<Territory> afganistanList = new ArrayList<>();
         afganistanList.add(ural);
@@ -393,7 +392,7 @@ public class Setup {
         afganistanList.add(middleEast);
         afganistanList.add(ukraine);
         afganistan.setNeighboringTerritories(afganistanList);
-
+        
         List<Territory> chinaList = new ArrayList<>();
         chinaList.add(mongolia);
         chinaList.add(slam);
@@ -402,26 +401,26 @@ public class Setup {
         chinaList.add(ural);
         chinaList.add(siberia);
         china.setNeighboringTerritories(chinaList);
-
+        
         List<Territory> indiaList = new ArrayList<>();
         indiaList.add(china);
         indiaList.add(slam);
         indiaList.add(middleEast);
         indiaList.add(afganistan);
         india.setNeighboringTerritories(indiaList);
-
+        
         List<Territory> irkutskList = new ArrayList<>();
         irkutskList.add(mongolia);
         irkutskList.add(siberia);
         irkutskList.add(yakutsk);
         irkutskList.add(kamchatka);
         irkutsk.setNeighboringTerritories(irkutskList);
-
+        
         List<Territory> japanaList = new ArrayList<>();
         japanaList.add(kamchatka);
         japanaList.add(mongolia);
         japan.setNeighboringTerritories(japanaList);
-
+        
         List<Territory> kamchatkaList = new ArrayList<>();
         kamchatkaList.add(japan);
         kamchatkaList.add(alaska);
@@ -429,7 +428,7 @@ public class Setup {
         kamchatkaList.add(yakutsk);
         kamchatkaList.add(irkutsk);
         kamchatka.setNeighboringTerritories(kamchatkaList);
-
+        
         List<Territory> middleEastList = new ArrayList<>();
         middleEastList.add(india);
         middleEastList.add(eastAfrica);
@@ -437,7 +436,7 @@ public class Setup {
         middleEastList.add(southernEurope);
         middleEastList.add(ukraine);
         middleEast.setNeighboringTerritories(middleEastList);
-
+        
         List<Territory> mongoliaList = new ArrayList<>();
         mongoliaList.add(japan);
         mongoliaList.add(kamchatka);
@@ -445,13 +444,13 @@ public class Setup {
         mongoliaList.add(siberia);
         mongoliaList.add(china);
         mongolia.setNeighboringTerritories(mongoliaList);
-
+        
         List<Territory> slamList = new ArrayList<>();
         slamList.add(china);
         slamList.add(india);
         slamList.add(indonesia);
         slam.setNeighboringTerritories(slamList);
-
+        
         List<Territory> siberiaList = new ArrayList<>();
         siberiaList.add(ural);
         siberiaList.add(china);
@@ -459,57 +458,57 @@ public class Setup {
         siberiaList.add(irkutsk);
         siberiaList.add(yakutsk);
         siberia.setNeighboringTerritories(siberiaList);
-
+        
         List<Territory> uralList = new ArrayList<>();
         uralList.add(ukraine);
         uralList.add(siberia);
         uralList.add(afganistan);
         uralList.add(china);
         ural.setNeighboringTerritories(uralList);
-
+        
         List<Territory> yakutskaList = new ArrayList<>();
         yakutskaList.add(kamchatka);
         yakutskaList.add(irkutsk);
         yakutskaList.add(siberia);
         yakutsk.setNeighboringTerritories(yakutskaList);
-
+        
         // australia
         List<Territory> easternAustraliaList = new ArrayList<>();
         easternAustraliaList.add(newGuinea);
         easternAustraliaList.add(westernAustralia);
         easternAustralia.setNeighboringTerritories(easternAustraliaList);
-
+        
         List<Territory> indonesiaList = new ArrayList<>();
         indonesiaList.add(slam);
         indonesiaList.add(newGuinea);
         indonesiaList.add(westernAustralia);
         indonesia.setNeighboringTerritories(indonesiaList);
-
+        
         List<Territory> newGuineaList = new ArrayList<>();
         newGuineaList.add(indonesia);
         newGuineaList.add(easternAustralia);
         newGuineaList.add(westernAustralia);
         newGuinea.setNeighboringTerritories(newGuineaList);
-
+        
         List<Territory> westernAustraliaList = new ArrayList<>();
         westernAustraliaList.add(newGuinea);
         westernAustraliaList.add(indonesia);
         westernAustraliaList.add(easternAustralia);
         westernAustralia.setNeighboringTerritories(westernAustraliaList);
-
+        
     }
-
-    // set up player
-
-    // return list with terriroyrs arraylist in element 0 and players in elemnet 1
-
     
-    private int numUnitAtStart(int num) {
+    // set up player
+    
+    // return list with terriroyrs arraylist in element 0 and players in elemnet 1
+    
+    
+    public int numUnitAtStart(int num) {
         if (num == 2) {
             return 40;
         } else if (num == 3) {
             return 35;
-
+            
         } else if (num == 4) {
             return 30;
         } else if (num == 5) {
@@ -518,11 +517,11 @@ public class Setup {
             return 20;
         }
     }
-
-    private void makePLayers(int numPlayers) {
-
+    
+    public void makePLayers(int numPlayers) {
+        
         int numUnitsPerPlayer = numUnitAtStart(numPlayers);
-
+        
         Player p1 = new Player(1, numUnitsPerPlayer, 0);
         playersList.add(p1);
         Player p2 = new Player(2, numUnitsPerPlayer, 0);
@@ -543,17 +542,17 @@ public class Setup {
                 }
             }
         }
-
+        
     }
-
+    
     public List<Territory> getTerritories() {
         return this.board;
     }
-
+    
     public List<Continent> getContinent() {
         return this.continents;
     }
-
+    
     public List<Player> getPlayers() {
         return this.playersList;
     }

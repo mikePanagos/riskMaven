@@ -1,18 +1,18 @@
 package mojo;
 import java.util.*;
-import risk.*;
+import risk;
 
 public class GameEngine {
 	// Territory territory;
 	// Player player;
-
+	
 	public int giveunits(Territory terr, int addingUnits) {
 		int units = terr.getNumOfUnits();
 		units = units + addingUnits;
 		terr.setNumOfUnits(units);
 		return terr.getNumOfUnits();
 	}
-
+	
 	public String attack(Territory act, Territory def) {
 		int[] dice = new int[5];
 		int attnewunits=0;
@@ -70,27 +70,27 @@ public class GameEngine {
 		}
 		return null;
 	}
-
+	
 	public int diceroll(int temp) {
 		Random rand = new Random();
 		int x = rand.nextInt(temp); // return random int
 		return x;
 	}
-
+	
 	/**
-	 * 
-	 * @param cardset the amount of trade that has already happen and the according amont of units given for that 
-	 * @param player pass in the current player 
-	 * @return A string saying how many more units they have and how much they have now
-	 */
-	public String trade(int cardset,Player player){
+	* 
+	* @param cardset the amount of trade that has already happen and the according amont of units given for that 
+	* @param player pass in the current player 
+	* @return A string saying how many more units they have and how much they have now
+	*/
+	public String trade(int cardset, Player player){
 		int temp = player.getArmiesCount();
 		//
 		int[] cardgroup = {3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45};
 		player.setArmiesCount(temp+cardgroup[cardset]);
 		return "you got "+cardgroup[cardset]+" more  units now you have "+player.getArmiesCount()+"in total";
 	}
-
+	
 	public int fortify(Territory from, Territory to, int numUnits) {
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);

@@ -2,7 +2,7 @@ package mojo;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.*;
-import risk.*;
+import mojo.risk.*;
 
 public class TerritoryTest {
 

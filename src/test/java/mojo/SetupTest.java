@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import risk.*;
+import mojo.risk.*;
 
 public class SetupTest {
     @Test public void setup() {
