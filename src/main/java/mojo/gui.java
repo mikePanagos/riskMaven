@@ -21,7 +21,6 @@ public class gui {
                 boolean surrender = false;
 				do{
                     System.out.println("Player " + playerlist.get(x) + "'s turn:\n");
-                    
 					//User choice
 					while(endturn != true){
                         newunits(playerlist.get(x));
@@ -179,7 +178,33 @@ public class gui {
     }
     
     public String attack(){
-        return null;
+        do{
+            boolean attack = false;
+            String attackagain;
+            System.out.println("Where do you want to attack from?"); //+ player.getterritorythatcanattack);
+            Scanner attfrom = new Scanner(System.in);
+            int attackfrom = attfrom.nextInt();
+            System.out.println("Where do you want to attack?"+ territory.getNeighboringTerritories(player.getTerritories(attackfrom)));
+            Scanner attto = new Scanner(System.in);
+            int attackto = attto.nextInt();
+            game.attack(attackfrom, attackto);
+            System.out.println("Do you want to attack again? (y/n)");
+            Scanner attagain = new Scanner(System.in);
+            attackagain = attagain.nextLine();
+            try{
+                if(attackagain == "y"){
+                    attack = false;
+                }
+                if(attackagain == "n"){
+                    attack = true;
+                }
+            }catch(InputMismatchException eattack){
+                System.out.println("Please enter a valid answer (y/n)");
+                attackagain = attagain.nextLine();
+            }
+            atto.close();
+            attagain.close();
+        }while(attack != true);
     }
     
     public String fortify(){
