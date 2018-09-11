@@ -182,8 +182,8 @@ public class gui {
     }
     
     public String attack(){
-        do{
-            boolean attack = false;
+        boolean attack = false; // Boolean used to determine if player would like to attack again
+        do {
             String attackagain;
             System.out.println("Where do you want to attack from?"); //+ player.getterritorythatcanattack);
             Scanner attfrom = new Scanner(System.in);
@@ -206,9 +206,9 @@ public class gui {
                 System.out.println("Please enter a valid answer (y/n)");
                 attackagain = attagain.nextLine();
             }
-            atto.close();
+            attto.close();
             attagain.close();
-        }while(attack != true);
+        } while(attack != true);
     }
     
     public String fortify(){

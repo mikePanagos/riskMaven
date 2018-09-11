@@ -44,7 +44,12 @@ public class Player {
 	 */
 	
 	public Player ( ) {
-		
+		this.id = 0;
+		this.armiesCount = 0;
+		this.cardCount = 0;
+		this.pointCount = 0;
+		this.territoryCount = 0;
+		this.continentCount = 0;
 	}
 	
 	/**

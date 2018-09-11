@@ -28,6 +28,10 @@ public class Territory{
      * - Oscar
      */
     public Territory ( ) {
+    	this.name = "Territory";
+    	this.continentName = "Continent";
+    	this.owner = "Owner";
+    	this.numOfUnits = 0;
     	return;
     }
     
