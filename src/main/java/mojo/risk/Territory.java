@@ -10,12 +10,25 @@ public class Territory{
     private int numOfUnits;
     private List<Territory> neighboringTerritories=new ArrayList<>();;
     
-    // baisc constructor 
+    // basic constructor 
     public Territory(String name,String continentName, String owner,int numOfUnits){
         this.name=name;
         this.continentName=continentName;
         this.owner=owner;
         this.numOfUnits=numOfUnits;
+    }
+    
+    /**
+     * Default constructor used to instantiate an empty Territory. Used for demo/beta
+     * purposes.
+     * @return empty instance of a territory
+     */
+    /*
+     * Using this constructor to fix errors in gui. Strictly used for testing.
+     * - Oscar
+     */
+    public Territory ( ) {
+    	return;
     }
     
     //getters

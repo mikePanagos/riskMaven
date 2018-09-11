@@ -1,6 +1,7 @@
 package mojo;
 import java.util.*;
-import risk;
+
+import mojo.risk.*;
 
 public class GameEngine {
 	// Territory territory;

@@ -22,12 +22,12 @@ public class gui {
 				do{
                     System.out.println("Player " + playerlist.get(x) + "'s turn:\n");
 					//User choice
-					while(endturn != true){
+					while(endturn != true) {
                         newunits(playerlist.get(x));
 						System.out.println("Please Choose: \n1.Trade\n2.Attack\n3.Fortify\n4.Show Territories\n5.End turn\n6.Surrender");
 						Scanner choose = new Scanner(System.in);
 						int choice = choose.nextInt();
-						try{
+						try {
                             //game.trade();
                             if(choice == 1){
                                 trade(counter, player);
@@ -51,10 +51,11 @@ public class gui {
                             if(choice == 6){
                                 surrender = surrender();
                             }
-                        }catch(InputMismatchException echoice){
+                        } catch(InputMismatchException echoice){
                             System.out.println("Please enter a valid answer: (y/n)");
                             choice = choose.nextInt();
                         }
+						choose.close(); // Closing Scanner to lower resource usage - Oscar
                     }
                     System.out.println("this is a test for: end of turn");
                     if(playerlist.size() == 1){
@@ -68,26 +69,29 @@ public class gui {
                 }
             }
             System.out.println("This is a test for: Win/lose check");
-        }while(win != true);
+        } while (win != true);
+		
     }
     
     public int newunits(Player player){
         int units = player.getTerritoryCount()/3;
-        if(units < 3){
+        if (units < 3){
             units = 3;
         }
         System.out.println("You are getting" + units + "units\n");
         System.out.println("Your territories:" + player.getTerritories() + "Where would you like to put them?");
         Scanner area = new Scanner(System.in);
         int put = area.nextInt();
-        try{
+        try {
             int total = put + territory.getNumOfUnits();
             territory.setNumOfUnits(total);
             System.out.println(territory.getNumOfUnits() + "place in territory" + player.getTerritories());
-        }catch(InputMismatchException eplace){
+        } catch (InputMismatchException eplace){
             System.out.println("Please choose aw number in the territories available:" + territory.getNeighboringTerritories());
             put = area.nextInt();
         }
+        area.close(); // Closing Scanner to lower resource usage - Oscar
+        return units; // Previously not returning a type - Oscar
     }
     
     public void displayterritory(){

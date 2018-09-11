@@ -1,7 +1,6 @@
 package mojo;
-
+import mojo.risk.*;
 import java.util.*;
-import risk.*;
 
 /**
 * @auther Michael Panagos

@@ -39,6 +39,15 @@ public class Player {
 	}
 	
 	/**
+	 * This constructor will initiate a Player class with the default values for all members;
+	 * @return new instance of Player class with all members set to defaults
+	 */
+	
+	public Player ( ) {
+		
+	}
+	
+	/**
 	* This is the getter for the id.
 	* @return player id
 	*/
@@ -184,13 +193,23 @@ public class Player {
 	/**
 	* This will print a list of the territories owned by the player.
 	*/
-	public void getTerritories ( ) {
+	public void printTerritories ( ) {
 		for ( int i = 0; i < tList.size(); i++ ) {
 			System.out.println( tList.get(i) + " " );
 		}
 		return;
 	}
 	
+	public String getTerritories ( ) {
+		String t = ""; // String used to return the list of territories
+		for ( int i = 0; i < tList.size(); i++ ) {
+			t += tList.get(i); // Take t and add in the the next territory
+			if ( i < tList.size() - 1 ) {
+				t += ", "; // Prints out a comma to separate only if not last element
+			}
+		}
+		return t;
+	}
 	
 	/**
 	* This will add a claimed continent to the players continent list.
