@@ -3,12 +3,19 @@ package mojo.risk;
 import java.util.List;
 import java.util.ArrayList;
 
+
+//
+//check neighbors to see current players owns all of them
+//
+//
+
 public class Territory{
     private String name;
     private String continentName;
     private String owner;
     private int numOfUnits;
-    private List<Territory> neighboringTerritories=new ArrayList<>();;
+    // private boolean canAttack;
+    private List<Territory> neighboringTerritories=new ArrayList<>();
     
     // basic constructor 
     public Territory(String name,String continentName, String owner,int numOfUnits){
@@ -16,6 +23,10 @@ public class Territory{
         this.continentName=continentName;
         this.owner=owner;
         this.numOfUnits=numOfUnits;
+        // if(this.numOfUnits>2)
+        // {
+        //     this.canAttack=true;
+        // }
     }
     
     /**
@@ -77,6 +88,9 @@ public class Territory{
     
     public void setNumOfUnits(int numOfUnits){
         this.numOfUnits=numOfUnits;
+        // if(this.numOfUnits>=2){
+        //     this.canAttack=true;
+        // }
     }
     
     

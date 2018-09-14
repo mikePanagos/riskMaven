@@ -6,7 +6,7 @@ import mojo.risk.*;
 public class gui {
     GameEngine game = new GameEngine();
     Setup s = new Setup();
-    Player player = new Player();
+    // Player player = new Player();
     Territory territory = new Territory();
 	
 	public void main(String[] args){
@@ -14,27 +14,29 @@ public class gui {
         boolean lose = false;
 		do{
             int counter = 0;
-            setup();
-            List<Player> playerlist = s.getPlayers();
+            List<Player> playerList = setup();
+            // List<Player> playerList = s.getPlayers();  //playerList.get()
 			for(int x = 0; win!=true; x++){
                 boolean endturn = false;
                 boolean surrender = false;
 				do{
-                    System.out.println("Player " + playerlist.get(x) + "'s turn:\n");
+                    System.out.println("Player " + playerList.get(x) + "'s turn:\n");
 					//User choice
 					while(endturn != true) {
-                        newunits(playerlist.get(x));
+                        newunits(playerList.get(x));
 						System.out.println("Please Choose: \n1.Trade\n2.Attack\n3.Fortify\n4.Show Territories\n5.End turn\n6.Surrender");
 						Scanner choose = new Scanner(System.in);
 						int choice = choose.nextInt();
 						try {
                             //game.trade();
                             if(choice == 1){
-                                trade(counter, player);
+                                trade(counter, playerList.get(x));
                             }
                             
-                            //game.attack();
-                            if(choice == 2){}		
+                            
+                            if(choice == 2){
+                            attack(playerList.get(x));
+                        }		
                             
                             //game.fortify();
                             if(choice == 3){}
@@ -58,8 +60,8 @@ public class gui {
 						choose.close(); // Closing Scanner to lower resource usage - Oscar
                     }
                     System.out.println("this is a test for: end of turn");
-                    if(playerlist.size() == 1){
-                        System.out.println("Player " + playerlist.get(x) + "wins!");
+                    if(playerList.size() == 1){
+                        System.out.println("Player " + playerList.get(x).getId() + "wins!");
                         win = true;
                     }
                     endturn = true;
@@ -102,7 +104,7 @@ public class gui {
         return null;
     }
     
-    public ArrayList<Integer> setup(){
+    public List<Player> setup(){
         boolean playrange = false;
         System.out.println("Welcome to Risk!");
         System.out.println("How many players are there?");
@@ -123,31 +125,37 @@ public class gui {
             }
             input.close();
         }while (!(playrange)); //end loop when returned true
-        ArrayList<Integer> Listofplayers = new ArrayList<Integer>(numberofplayers);
+        ArrayList<Integer> listOfIdsUsed = new ArrayList<Integer>(numberofplayers);
+        List<Player> randPlayerOrder=new ArrayList<>();
         List<Player> players = s.getPlayers();    
         List<Territory> territory = new ArrayList<Territory>(s.getTerritories());    
         s.setup(numberofplayers);
         Random rand = new Random();
         for(int temp = 1; temp <= numberofplayers; temp++){
             int x = rand.nextInt(numberofplayers+1); //return random int dependent on number of players
-            if(Listofplayers.contains(x)){
+            if(listOfIdsUsed.contains(x)){
                 temp--; //if already in ArrayList then start over
             }else{
                 if(x == 0){
                     temp--; //if already in ArrayList then start over
                 }else{
-                    Listofplayers.add(x); // if not in ArrayList then put in "first"
+
+                    listOfIdsUsed.add(x); 
+                    randPlayerOrder.add(players.get(x));// if not in ArrayList then put in "first"
                 }
             }
         }
         for(int i=0;i<=numberofplayers;i++){
-            player.setArmiesCount(s.numUnitAtStart(i));
+            players.get(i).setArmiesCount(s.numUnitAtStart(i));
         }  
         System.out.println("The order of players is:");
-        for(int i = 0; i < Listofplayers.size(); i++){
-            System.out.println("Player " + Listofplayers.get(i)); //print player order
+        for(int i = 0; i < listOfIdsUsed.size(); i++){
+            System.out.println("Player " + listOfIdsUsed.get(i)); //print player order
         }
-        return Listofplayers;
+
+
+        //assign terr to all
+        return randPlayerOrder;
     }
     
     public boolean trade(int counter, Player player){
@@ -181,17 +189,28 @@ public class gui {
         return trade;
     }
     
-    public String attack(){
+
+    /**
+     * 
+     * @param player the current player who wishes to attack
+     * @return will return a string for testing void
+     */
+    public void attack(Player player){
         boolean attack = false; // Boolean used to determine if player would like to attack again
         do {
             String attackagain;
-            System.out.println("Where do you want to attack from?"); //+ player.getterritorythatcanattack);
+            List<Territory> terrThatCanAttack=game.getAttackingTerritories(player);
+            String printableList=makeStringFromListOfAttackingTerritories(terrThatCanAttack);
+            System.out.println("Where do you want to attack from?"+printableList );
             Scanner attfrom = new Scanner(System.in);
-            int attackfrom = attfrom.nextInt();
-            System.out.println("Where do you want to attack?"+ territory.getNeighboringTerritories(player.getTerritories(attackfrom)));
-            Scanner attto = new Scanner(System.in);
-            int attackto = attto.nextInt();
-            game.attack(attackfrom, attackto);
+            //do a check for range
+            Territory attackfrom = terrThatCanAttack.get(attfrom.nextInt());
+            List <Territory> defendingTerritoriesList=attackfrom.getNeighboringTerritories();
+            String defendingTerritories =makeStringFromListOfAttackingTerritories(defendingTerritoriesList);
+            System.out.println("Where do you want to attack?"+ defendingTerritories);
+            Scanner attackTo = new Scanner(System.in);
+            Territory defendingTerr = defendingTerritoriesList.get(attackTo.nextInt());
+            game.attack(attackfrom, defendingTerr);
             System.out.println("Do you want to attack again? (y/n)");
             Scanner attagain = new Scanner(System.in);
             attackagain = attagain.nextLine();
@@ -206,12 +225,25 @@ public class gui {
                 System.out.println("Please enter a valid answer (y/n)");
                 attackagain = attagain.nextLine();
             }
-            attto.close();
+            attackTo.close();
             attagain.close();
         } while(attack != true);
     }
+
+    public String  makeStringFromListOfAttackingTerritories(List<Territory>terrThatCanAttack){
+
+        String namesOfAbleToAttack= " ";
+        for(int i = 0; i < terrThatCanAttack.size();i++){
+            namesOfAbleToAttack += i+". "+terrThatCanAttack.get(i).getName()+", ";
+        }
+
+        return namesOfAbleToAttack;
+    }
+
+
     
-    public String fortify(){
+    
+    public String fortify(Player player){
         boolean fortify = false;
         do{ 
             System.out.println("Which territory do you want to move units from?\n");// + territory.getNeighboringTerritories());
@@ -227,7 +259,16 @@ public class gui {
                         System.out.println("How many units would you like to move?\n Total: " + (territryUnit-1));
                         Scanner unitmove = new Scanner(System.in);
                         int troops = unitmove.nextInt();
-                        game.fortify(movefrom, moveto, unitmove);
+
+                        // List<Territory> terrThatCanAttack=game.getAttackingTerritories(player);
+                        // String printableList=makeStringFromListOfAttackingTerritories(terrThatCanAttack);
+                        // System.out.println("Where do you want to attack from?"+printableList );
+                        // Scanner attfrom = new Scanner(System.in);
+                        // //do a check for range
+                        // Territory attackfrom = terrThatCanAttack.get(attfrom.nextInt());
+
+
+                        // game.fortify(movefrom, moveto, unitmove);
                         System.out.println("Do you want to fortify again? (y/n)\n");
                         Scanner fortifyagain = new Scanner(System.in);
                         String fortnite = fortifyagain.nextLine();

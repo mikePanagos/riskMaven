@@ -16,6 +16,8 @@ public class Player {
 	private int pointCount;
 	private int territoryCount;
 	private int continentCount;
+
+	//change type to Terriotry and for the getters and setters
 	private List<String> tList = new ArrayList<String>();
 	private List<String> cList = new ArrayList<String>();
 	
@@ -204,7 +206,7 @@ public class Player {
 		}
 		return;
 	}
-	
+	// make return list 
 	public String getTerritories ( ) {
 		String t = ""; // String used to return the list of territories
 		for ( int i = 0; i < tList.size(); i++ ) {

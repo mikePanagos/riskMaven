@@ -98,4 +98,29 @@ public class GameEngine {
 		to.setNumOfUnits(numUnits);
 		return 0; //zero for now
 	}
+
+
+	/**
+     * 
+     * @param player current player options for attacking 
+     * @return
+     */
+    public List<Territory> getAttackingTerritories(Player player){
+		//    String namesOFTerritories= player.getTerritories();
+			// List<Territory> terr=  player.getTerritories();
+			List<Territory> ableToAttack = new ArrayList<>();
+
+	
+	
+			// for(int i = 0; i<terr.size();i++){
+	
+			// 	//checkNeighbors will return true if it can attack flase if the current player owns all neighbors
+			// 	if(terr.get(i).getNumOfUnits()>=2&&terr.get(i).checkNeighbors())
+			// 	{
+			// 		ableToAttack.add(terr.get(i));
+			// 	}
+			// }
+	
+			return ableToAttack;
+		}
 }
