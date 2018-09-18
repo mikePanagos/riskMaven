@@ -1,12 +1,14 @@
 package mojo;
 import java.lang.reflect.Array;
 import java.util.*;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import mojo.risk.*;
 
 public class gui {
     GameEngine game = new GameEngine();
     Setup s = new Setup();
-    // Player player = new Player();
     Territory territory = new Territory();
 	
 	public void main(String[] args){
@@ -18,11 +20,12 @@ public class gui {
             // List<Player> playerList = s.getPlayers();  //playerList.get()
 			for(int x = 0; win!=true; x++){
                 boolean endturn = false;
+                boolean endturn2 = false;
                 boolean surrender = false;
 				do{
                     System.out.println("Player " + playerList.get(x) + "'s turn:\n");
 					//User choice
-					while(endturn != true) {
+					while(endturn2 != true && surrender != true) {
                         newunits(playerList.get(x));
 						System.out.println("Please Choose: \n1.Trade\n2.Attack\n3.Fortify\n4.Show Territories\n5.End turn\n6.Surrender");
 						Scanner choose = new Scanner(System.in);
@@ -33,20 +36,26 @@ public class gui {
                                 trade(counter, playerList.get(x));
                             }
                             
-                            
                             if(choice == 2){
-                            attack(playerList.get(x));
-                        }		
+                                attack(playerList.get(x));
+                                endturn2 = false;
+                            }		
                             
                             //game.fortify();
-                            if(choice == 3){}
+                            if(choice == 3){
+                                fortiy(playerList.get(x));
+                                endturn2 = false;
+                            }
                             
                             //display owned territories
-                            if(choice == 4){}
+                            if(choice == 4){
+                                playerList.get(x).displayterritory();
+                                endturn2 = false;
+                            }
                             
                             //endturn option
                             if(choice == 5){
-                                endturn = true;
+                                endtrun2 = endturn();
                             }
                             
                             //game surrender
@@ -63,6 +72,9 @@ public class gui {
                     if(playerList.size() == 1){
                         System.out.println("Player " + playerList.get(x).getId() + "wins!");
                         win = true;
+                    }
+                    if(surrender = true){
+                        playerList.remove(x);
                     }
                     endturn = true;
                 }while(endturn != true);
@@ -96,12 +108,24 @@ public class gui {
         return units; // Previously not returning a type - Oscar
     }
     
-    public void displayterritory(){
-        return;
-    }
-    
-    public String endturn(){
-        return null;
+    public Boolean endturn(){
+        boolean end = false;
+        System.out.println("Are you sure you wish to end your turn? (y/n)");
+        Scanner turn = new Scanner(System.in);
+        String en = giveup.nextLine();
+        try{
+            if(en == "y"){
+                end = true;
+            }
+            if(en == "n"){
+                end = false;
+            }
+        }catch(InputMismatchException esurrender){
+            System.out.println("Please enter a valid answer: (y/n)");
+            en = giveup.nextLine();
+        }
+        turn.close();
+        return end;
     }
     
     public List<Player> setup(){
