@@ -2,7 +2,7 @@ package mojo;
 import java.lang.reflect.Array;
 import java.util.*;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+// import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import mojo.risk.*;
 
@@ -43,19 +43,19 @@ public class gui {
                             
                             //game.fortify();
                             if(choice == 3){
-                                fortiy(playerList.get(x));
+                                // fortiy(playerList.get(x));
                                 endturn2 = false;
                             }
                             
                             //display owned territories
                             if(choice == 4){
-                                playerList.get(x).displayterritory();
+                                // playerList.get(x).displayterritory();
                                 endturn2 = false;
                             }
                             
                             //endturn option
                             if(choice == 5){
-                                endtrun2 = endturn();
+                                // endtrun2 = endturn();
                             }
                             
                             //game surrender
@@ -112,7 +112,7 @@ public class gui {
         boolean end = false;
         System.out.println("Are you sure you wish to end your turn? (y/n)");
         Scanner turn = new Scanner(System.in);
-        String en = giveup.nextLine();
+        String en = turn.nextLine();
         try{
             if(en == "y"){
                 end = true;
@@ -122,7 +122,7 @@ public class gui {
             }
         }catch(InputMismatchException esurrender){
             System.out.println("Please enter a valid answer: (y/n)");
-            en = giveup.nextLine();
+            en = turn.nextLine();
         }
         turn.close();
         return end;
