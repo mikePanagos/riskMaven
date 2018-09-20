@@ -18,7 +18,7 @@ public class Player {
 	private int continentCount;
 
 	//change type to Terriotry and for the getters and setters
-	private List<String> tList = new ArrayList<String>();
+	private List<Territory> tList = new ArrayList<Territory>();
 	private List<String> cList = new ArrayList<String>();
 	
 	
@@ -179,9 +179,9 @@ public class Player {
 	
 	/**
 	* This will add a territory to the list of territories owned by the player.
-	* @param territory name of the territory claimed
+	* @param territory object of the territory claimed
 	*/
-	public void addTerritory ( String territory ) {
+	public void addTerritory ( Territory territory ) {
 		tList.add( territory );
 		return;
 	}
@@ -189,9 +189,9 @@ public class Player {
 	
 	/**
 	* This will remove a territory owned by the player from the territory list.
-	* @param territory name of the territory lost
+	* @param territory object of the territory lost
 	*/
-	public void removeTerritory ( String territory ) {
+	public void removeTerritory ( Territory territory ) {
 		tList.remove( territory );
 		return;
 	}
@@ -207,15 +207,8 @@ public class Player {
 		return;
 	}
 	// make return list 
-	public String getTerritories ( ) {
-		String t = ""; // String used to return the list of territories
-		for ( int i = 0; i < tList.size(); i++ ) {
-			t += tList.get(i); // Take t and add in the the next territory
-			if ( i < tList.size() - 1 ) {
-				t += ", "; // Prints out a comma to separate only if not last element
-			}
-		}
-		return t;
+	public List <Territory> getTerritories ( ) {
+		return this.tList;
 	}
 	
 	/**

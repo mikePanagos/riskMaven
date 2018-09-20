@@ -122,5 +122,14 @@ public class GameEngine {
 			// }
 	
 			return ableToAttack;
-		}
+	}
+    
+    
+    /**
+     * This method will return a list of cards shuffled
+     * @param deck the card list to be shuffled
+     */
+    public static void shuffleCards(List<Card> deck) {
+    	Collections.shuffle(deck);
+    }
 }
