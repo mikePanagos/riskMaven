@@ -217,6 +217,8 @@ public class Player {
 	*/
 	public void addContinent ( String continent ) {
 		cList.add( continent );
+		//i added this just for testing can be taken out later if not wanted 
+		setContinentCount();
 		return;
 	}
 	
@@ -227,6 +229,8 @@ public class Player {
 	*/
 	public void removeContinent ( String continent ) {
 		cList.remove( continent );
+		//i added this just for testing can be taken out later if not wanted 
+		setContinentCount();
 	}
 	
 	
