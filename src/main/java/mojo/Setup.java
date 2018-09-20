@@ -7,6 +7,7 @@ public class Setup {
     private List<Territory> board = new ArrayList<>();
     private List<Continent> continents = new ArrayList<>();
     private List<Player> playersList = new ArrayList<>();
+    private List<Card> deck = new ArrayList<>();
     
     
     /*
@@ -16,10 +17,102 @@ public class Setup {
     public void setup(int numPlayers) {
         makeTerritory();
         makePLayers(numPlayers);
+        makeDeck();
         
     }
-    
-    
+    /**
+     * assimbles a deck of cards
+     * 
+     * 
+     */
+    private void makeDeck(){   
+        Card card1=new Card("Alaska", "Infantr");
+        deck.add(card1);
+        Card card2=new Card("Alberta", "Cavalry");
+        deck.add(card2);
+        Card card3=new Card("Central America", "Artillery");
+        deck.add(card3);
+        Card card4=new Card("Eastern United States", "Infantry");
+        deck.add(card4);
+        Card card5=new Card("Greenland", "Cavalry");
+        deck.add(card5);
+        Card card6=new Card("Northwest", "Artillery");
+        deck.add(card6);
+        Card card7=new Card("Ontario", "Infantry");
+        deck.add(card7);
+        Card card8=new Card("Quebec", "Cavalry");
+        deck.add(card8);
+        Card card9=new Card("Western United States", "Artillery");
+        deck.add(card9);
+        Card card10=new Card("Argentina", "Infantry");
+        deck.add(card10);
+        Card card11=new Card("Brazil", "Cavalry");
+        deck.add(card11);
+        Card card12=new Card("Peru", "Artillery");
+        deck.add(card12);
+        Card card13=new Card("Venexuela", "Infantry");
+        deck.add(card13);
+        Card card14=new Card("Western Australia", "Cavalry");
+        deck.add(card14);
+        Card card15=new Card("Britain", "Artillery");
+        deck.add(card15);
+        Card card16=new Card("Iceland", "Infantry");
+        deck.add(card16);
+        Card card17=new Card("Northern Europe", "Cavalry");
+        deck.add(card17);
+        Card card18=new Card("Scandinavia", "Artillery");
+        deck.add(card18);
+        Card card19=new Card("Southern Europe", "Infantry");
+        deck.add(card19);
+        Card card20=new Card("Ukraine", "Cavalry");
+        deck.add(card20);
+        Card card21=new Card("Western Europe", "Artillery");
+        deck.add(card21);
+        Card card22=new Card("Congo", "Infantry");
+        deck.add(card22);
+        Card card23=new Card("East Africa", "Cavalry");
+        deck.add(card23);
+        Card card24=new Card("Egypt", "Artillery");
+        deck.add(card24);
+        Card card25=new Card("Madagascar", "Infantry");
+        deck.add(card25);
+        Card card26=new Card("North Africa", "Cavalry");
+        deck.add(card26);
+        Card card27=new Card("South Africa", "Artillery");
+        deck.add(card27);
+        Card card28=new Card("Afganistan", "Infantry");
+        deck.add(card28);
+        Card card29=new Card("China", "Cavalry");
+        deck.add(card29);
+        Card card30=new Card("India", "Artillery");
+        deck.add(card30);
+        Card card31=new Card("Irkutsk", "Infantry");
+        deck.add(card31);
+        Card card32=new Card("Japan", "Cavalry");
+        deck.add(card32);
+        Card card33=new Card("Kamchatka", "Artillery");
+        deck.add(card33);
+        Card card34=new Card("Middle East", "Infantry");
+        deck.add(card34);
+        Card card35=new Card("Mongolia", "Cavalry");
+        deck.add(card35);
+        Card card36=new Card("Slam", "Artillery");
+        deck.add(card36);
+        Card card37=new Card("Siberia", "Infantry");
+        deck.add(card37);
+        Card card38=new Card("Ural", "Cavalry");
+        deck.add(card38);
+        Card card39=new Card("Yakutsk", "Artillery");
+        deck.add(card39);
+        Card card40=new Card("Eastern Australia", "Infantry");
+        deck.add(card40);
+        Card card41=new Card("Indonesia", "Cavalry");
+        deck.add(card41);
+        Card card42=new Card("New Guinea", "Artillery");
+        deck.add(card42);
+
+    }
+
     /**
     * this function makes all the territory all makes the Continent then calles a
     * funtion that will make the neighbors
@@ -198,7 +291,7 @@ public class Setup {
         Territory westernAustralia = new Territory("Western Australia", "Australia", " ", 0);
         australiaList.add(westernAustralia);
         board.add(westernAustralia);
-        Continent australia = new Continent("Asia", asiaList);
+        Continent australia = new Continent("Australia", asiaList);
         continents.add(australia);
         
         /**
@@ -526,13 +619,13 @@ public class Setup {
         playersList.add(p1);
         Player p2 = new Player(2, numUnitsPerPlayer, 0);
         playersList.add(p2);
-        if (numPlayers > 3) {
+        if (numPlayers >= 3) {
             Player p3 = new Player(3, numUnitsPerPlayer, 0);
             playersList.add(p3);
-            if (numPlayers > 4) {
+            if (numPlayers >= 4) {
                 Player p4 = new Player(4, numUnitsPerPlayer, 0);
                 playersList.add(p4);
-                if (numPlayers > 5) {
+                if (numPlayers >= 5) {
                     Player p5 = new Player(5, numUnitsPerPlayer, 0);
                     playersList.add(p5);
                     if (numPlayers ==6) {
@@ -555,5 +648,8 @@ public class Setup {
     
     public List<Player> getPlayers() {
         return this.playersList;
+    }
+    public List<Card> getDeck(){
+        return this.deck;
     }
 }
