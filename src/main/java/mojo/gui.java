@@ -1,5 +1,6 @@
 package mojo;
 import java.lang.reflect.Array;
+import mojo.*;
 import java.util.*;
 
 // import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -11,7 +12,7 @@ public class gui {
     Setup s = new Setup();
     Territory territory = new Territory();
 	
-	public void main(String[] args){
+	public void start (){
         boolean win = false;
         boolean lose = false;
 		do{
@@ -251,6 +252,7 @@ public class gui {
             }
             attackTo.close();
             attagain.close();
+            attfrom.close();
         } while(attack != true);
     }
 
