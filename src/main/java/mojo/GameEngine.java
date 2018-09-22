@@ -7,6 +7,10 @@ public class GameEngine {
 	// Territory territory;
 	// Player player;
 	
+	public void GameEngine () {
+		System.out.println("Game Engine Initiated.");
+	}
+	
 	public int giveunits(Territory terr, int addingUnits) {
 		int units = terr.getNumOfUnits();
 		units = units + addingUnits;
