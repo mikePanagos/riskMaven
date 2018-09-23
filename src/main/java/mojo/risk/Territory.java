@@ -62,13 +62,93 @@ public class Territory{
         return this.numOfUnits;
     }
     
-    public List<Territory> getNeighboringTerritories()
-    {   List<Territory> list=new ArrayList<>(neighboringTerritories);
+    public String getNeighboringTerritories(){
+    // {   List<Territory> list=new ArrayList<>(neighboringTerritories);
         
-        return list;
+    //     return list;
+
+        String terr="";
+		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
+			terr+=i+". "+ neighboringTerritories.get(i).getName() + " " ;
+		}
+		return terr;
         
     }
-    
+    /**
+     * 
+     * @param id id of player 
+     * @return list of neighbors that the player owns
+     */
+    public String getprintableListOfOwnedNeighboringTerritories(int id){
+        String terr="";
+        int count=0;
+		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
+            if(neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            {terr+=count+". "+ neighboringTerritories.get(i).getName() + " " ;}
+            count++;
+		}
+		return terr;
+    }
+
+     /**
+      * 
+      * @param id of player
+      * @return the territory
+      */
+    public Territory getOwnedNeighboringTerritory(int id,int index){
+        // String terr="";
+        int count=0;
+        int found=0;
+		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
+            if(neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            { 
+                if(count==index)
+                {
+                    found=i;
+                }
+            }
+            count++;
+        }
+        return neighboringTerritories.get(found);
+    }
+    /**
+     *  give list of attackable terrs
+     * @param id
+     * @return
+     */
+    public String printableListOfAttackableNeighboringTerritories(int id){
+        String terr="";
+        int count=0;
+		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
+            if(!neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            {terr+=count+". "+ neighboringTerritories.get(i).getName() + " " ;}
+            count++;
+		}
+		return terr;
+        
+    }
+    /**
+     * get Neighboring Territory that player wants to attack
+     * @param id
+     * @param index
+     * @return
+     */
+    public Territory getAttackableNeighboringTerritory(int id,int index){
+        int count=0;
+        int found=0;
+		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
+            if(!neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            { 
+                if(count==index)
+                {
+                    found=i;
+                }
+            }
+            count++;
+        }
+        return neighboringTerritories.get(found);
+        
+    }
     //setters
     
     public void setNeighboringTerritories( List<Territory> list)
