@@ -29,14 +29,9 @@ public class gui {
                     while (endturn2 != true && surrender != true) {
 
                         handOutTerr(playerList);
-                        // handout armies to terr 
+                        // handout armies to terr
 
-
-
-
-
-                        //start the game 
-
+                        // start the game
 
                         newunits(playerList.get(x));
                         System.out.println(
@@ -108,12 +103,13 @@ public class gui {
     public void handOutTerr(List<Player> pList) {
         // Scanner m = new Scanner(System.in);
         boolean done = false;
-        int count=0;
+        int count = 0;
         while (!done) {
             for (int i = 0; i < pList.size(); i++) {
 
-                System.out.println("Player " + pList.get(i).getId() + " would you like to 1. pick a random territory or 2. pick a territory?");
-                int choice=key.nextInt();
+                System.out.println("Player " + pList.get(i).getId()
+                        + " would you like to 1. pick a random territory or 2. pick a territory?");
+                int choice = key.nextInt();
 
                 switch (choice) {
                 case 1: {
@@ -127,12 +123,13 @@ public class gui {
                 }
                 }
 
+                count++;
+                if (count > 41) {
+                    done = true;
+                    break;
+                }
             }
-            count++;
-            if(count>41)
-            {
-                done=true;
-            }
+
         }
         // m.close();
 
@@ -149,18 +146,19 @@ public class gui {
             units = 3;
         }
         System.out.println("You are getting " + units + " units\n");
-        System.out.println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
+        System.out
+                .println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
         Scanner area = new Scanner(System.in);
         int put = area.nextInt();
         try {
-             player.getTerritory(put);
-             System.out.println("how many units would you liek to place on "+player.getTerritory(put).getName());
-            int unitsAdding=area.nextInt();
-            player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits()+unitsAdding);
-            System.out.println("you have "+player.getTerritory(put).getNumOfUnits() + " units on territory" + player.getTerritory(put).getName());
+            player.getTerritory(put);
+            System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
+            int unitsAdding = area.nextInt();
+            player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits() + unitsAdding);
+            System.out.println("you have " + player.getTerritory(put).getNumOfUnits() + " units on territory"
+                    + player.getTerritory(put).getName());
         } catch (InputMismatchException eplace) {
-            System.out.println(
-                    "Please choose aw number in the territories available:" + player.printableTerritories());
+            System.out.println("Please choose aw number in the territories available:" + player.printableTerritories());
             put = area.nextInt();
         }
         area.close(); // Closing Scanner to lower resource usage - Oscar
@@ -206,12 +204,12 @@ public class gui {
                 System.out.println("Not a Number. Please enter 2-6 players: ");
                 numberofplayers = key.nextInt();
             }
-            
+
         } while (!(playrange)); // end loop when returned true
         ArrayList<Integer> listOfIdsUsed = new ArrayList<Integer>(numberofplayers);
         List<Player> randPlayerOrder = new ArrayList<>();
         List<Player> players = s.getPlayers();
-        territory =s.getTerritories();
+        territory = s.getTerritories();
         s.setup(numberofplayers);
         Random rand = new Random();
         for (int temp = 1; temp <= numberofplayers; temp++) {
@@ -281,18 +279,19 @@ public class gui {
         do {
             String attackagain;
             // List<Territory> terrThatCanAttack = game.getAttackingTerritories(player);
-            // String printableList = makeStringFromListOfAttackingTerritories(terrThatCanAttack);
+            // String printableList =
+            // makeStringFromListOfAttackingTerritories(terrThatCanAttack);
             System.out.println("Where do you want to attack from?" + player.getPrintableListOfTerritoryThatCanAttack());
             Scanner attfrom = new Scanner(System.in);
             // do a check for range
-            int indexOfTerr=attfrom.nextInt();
+            int indexOfTerr = attfrom.nextInt();
             Territory attackfrom = player.getTerritoryThatCanAttack(indexOfTerr);
             // Territory defendingTerritoriesList = ;
             String defendingTerritories = attackfrom.printableListOfAttackableNeighboringTerritories(player.getId());
             System.out.println("Where do you want to attack?" + defendingTerritories);
             Scanner attackTo = new Scanner(System.in);
-            int attackToIndex=attackTo.nextInt();
-            Territory defendingTerr = attackfrom.getAttackableNeighboringTerritory(player.getId(),attackToIndex);
+            int attackToIndex = attackTo.nextInt();
+            Territory defendingTerr = attackfrom.getAttackableNeighboringTerritory(player.getId(), attackToIndex);
             game.attack(attackfrom, defendingTerr);
             System.out.println("Do you want to attack again? (y/n)");
             Scanner attagain = new Scanner(System.in);
@@ -332,11 +331,12 @@ public class gui {
     public String fortify(Player player) {
         boolean fortify = false;
         do {
-            System.out.println("Which territory do you want to move units from?\n"+player.printableTerritories());
+            System.out.println("Which territory do you want to move units from?\n" + player.printableTerritories());
             Scanner from = new Scanner(System.in);
-            int moveFrom = from.nextInt(); 
+            int moveFrom = from.nextInt();
             try {
-                System.out.println("Which territory are you moving to?\n" + player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
+                System.out.println("Which territory are you moving to?\n"
+                        + player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
                 Scanner to = new Scanner(System.in);
                 int moveTo = to.nextInt();
                 int territryUnit = player.getTerritory(moveFrom).getNumOfUnits();
@@ -354,7 +354,9 @@ public class gui {
                         // //do a check for range
                         // Territory attackfrom = terrThatCanAttack.get(attfrom.nextInt());
 
-                        game.fortify(player.getTerritory(moveFrom), player.getTerritory(moveFrom).getOwnedNeighboringTerritory(player.getId(), moveTo), troops);
+                        game.fortify(player.getTerritory(moveFrom),
+                                player.getTerritory(moveFrom).getOwnedNeighboringTerritory(player.getId(), moveTo),
+                                troops);
                         System.out.println("Do you want to fortify again? (y/n)\n");
                         Scanner fortifyagain = new Scanner(System.in);
                         String fortnite = fortifyagain.nextLine();
@@ -374,14 +376,14 @@ public class gui {
                         fortify = false;
                     }
                 } catch (InputMismatchException emoveto) {
-                    System.out.println("Please choose a number in the territories available:"
-                            + player.printableTerritories());
+                    System.out.println(
+                            "Please choose a number in the territories available:" + player.printableTerritories());
                     moveTo = to.nextInt();
                 }
                 to.close();
             } catch (InputMismatchException emovefrom) {
-                System.out.println(
-                        "Please choose a number in the territories available:" +  player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
+                System.out.println("Please choose a number in the territories available:"
+                        + player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
                 moveFrom = from.nextInt();
             }
             from.close();
