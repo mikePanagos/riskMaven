@@ -17,7 +17,7 @@ public class gui {
         boolean surrender = false;
         boolean endTurn=false;
         int counter = 0;
-        List<Player> playerList = setup();
+        List<Player> playerList = setupGui();
 
             while(gameOver!=true){
             
@@ -80,6 +80,8 @@ public class gui {
 
     }
 
+
+    //  DONT NEED THIS THIS IS DONE BY SETUP
     // public void startArmies(int numplayers){
     //     if(numplayers == 2){
     //         for(int x = 0; x <= numplayers; x++)
@@ -177,16 +179,18 @@ public class gui {
                 //if player owns Australia then units + 2
             // }
         }
-        System.out.println("You are getting " + units + " units\n");
-        System.out
-                .println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
+        player.setArmiesCount(units+player.getArmiesCount());
+        System.out.println("You are getting " + units + " units this turn now\n you have "+player.getArmiesCount()+" in total");
+        System.out.println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
         // Scanner area = new Scanner(System.in);
         int put = key.nextInt();
         try {
             player.getTerritory(put);
             System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
             int unitsAdding = key.nextInt();
+            
             player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits() + unitsAdding);
+            player.setArmiesCount(player.getArmiesCount()-unitsAdding);
             System.out.println("you have " + player.getTerritory(put).getNumOfUnits() + " units on territory"
                     + player.getTerritory(put).getName());
         } catch (InputMismatchException eplace) {
@@ -217,7 +221,7 @@ public class gui {
         return end;
     }
 
-    public List<Player> setup() {
+    public List<Player> setupGui() {
         boolean playrange = false;
         System.out.println("Welcome to Risk!");
         System.out.println("How many players are there?");
@@ -238,38 +242,45 @@ public class gui {
             }
 
         } while (!(playrange)); // end loop when returned true
-        ArrayList<Integer> listOfIdsUsed = new ArrayList<Integer>(numberofplayers);
-        List<Player> randPlayerOrder = new ArrayList<>();
+        // ArrayList<Integer> listOfIdsUsed = new ArrayList<Integer>();
+        // List<Player> randPlayerOrder = new ArrayList<>();
         List<Player> players = s.getPlayers();
         territory = s.getTerritories();
-        s.setup(numberofplayers);
-        Random rand = new Random();
-        for (int temp = 1; temp <= numberofplayers; temp++) {
-            int x = rand.nextInt(numberofplayers + 1); // return random int dependent on number of players
-            if (listOfIdsUsed.contains(x)) {
-                temp--; // if already in ArrayList then start over
-            } else {
-                if (x == 0) {
-                    temp--; // if already in ArrayList then start over
-                } else {
+        // s.setup(numberofplayers);
+        // Random rand = new Random();
+        // for (int temp = 1; temp <= players.size(); temp++) {
+        //     int x = rand.nextInt(players.size() + 1); // return random int dependent on number of players
+        //     if (listOfIdsUsed.contains(x)) {
+        //         temp--; // if already in ArrayList then start over
+        //     } else {
+        //         if (x == 0) {
+        //             temp--; // if already in ArrayList then start over
+        //         } else {
 
-                    listOfIdsUsed.add(x);
-                    randPlayerOrder.add(players.get(x));// if not in ArrayList then put in "first"
-                }
-            }
-        }
-        for (int i = 0; i <= numberofplayers; i++) {
-            players.get(i).setArmiesCount(s.numUnitAtStart(i));
-        }
+        //             listOfIdsUsed.add(x);
+        //             randPlayerOrder.add(players.get(x));// if not in ArrayList then put in "first"
+        //         }
+        //     }
+        // }
+
+
+        // this is all we need for shuffling an arraylist MICHAEL
+        Collections.shuffle(players);
+
+
+        // Not needed already done in the setup MICHAEL
+        // for (int i = 0; i <= players.size(); i++) {
+        //     players.get(i).setArmiesCount(s.numUnitAtStart(i));
+        // }
         System.out.println("The order of players is:");
-        for (int i = 0; i < randPlayerOrder.size(); i++) {
-            System.out.println("Player " + randPlayerOrder.get(i).getId()); // print player order
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println("Player " + players.get(i).getId()); // print player order
         }
 
         // assign terr to all
         // input.close();
-        handOutTerr(randPlayerOrder);
-        return randPlayerOrder;
+        handOutTerr(players);
+        return players;
     }
 
     public boolean trade(int counter, Player player) {
