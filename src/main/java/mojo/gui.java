@@ -31,14 +31,16 @@ public class gui {
                         // Scanner choose = new Scanner(System.in);
                         int choice = key.nextInt();
                         try {
-                            // game.trade();
+                            // trade option
                             if (choice == 1) {
                                 trade(counter, playerList.get(x));
                             }
-
+                            // attack option
                             if (choice == 2) {
                                 attack(playerList.get(x));
                             }
+
+                            // fortify option
                             if (choice == 3) {
                                 // fortiy(playerList.get(x));
                             }
@@ -78,6 +80,31 @@ public class gui {
 
     }
 
+    // public void startArmies(int numplayers){
+    //     if(numplayers == 2){
+    //         for(int x = 0; x <= numplayers; x++)
+    //             player.get(x).getid(x).setArmiesCount(40);
+    //     }
+    //     if(numplayers == 3){
+    //         for(int x = 0; x <= numplayers; x++)
+    //             player.get(x).getid(x).setArmiesCount(35);
+    //     }
+    //     if(numplayers == 4){
+    //         for(int x = 0; x <= numplayers; x++)
+    //             player.get(x).getid(x).setArmiesCount(30);
+    //     }
+    //     if(numplayers == 5){
+    //         for(int x = 0; x <= numplayers; x++)
+    //             player.get(x).getid(x).setArmiesCount(25);
+    //     }
+    //     if(numplayers == 6){
+    //         for(int x = 0; x <= numplayers; x++)
+    //             player.get(x).getid(x).setArmiesCount(20);
+    //     }
+    //     return;
+    // }
+
+
     /**
      * this method will assign the first 42 territorys out
      * 
@@ -87,6 +114,7 @@ public class gui {
         // Scanner m = new Scanner(System.in);
         boolean done = false;
         int count = 0;
+        Random rand = new Random();
         while (!done) {
             for (int i = 0; i < pList.size(); i++) {
 
@@ -124,9 +152,30 @@ public class gui {
      * @return
      */
     public int newunits(Player player) {
+        List<Continent> continents;
         int units = player.getTerritoryCount() / 3;
         if (units < 3) {
             units = 3;
+        }
+        if(player.getContinentCount() >= 1){
+            // if(){
+                //if player owns Asia then units + 7
+            // }
+            // if(){
+                //if player owns Europe then units + 5
+            // }
+            // if(){
+                //if player owns North America then units + 5
+            // }
+            // if(){
+                //if player owns Africa then units +3
+            // }
+            // if(){
+                //if player owns South America then untis + 2
+            // }
+            // if(){
+                //if player owns Australia then units + 2
+            // }
         }
         System.out.println("You are getting " + units + " units\n");
         System.out
@@ -303,7 +352,7 @@ public class gui {
      * @param player current Player
      * @return
      */
-    public String fortify(Player player) {
+    public void fortify(Player player) {
         boolean fortify = false;
         do {
             System.out.println("Which territory do you want to move units from?\n" + player.printableTerritories());
@@ -363,7 +412,7 @@ public class gui {
             }
             from.close();
         } while (fortify != true);
-        return "Hello";
+        return;
     }
 
     public boolean surrender() {
