@@ -203,6 +203,14 @@ public class Player {
 		tList.remove(territory);
 		return;
 	}
+	public void removeTerritoryByName(String name){
+		for(int i=0;i<tList.size();i++)
+		{
+			if(name.equals(tList.get(i).getName())){
+				 tList.remove(i);
+			}
+		}
+	}
 
 	/**
 	 * This will print a list of the territories owned by the player.

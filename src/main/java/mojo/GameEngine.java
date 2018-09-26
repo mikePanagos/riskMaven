@@ -6,6 +6,7 @@ import mojo.risk.*;
 public class GameEngine {
 	// Territory territory;
 	// Player player;
+	Setup s =new Setup();
 	
 	public void GameEngine () {
 		System.out.println("Game Engine Initiated.");
@@ -72,7 +73,17 @@ public class GameEngine {
 			if(def.getNumOfUnits()-attrolls<1)
 			{
 				System.out.println("you gained a new territory");
-				// def.setOwner(act.getOwner());
+				List<Player> players=s.getPlayers();
+				players.get(def.getOwner()).removeTerritoryByName(def.getName());
+
+				def.setOwner(act.getOwner());
+				System.out.println("new onwer of def is "+def.getOwner());
+				players.get(act.getOwner()-1).addTerritory(def);
+				System.out.println(players.get(act.getOwner()-1).printableTerritories());
+
+				System.out.println("player "+players.get(act.getOwner()-1).getId()+" just took control of "+ def.getName());
+				act.setNumOfUnits(act.getNumOfUnits()-1);
+				def.setNumOfUnits(1);
 				// need to figure out what to do here 
 				// we need to take out the territory form the def list and add it to the player attacks list but we do not have them here
 

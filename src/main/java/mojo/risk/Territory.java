@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class Territory{
     private String name;
     private String continentName;
-    private String owner;
+    private int owner;
     private int numOfUnits;
     // private boolean canAttack;
     private List<Territory> neighboringTerritories=new ArrayList<>();
     
     // basic constructor 
-    public Territory(String name,String continentName, String owner,int numOfUnits){
+    public Territory(String name,String continentName, int owner,int numOfUnits){
         this.name=name;
         this.continentName=continentName;
         this.owner=owner;
@@ -41,7 +41,6 @@ public class Territory{
     public Territory ( ) {
     	this.name = "Territory";
     	this.continentName = "Continent";
-    	this.owner = "Owner";
     	this.numOfUnits = 0;
     	return;
     }
@@ -55,7 +54,7 @@ public class Territory{
         return this.continentName;
         
     }
-    public String getOwner(){
+    public int getOwner(){
         return this.owner;
     }
     public int getNumOfUnits(){
@@ -83,7 +82,7 @@ public class Territory{
         String terr="";
         int count=0;
 		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
-            if(neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            if(neighboringTerritories.get(i).getOwner()==id)
             {terr+=count+". "+ neighboringTerritories.get(i).getName() + " " ;}
             count++;
 		}
@@ -100,7 +99,7 @@ public class Territory{
         int count=0;
         int found=0;
 		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
-            if(neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            if(neighboringTerritories.get(i).getOwner()==id)
             { 
                 if(count==index)
                 {
@@ -120,7 +119,7 @@ public class Territory{
         String terr="";
         int count=0;
 		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
-            if(!neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            if(neighboringTerritories.get(i).getOwner()!=id)
             {terr+=count+". "+ neighboringTerritories.get(i).getName() + " " ;}
             count++;
 		}
@@ -137,7 +136,7 @@ public class Territory{
         int count=0;
         int found=0;
 		for ( int i = 0; i < neighboringTerritories.size(); i++ ) {
-            if(!neighboringTerritories.get(i).getOwner().equals( Integer.toString(id)))
+            if(neighboringTerritories.get(i).getOwner()!=id)
             { 
                 if(count==index)
                 {
@@ -162,7 +161,7 @@ public class Territory{
         }
         
     }
-    public void setOwner(String owner){
+    public void setOwner(int owner){
         this.owner=owner;
     }
     

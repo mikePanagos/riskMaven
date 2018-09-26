@@ -132,6 +132,7 @@ public class gui {
 
                     pList.get(i).addTerritory(territory.get(count));
                     territory.get(count).setNumOfUnits(territory.get(count).getNumOfUnits() + 1);
+                    territory.get(count).setOwner(pList.get(i).getId());
                     pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
                     count++;
                     if (count > 41) {
@@ -170,6 +171,7 @@ public class gui {
 
                     pList.get(i).addTerritory(territory.get(choice));
                     territory.get(count).setNumOfUnits(territory.get(count).getNumOfUnits() + 1);
+                    territory.get(count).setOwner(pList.get(i).getId());
                     pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
                     s.removeTerritory(choice);
 
