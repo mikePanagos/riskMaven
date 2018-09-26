@@ -423,7 +423,15 @@ public class gui {
             // Scanner attackTo = new Scanner(System.in);
             int attackToIndex = key.nextInt();
             Territory defendingTerr = attackfrom.getAttackableNeighboringTerritory(player.getId(), attackToIndex);
-            game.attack(attackfrom, defendingTerr);
+            int attackingUnits=0;
+            System.out.println("how many units do you want to attack with"+(attackfrom.getNumOfUnits()-1));
+             attackingUnits =key.nextInt();
+             while(attackingUnits>attackfrom.getNumOfUnits())
+             {
+                System.out.println("invailed numebr try again. how many units do you want to attack with"+(attackfrom.getNumOfUnits()-1));
+                attackingUnits =key.nextInt();
+             }
+            game.attack(attackfrom, defendingTerr,attackingUnits);
             System.out.println("Do you want to attack again? (y/n)");
             // Scanner attagain = new Scanner(System.in);
             key.nextLine();

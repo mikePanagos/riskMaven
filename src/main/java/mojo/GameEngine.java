@@ -18,18 +18,19 @@ public class GameEngine {
 		return terr.getNumOfUnits();
 	}
 	
-	public String attack(Territory act, Territory def) {
+	public String attack(Territory act, Territory def,int attachingUnits) {
 		int[] dice = new int[5];
 		int attnewunits=0;
 		int defnewunits=0;
-		int attunits = act.getNumOfUnits();
+		int attunits = attachingUnits;
 		int defunits = def.getNumOfUnits();
 		int attrolls=0;
 		int defrolls=0;
 		int atttotal = 0;
 		int deftotal = 0;
-		for (int i = 0; i <= dice.length; i++) {
-			dice[i] = diceroll(1);
+		for (int i = 0; i < 5; i++) {
+			dice[i] = diceroll();
+			System.out.println(dice[i]);
 		}
 		if (attunits > 3) {
 			attrolls = 3;
@@ -43,42 +44,71 @@ public class GameEngine {
 		} else {
 			defrolls = 1;
 		}
-		for (int j = 0; j <= dice.length - defrolls; j++) {
-			dice[j] = atttotal;
+
+		// this was all wrong 
+		// for (int j = 0; j <5 - defrolls; j++) {
+		// 	dice[j] = atttotal;
+			
+		// }
+		// for (int d = attrolls + 1; d < 5; d++) {
+		// 	dice[d] = deftotal;
+		// }
+		for (int j = 0; j <5 - defrolls; j++) {
+			  atttotal+=dice[j];
+			
 		}
-		for (int d = attrolls + 1; d <= dice.length; d++) {
-			dice[d] = deftotal;
+		for (int d = attrolls + 1; d < 5; d++) {
+			deftotal+=dice[d];
 		}
 		int attack = atttotal / 3;
 		int defence = deftotal / 3;
 		if (attack < defence) {
 			System.out.println("Defeat!");
 			attnewunits = attunits - attack;
+			act.setNumOfUnits(attnewunits);//added this here so it would be correct
 		} else if (attack > defence) {
 			System.out.println("Victory!");
 			defnewunits = defunits - defence;
+			if(def.getNumOfUnits()-attrolls<1)
+			{
+				System.out.println("you gained a new territory");
+				// def.setOwner(act.getOwner());
+				// need to figure out what to do here 
+				// we need to take out the territory form the def list and add it to the player attacks list but we do not have them here
+
+			}
 		} else {
+			// what happens is there is a tie
 			System.out.println("Defeat!");
 			attnewunits = attunits - defence;
+			if(attachingUnits!=0)
+			{
+				act.setNumOfUnits(attnewunits);
+			}
+			
 		}
-		act.setNumOfUnits(attnewunits);
-		def.setNumOfUnits(defnewunits);
-		if (defnewunits < 1) {
-			def.setOwner(act.getOwner());
-			def.setNumOfUnits(1);
-			act.setNumOfUnits(attnewunits - 1);
-		} else if (attnewunits < 2) {
-			System.out.println("Attacking territory only has 1 army");
-		} else {
-			act.setNumOfUnits(attnewunits);
-			def.setNumOfUnits(defnewunits);
-		}
+
+		// this was wrong too
+		// act.setNumOfUnits(attnewunits);
+		// def.setNumOfUnits(defnewunits);
+		// if (defnewunits < 1) {
+		// 	def.setOwner(act.getOwner());
+		// 	def.setNumOfUnits(1);
+		// 	act.setNumOfUnits(attnewunits - 1);
+		// } else if (attnewunits < 2) {
+		// 	System.out.println("Attacking territory only has 1 army");
+		// } else {
+		// 	act.setNumOfUnits(attnewunits);
+		// 	def.setNumOfUnits(defnewunits);
+		// }
+
+
 		return null;
 	}
 	
-	public int diceroll(int temp) {
+	public int diceroll() {
 		Random rand = new Random();
-		int x = rand.nextInt(temp); // return random int
+		int x = rand.nextInt(6); // return random int
 		return x;
 	}
 	
