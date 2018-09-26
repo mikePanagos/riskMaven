@@ -15,97 +15,96 @@ public class gui {
     public void start() {
         boolean gameOver = false;
         boolean surrender = false;
-        boolean endTurn=false;
+        boolean endTurn = false;
         int counter = 0;
         List<Player> playerList = setupGui();
 
-            while(gameOver!=true){
-            
-            for (int x = 0; x<playerList.size(); x++) {
-                    System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
-                    // User choice
-                        newunits(playerList.get(x));
-                        endTurn=false;
-                        while(endTurn!=true){
-                        System.out.println("Please Choose: \n1.Trade\n2.Attack\n3.Fortify\n4.Show Territories\n5.End turn\n6.Surrender");
-                        // Scanner choose = new Scanner(System.in);
-                        int choice = key.nextInt();
-                        try {
-                            // trade option
-                            if (choice == 1) {
-                                trade(counter, playerList.get(x));
-                            }
-                            // attack option
-                            if (choice == 2) {
-                                attack(playerList.get(x));
-                            }
+        while (gameOver != true) {
 
-                            // fortify option
-                            if (choice == 3) {
-                                // fortiy(playerList.get(x));
-                            }
-                            // display owned territories
-                            if (choice == 4) {
-                                // playerList.get(x).displayterritory();
-                            }
-
-                            // endturn option
-                            if (choice == 5) {
-                                // System.out.println(playerList);
-                                endTurn=true;
-                            }
-                            if (choice == 6) {
-                                surrender = surrender();
-                            }
-                        } catch (InputMismatchException echoice) {
-                            System.out.println("Please enter a valid answer: (y/n)");
-                            choice = key.nextInt();
+            for (int x = 0; x < playerList.size(); x++) {
+                System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
+                // User choice
+                newunits(playerList.get(x));
+                endTurn = false;
+                while (endTurn != true) {
+                    System.out.println(
+                            "Please Choose: \n1.Trade\n2.Attack\n3.Fortify\n4.Show Territories\n5.End turn\n6.Surrender");
+                    // Scanner choose = new Scanner(System.in);
+                    int choice = key.nextInt();
+                    try {
+                        // trade option
+                        if (choice == 1) {
+                            trade(counter, playerList.get(x));
                         }
+                        // attack option
+                        if (choice == 2) {
+                            attack(playerList.get(x));
+                        }
+
+                        // fortify option
+                        if (choice == 3) {
+                            // fortiy(playerList.get(x));
+                        }
+                        // display owned territories
+                        if (choice == 4) {
+                            // playerList.get(x).displayterritory();
+                        }
+
+                        // endturn option
+                        if (choice == 5) {
+                            // System.out.println(playerList);
+                            endTurn = true;
+                        }
+                        if (choice == 6) {
+                            surrender = surrender();
+                        }
+                    } catch (InputMismatchException echoice) {
+                        System.out.println("Please enter a valid answer: (y/n)");
+                        choice = key.nextInt();
                     }
-                        // choose.close(); // Closing Scanner to lower resource usage - Oscar
-                        // System.out.println("the number of players playing is "+playerList.size());
-                        // if (playerList.size() == 1) {
-                        //     System.out.println("Player " + playerList.get(x).getId() + "wins!");
-                        //     gameOver = true;
-                        // }
-                        // if (surrender = true) {
-                        //     playerList.remove(x);
-                        // }
-                
-                    }
-                    // System.out.println("this is a test for: end of turn");
-                    
+                }
+                // choose.close(); // Closing Scanner to lower resource usage - Oscar
+                // System.out.println("the number of players playing is "+playerList.size());
+                // if (playerList.size() == 1) {
+                // System.out.println("Player " + playerList.get(x).getId() + "wins!");
+                // gameOver = true;
+                // }
+                // if (surrender = true) {
+                // playerList.remove(x);
+                // }
+
+            }
+            // System.out.println("this is a test for: end of turn");
+
             // System.out.println("This is a test for: Win/lose check");
         }
 
     }
 
-
-    //  DONT NEED THIS THIS IS DONE BY SETUP
+    // DONT NEED THIS THIS IS DONE BY SETUP
     // public void startArmies(int numplayers){
-    //     if(numplayers == 2){
-    //         for(int x = 0; x <= numplayers; x++)
-    //             player.get(x).getid(x).setArmiesCount(40);
-    //     }
-    //     if(numplayers == 3){
-    //         for(int x = 0; x <= numplayers; x++)
-    //             player.get(x).getid(x).setArmiesCount(35);
-    //     }
-    //     if(numplayers == 4){
-    //         for(int x = 0; x <= numplayers; x++)
-    //             player.get(x).getid(x).setArmiesCount(30);
-    //     }
-    //     if(numplayers == 5){
-    //         for(int x = 0; x <= numplayers; x++)
-    //             player.get(x).getid(x).setArmiesCount(25);
-    //     }
-    //     if(numplayers == 6){
-    //         for(int x = 0; x <= numplayers; x++)
-    //             player.get(x).getid(x).setArmiesCount(20);
-    //     }
-    //     return;
+    // if(numplayers == 2){
+    // for(int x = 0; x <= numplayers; x++)
+    // player.get(x).getid(x).setArmiesCount(40);
     // }
-
+    // if(numplayers == 3){
+    // for(int x = 0; x <= numplayers; x++)
+    // player.get(x).getid(x).setArmiesCount(35);
+    // }
+    // if(numplayers == 4){
+    // for(int x = 0; x <= numplayers; x++)
+    // player.get(x).getid(x).setArmiesCount(30);
+    // }
+    // if(numplayers == 5){
+    // for(int x = 0; x <= numplayers; x++)
+    // player.get(x).getid(x).setArmiesCount(25);
+    // }
+    // if(numplayers == 6){
+    // for(int x = 0; x <= numplayers; x++)
+    // player.get(x).getid(x).setArmiesCount(20);
+    // }
+    // return;
+    // }
 
     /**
      * this method will assign the first 42 territorys out
@@ -116,35 +115,113 @@ public class gui {
         // Scanner m = new Scanner(System.in);
         boolean done = false;
         int count = 0;
+        int choice = 0;
         Random rand = new Random();
-        while (!done) {
-            for (int i = 0; i < pList.size(); i++) {
 
-                // System.out.println("Player " + pList.get(i).getId()
-                //         + " would you like to 1. pick a random territory or 2. pick a territory?");
-                // int choice = key.nextInt();
+        System.out.println(" would you like to 1. pick a random territory for all  or 2. pick territory?");
+        choice = key.nextInt();
+        while (choice != 1 && choice != 2) {
+            System.out.println(" PLEASE ENTER 1 0R 2");
+            choice = key.nextInt();
+        }
 
-                // switch (choice) {
-                // case 1: {
+        switch (choice) {
+        case 1: {
+            while (!done) {
+                for (int i = 0; i < pList.size(); i++) {
 
                     pList.get(i).addTerritory(territory.get(count));
-            //         break;
-            //     }
-            //     case 2: {
-            //         pList.get(i).addTerritory(territory.get(count));
-            //         break;
-            //     }
-            //     }
-
-                count++;
-                if (count > 41) {
-                    done = true;
-                    break;
+                    territory.get(count).setNumOfUnits(territory.get(count).getNumOfUnits() + 1);
+                    pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
+                    count++;
+                    if (count > 41) {
+                        done = true;
+                        break;
+                    }
                 }
+
+            }
+        }
+        case 2: {
+            while (!done) {
+                for (int i = 0; i < pList.size(); i++) {
+                    System.out.println("what territory do you want? player " + pList.get(i).getId());
+                    System.out.println(s.printTerritories());
+
+                    choice = key.nextInt();
+                    try {
+                        while (choice > territory.size() - 1) {
+
+                            System.out.println("try again what territory do you want? player " + pList.get(i).getId());
+                            try {
+                                choice = key.nextInt();
+
+                            } catch (InputMismatchException exception) {
+                                System.out.println(
+                                        "please try again what territory do you want? player " + pList.get(i).getId());
+                                choice = key.nextInt();
+                            }
+                        }
+                    } catch (InputMismatchException exception) {
+                        System.out
+                                .println("please try again what territory do you want? player " + pList.get(i).getId());
+                        choice = key.nextInt();
+                    }
+
+                    pList.get(i).addTerritory(territory.get(choice));
+                    territory.get(count).setNumOfUnits(territory.get(count).getNumOfUnits() + 1);
+                    pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
+                    s.removeTerritory(choice);
+
+                    count++;
+                    if (count > 41) {
+                        done = true;
+                        break;
+                    }
+                }
+
+            }
+            break;
+        }
+        }
+
+    }
+  
+
+    /**
+     * @auther michael
+     * @param players list of all players
+     */
+    public void handOutRestOfUnits(List<Player>players){
+        int choice=0;
+        int unitsAdding=0;
+        System.out.println("\nall terriories have been assigned and have one unit on each now you need to add the rest off your units to terriories\n");
+
+        for(int i=0;i<players.size();i++){
+            while(players.get(i).getArmiesCount()!=0){
+            System.out.println("here are your territories player "+players.get(i).getId()+"\n "+players.get(i).printableTerritories());
+
+            System.out.println("where would you like to place your units");
+            choice=key.nextInt();
+            while(choice<players.get(i).getTerritoryCount()-1)
+            {
+                System.out.println("Not vaild chocie Try again. \nwhere would you like to place your units");
+            choice=key.nextInt();
+            }
+            System.out.println("\nhow many units would you liek to place on " + players.get(i).getTerritory(choice).getName()+"/n you have "+players.get(i).getArmiesCount());
+           unitsAdding = key.nextInt();
+            while (unitsAdding > players.get(i).getArmiesCount()) {
+                System.out.println("sorry you dont have that many units pick a lower number");
+                System.out.println("how many units would you liek to place on " + players.get(i).getTerritory(choice).getName());
+                unitsAdding = key.nextInt();
+
             }
 
+            players.get(i).getTerritory(choice).setNumOfUnits(players.get(i).getTerritory(choice).getNumOfUnits() + unitsAdding);
+            players.get(i).setArmiesCount(players.get(i).getArmiesCount() - unitsAdding);
         }
-        // m.close();
+            
+        }
 
     }
 
@@ -159,38 +236,47 @@ public class gui {
         if (units < 3) {
             units = 3;
         }
-        if(player.getContinentCount() >= 1){
+        if (player.getContinentCount() >= 1) {
             // if(){
-                //if player owns Asia then units + 7
+            // if player owns Asia then units + 7
             // }
             // if(){
-                //if player owns Europe then units + 5
+            // if player owns Europe then units + 5
             // }
             // if(){
-                //if player owns North America then units + 5
+            // if player owns North America then units + 5
             // }
             // if(){
-                //if player owns Africa then units +3
+            // if player owns Africa then units +3
             // }
             // if(){
-                //if player owns South America then untis + 2
+            // if player owns South America then untis + 2
             // }
             // if(){
-                //if player owns Australia then units + 2
+            // if player owns Australia then units + 2
             // }
         }
-        player.setArmiesCount(units+player.getArmiesCount());
-        System.out.println("You are getting " + units + " units this turn now\n you have "+player.getArmiesCount()+" in total");
-        System.out.println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
+        player.setArmiesCount(units + player.getArmiesCount());
+        System.out.println("You are getting " + units + " units this turn now\n you have " + player.getArmiesCount()
+                + " in total");
+        System.out
+                .println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
         // Scanner area = new Scanner(System.in);
         int put = key.nextInt();
+
         try {
             player.getTerritory(put);
             System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
             int unitsAdding = key.nextInt();
-            
+            while (unitsAdding > player.getArmiesCount()) {
+                System.out.println("sorry you dont have that many units pick a lower number");
+                System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
+                unitsAdding = key.nextInt();
+
+            }
+
             player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits() + unitsAdding);
-            player.setArmiesCount(player.getArmiesCount()-unitsAdding);
+            player.setArmiesCount(player.getArmiesCount() - unitsAdding);
             System.out.println("you have " + player.getTerritory(put).getNumOfUnits() + " units on territory"
                     + player.getTerritory(put).getName());
         } catch (InputMismatchException eplace) {
@@ -249,28 +335,28 @@ public class gui {
         // s.setup(numberofplayers);
         // Random rand = new Random();
         // for (int temp = 1; temp <= players.size(); temp++) {
-        //     int x = rand.nextInt(players.size() + 1); // return random int dependent on number of players
-        //     if (listOfIdsUsed.contains(x)) {
-        //         temp--; // if already in ArrayList then start over
-        //     } else {
-        //         if (x == 0) {
-        //             temp--; // if already in ArrayList then start over
-        //         } else {
+        // int x = rand.nextInt(players.size() + 1); // return random int dependent on
+        // number of players
+        // if (listOfIdsUsed.contains(x)) {
+        // temp--; // if already in ArrayList then start over
+        // } else {
+        // if (x == 0) {
+        // temp--; // if already in ArrayList then start over
+        // } else {
 
-        //             listOfIdsUsed.add(x);
-        //             randPlayerOrder.add(players.get(x));// if not in ArrayList then put in "first"
-        //         }
-        //     }
+        // listOfIdsUsed.add(x);
+        // randPlayerOrder.add(players.get(x));// if not in ArrayList then put in
+        // "first"
         // }
-
+        // }
+        // }
 
         // this is all we need for shuffling an arraylist MICHAEL
         Collections.shuffle(players);
 
-
         // Not needed already done in the setup MICHAEL
         // for (int i = 0; i <= players.size(); i++) {
-        //     players.get(i).setArmiesCount(s.numUnitAtStart(i));
+        // players.get(i).setArmiesCount(s.numUnitAtStart(i));
         // }
         System.out.println("The order of players is:");
         for (int i = 0; i < players.size(); i++) {
@@ -280,6 +366,7 @@ public class gui {
         // assign terr to all
         // input.close();
         handOutTerr(players);
+        handOutRestOfUnits(players);
         return players;
     }
 
@@ -443,7 +530,7 @@ public class gui {
             System.out.println("Please enter a valid answer: (y/n)");
             surr = key.nextLine();
         }
-        
+
         return surrender;
     }
 }

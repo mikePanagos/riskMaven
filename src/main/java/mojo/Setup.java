@@ -641,7 +641,16 @@ public class Setup {
     public List<Territory> getTerritories() {
         return this.board;
     }
-    
+    public String printTerritories() {
+        String list=" ";
+        for(int i=0; i<board.size();i++){
+            list+= " "+i+". "+board.get(i).getName()+".";
+        }
+        return list;
+    }
+    public void removeTerritory(int i){
+        board.remove(i);
+    }
     public List<Continent> getContinent() {
         return this.continents;
     }

@@ -212,7 +212,7 @@ public class Player {
 	public String printableTerritories() {
 		String terr = "";
 		for (int i = 0; i < tList.size(); i++) {
-			terr += i + ". " + tList.get(i).getName() + " ";
+			terr += i + ". " + tList.get(i).getName() + " army on "+tList.get(i).getNumOfUnits()+". ";
 		}
 		return terr;
 	}
