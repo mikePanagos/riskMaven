@@ -274,7 +274,6 @@ public class gui {
                 System.out.println("sorry you dont have that many units pick a lower number");
                 System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
                 unitsAdding = key.nextInt();
-
             }
 
             player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits() + unitsAdding);

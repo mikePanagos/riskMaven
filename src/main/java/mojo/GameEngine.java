@@ -74,14 +74,14 @@ public class GameEngine {
 			{
 				System.out.println("you gained a new territory");
 				List<Player> players=s.getPlayers();
-				players.get(def.getOwner()).removeTerritoryByName(def.getName());
+				players.get(def.getOwner()-1).removeTerritoryByName(def.getName());
 
 				def.setOwner(act.getOwner());
 				System.out.println("new onwer of def is "+def.getOwner());
 				players.get(act.getOwner()-1).addTerritory(def);
 				System.out.println(players.get(act.getOwner()-1).printableTerritories());
 
-				System.out.println("player "+players.get(act.getOwner()-1).getId()+" just took control of "+ def.getName());
+				System.out.println("player "+act.getOwner()+" just took control of "+ def.getName());
 				act.setNumOfUnits(act.getNumOfUnits()-1);
 				def.setNumOfUnits(1);
 				// need to figure out what to do here 
@@ -143,29 +143,4 @@ public class GameEngine {
 		to.setNumOfUnits(numUnits);
 		return 0; //zero for now
 	}
-
-
-	/**
-     * 
-     * @param player current player options for attacking 
-     * @return
-     */
-    public List<Territory> getAttackingTerritories(Player player){
-		//    String namesOFTerritories= player.getTerritories();
-			// List<Territory> terr=  player.getTerritories();
-			List<Territory> ableToAttack = new ArrayList<>();
-
-	
-	
-			// for(int i = 0; i<terr.size();i++){
-	
-			// 	//checkNeighbors will return true if it can attack flase if the current player owns all neighbors
-			// 	if(terr.get(i).getNumOfUnits()>=2&&terr.get(i).checkNeighbors())
-			// 	{
-			// 		ableToAttack.add(terr.get(i));
-			// 	}
-			// }
-	
-			return ableToAttack;
-		}
 }
