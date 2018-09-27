@@ -60,4 +60,9 @@ public class Card {
 		this.type = type;
 		return;
 	}
+
+	public String printCard(){
+		String print=getType()+" "+getTerritoryName();
+		return print;
+	}
 }

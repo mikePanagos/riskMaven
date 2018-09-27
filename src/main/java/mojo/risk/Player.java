@@ -20,6 +20,7 @@ public class Player {
 	// change type to Terriotry and for the getters and setters
 	private List<Territory> tList = new ArrayList<Territory>();
 	private List<String> cList = new ArrayList<String>();
+	private List<Card> cardList = new ArrayList<>();
 
 	/**
 	 * This is the default constructor for the player class. It will set the army
@@ -203,11 +204,11 @@ public class Player {
 		tList.remove(territory);
 		return;
 	}
-	public void removeTerritoryByName(String name){
-		for(int i=0;i<tList.size();i++)
-		{
-			if(name.equals(tList.get(i).getName())){
-				 tList.remove(i);
+
+	public void removeTerritoryByName(String name) {
+		for (int i = 0; i < tList.size(); i++) {
+			if (name.equals(tList.get(i).getName())) {
+				tList.remove(i);
 			}
 		}
 	}
@@ -220,18 +221,19 @@ public class Player {
 	public String printableTerritories() {
 		String terr = "";
 		for (int i = 0; i < tList.size(); i++) {
-			terr += i + ". " + tList.get(i).getName() + " army on "+tList.get(i).getNumOfUnits()+". ";
+			terr += i + ". " + tList.get(i).getName() + " army on " + tList.get(i).getNumOfUnits() + ". ";
 		}
 		return terr;
 	}
 
-	/**michael added this
+	/**
+	 * michael added this
 	 * 
 	 * @return retruns lsit of terrs that can attack
 	 */
 	public String getPrintableListOfTerritoryThatCanAttack() {
 		String terr = "";
-		int count =0;
+		int count = 0;
 		for (int i = 0; i < tList.size(); i++) {
 			if (tList.get(i).getNumOfUnits() >= 2)
 
@@ -243,25 +245,24 @@ public class Player {
 		return terr;
 
 	}
+
 	/**
 	 * 
 	 * @param index index of attacking terr
 	 * @return pointer to terr
 	 */
 	public Territory getTerritoryThatCanAttack(int index) {
-		int count=0;
-        int found=0;
-		for ( int i = 0; i < tList.size(); i++ ) {
-            if(tList.get(i).equals( Integer.toString(id)))
-            { 
-                if(count==index)
-                {
-                    found=i;
-                }
-            }
-            count++;
-        }
-        return tList.get(found);
+		int count = 0;
+		int found = 0;
+		for (int i = 0; i < tList.size(); i++) {
+			if (tList.get(i).equals(Integer.toString(id))) {
+				if (count == index) {
+					found = i;
+				}
+			}
+			count++;
+		}
+		return tList.get(found);
 
 	}
 
@@ -301,6 +302,24 @@ public class Player {
 			System.out.println(cList.get(i) + " ");
 		}
 		return;
+	}
+
+	public void addCard(Card c) {
+		this.cardList.add(c);
+		setCardCount(getCardCount() + 1);
+
+	}
+
+	public void remvoeCard(Card c) {
+
+		for (int i = 0; i < this.cardList.size(); i++) {
+			if (c.getTerritoryName().equals(this.cardList.get(i).getTerritoryName()))
+
+			{
+				this.cardList.remove(c);
+			}
+		}
+
 	}
 
 }

@@ -14,9 +14,8 @@ public class gui {
 
     public void start() {
         boolean gameOver = false;
-        boolean surrender = false;
+        // boolean surrender = false;
         boolean endTurn = false;
-        int counter = 0;
         List<Player> playerList = setupGui();
 
         while (gameOver != true) {
@@ -25,6 +24,7 @@ public class gui {
                 System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
                 // User choice
                 newunits(playerList.get(x));
+                checkIfHandIsFull(playerList.get(x));
                 endTurn = false;
                 while (endTurn != true) {
                     System.out.println(
@@ -34,7 +34,7 @@ public class gui {
                     try {
                         // trade option
                         if (choice == 1) {
-                            trade(counter, playerList.get(x));
+                            trade(playerList.get(x));
                         }
                         // attack option
                         if (choice == 2) {
@@ -288,6 +288,19 @@ public class gui {
         return units; // Previously not returning a type - Oscar
     }
 
+
+    /**
+     * this will hand out one card for every succesful attack
+     * 
+     * @param player
+     */
+    public void checkIfHandIsFull(Player player){
+        if(player.getCardCount()>=5){
+            game.trade( player);
+        }
+    }
+
+
     public Boolean endturn() {
         boolean end = false;
         System.out.println("Are you sure you wish to end your turn? (y/n)");
@@ -329,49 +342,22 @@ public class gui {
             }
 
         } while (!(playrange)); // end loop when returned true
-        // ArrayList<Integer> listOfIdsUsed = new ArrayList<Integer>();
-        // List<Player> randPlayerOrder = new ArrayList<>();
+       
         List<Player> players = s.getPlayers();
         territory = s.getTerritories();
-        // s.setup(numberofplayers);
-        // Random rand = new Random();
-        // for (int temp = 1; temp <= players.size(); temp++) {
-        // int x = rand.nextInt(players.size() + 1); // return random int dependent on
-        // number of players
-        // if (listOfIdsUsed.contains(x)) {
-        // temp--; // if already in ArrayList then start over
-        // } else {
-        // if (x == 0) {
-        // temp--; // if already in ArrayList then start over
-        // } else {
-
-        // listOfIdsUsed.add(x);
-        // randPlayerOrder.add(players.get(x));// if not in ArrayList then put in
-        // "first"
-        // }
-        // }
-        // }
-
-        // this is all we need for shuffling an arraylist MICHAEL
+    
         Collections.shuffle(players);
-
-        // Not needed already done in the setup MICHAEL
-        // for (int i = 0; i <= players.size(); i++) {
-        // players.get(i).setArmiesCount(s.numUnitAtStart(i));
-        // }
         System.out.println("The order of players is:");
         for (int i = 0; i < players.size(); i++) {
             System.out.println("Player " + players.get(i).getId()); // print player order
         }
 
-        // assign terr to all
-        // input.close();
         handOutTerr(players);
         handOutRestOfUnits(players);
         return players;
     }
 
-    public boolean trade(int counter, Player player) {
+    public boolean trade( Player player) {
         boolean trade = false;
         String tra;
         if (player.getCardCount() >= 3) {
@@ -381,8 +367,7 @@ public class gui {
                 tra = tradecard.nextLine();
                 try {
                     if (tra == "y") {
-                        counter++;
-                        game.trade(counter, player);
+                        game.trade( player);
                         trade = true;
                     }
                     if (tra == "n") {
