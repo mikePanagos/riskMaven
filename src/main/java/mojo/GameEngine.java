@@ -143,4 +143,12 @@ public class GameEngine {
 		to.setNumOfUnits(numUnits);
 		return 0; //zero for now
 	}
+
+    /**
+     * This method will return a list of cards shuffled
+     * @param deck the card list to be shuffled
+     */
+    public static void shuffleCards(List<Card> deck) {
+    	Collections.shuffle(deck);
+    }
 }
