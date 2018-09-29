@@ -6,15 +6,15 @@ import java.util.*;
 import mojo.risk.*;
 
 public class gui {
-    GameEngine game = new GameEngine();
-    Setup s = new Setup();
+    GameEngine game = GameEngine.getInit();
+    Setup s = Setup.getInstances();
     Scanner key = new Scanner(System.in);
     // Territory territory = new Territory();
     List<Territory> territory;
 
     public void start() {
         boolean gameOver = false;
-        // boolean surrender = false;
+        boolean surrender = false;
         boolean endTurn = false;
         List<Player> playerList = setupGui();
 
@@ -330,7 +330,7 @@ public class gui {
         do {
             try {
                 if (numberofplayers <= 6 && numberofplayers >= 2) {
-                    s.setup(numberofplayers);
+                    Setup.SetupPLayers(numberofplayers);
                     playrange = true; // if number is in range then continue
                 } else {
                     System.out.println("Not in range. Please enter 2-6 players");

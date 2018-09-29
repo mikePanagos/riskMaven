@@ -3,7 +3,7 @@ import mojo.risk.*;
 import java.util.*;
 
 /**
-* @auther Michael Panagos
+* @author Michael Panagos
 */
 public class Continent{
     private String name;

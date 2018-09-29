@@ -15,7 +15,9 @@ public class Player {
 	private int cardCount;
 	private int pointCount;
 	private int territoryCount;
+	private int prevTerritoryCount;
 	private int continentCount;
+	private List<Dice> dice=new ArrayList<>();
 
 	// change type to Terriotry and for the getters and setters
 	private List<Territory> tList = new ArrayList<Territory>();
@@ -192,6 +194,10 @@ public class Player {
 	 */
 	public void addTerritory(Territory territory) {
 		tList.add(territory);
+		// setTerritoryCount(tList.size()+1);
+		// setPrevTerritoryCount(tList.size());
+
+
 		return;
 	}
 
@@ -202,6 +208,8 @@ public class Player {
 	 */
 	public void removeTerritory(Territory territory) {
 		tList.remove(territory);
+		setTerritoryCount(getTerritoryCount()-1);
+		// setPrevTerritoryCount(tList.size());
 		return;
 	}
 
@@ -321,5 +329,39 @@ public class Player {
 		}
 
 	}
+	public void rollDices(int amount)
+	{	
+		
+		if(!dice.isEmpty()){
+			clearDice();
+		}
+		// Random r=new Random();
+
+		for (int i = 0; i < amount; i++) {
+			// System.out.println("new dice for player "+this.getId());
+			dice.add(new Dice());
+		}
+	}
+
+	public List<Integer> getDice(){
+		List<Integer> print =new ArrayList<>();
+
+		for (int i = 0; i < dice.size(); i++) {
+			print.add(dice.get(i).getVal());
+		}
+		return print;
+	}
+
+	private void clearDice(){
+		dice.clear();
+	}
+	public void setPrevTerritoryCount(int oldCount){
+		this.prevTerritoryCount=oldCount;
+	}
+	public int getPrevTerritoryCount(){
+		return this.prevTerritoryCount;
+	}
+
+	
 
 }
