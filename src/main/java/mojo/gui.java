@@ -13,12 +13,14 @@ public class gui {
     Scanner key = new Scanner(System.in);
     // Territory territory = new Territory();
     List<Territory> territory;
+    boolean gameOver = false;
+    boolean surrender = false;
+    boolean endTurn = false;
+    List<Player> playerList;
 
     public void start() {
-        boolean gameOver = false;
-        boolean surrender = false;
-        boolean endTurn = false;
-        List<Player> playerList = setupGui();
+       
+        playerList = setupGui();
 
         while (gameOver != true) {
 
@@ -58,7 +60,8 @@ public class gui {
                             endTurn = true;
                         }
                         if (choice == 6) {
-                            surrender = surrender();
+                            surrender = surrender(playerList.get(x));
+                            endTurn=true;
                         }
                     } catch (InputMismatchException echoice) {
                         System.out.println("Please enter a valid answer: (y/n)");
@@ -78,7 +81,7 @@ public class gui {
             }
             // System.out.println("this is a test for: end of turn");
 
-            // System.out.println("This is a test for: Win/lose check");
+            System.out.println("player"+playerList.get(0).getId()+" won!!!");
         }
 
     }
@@ -425,10 +428,10 @@ public class gui {
             key.nextLine();
             attackagain = key.nextLine();
             try {
-                if (attackagain == "y") {
+                if (attackagain.equals("y")) {
                     attack = false;
                 }
-                if (attackagain == "n") {
+                if (attackagain.equals("n")) {
                     attack = true;
                 }
             } catch (InputMismatchException eattack) {
@@ -509,17 +512,21 @@ public class gui {
         return;
     }
 
-    public boolean surrender() {
-        boolean surrender = false;
+    public boolean surrender(Player player) {
+        // boolean surrender = false;
         System.out.println("Are you sure you wish to surrender? (y/n)");
         // Scanner giveup = new Scanner(System.in);
         key.nextLine();
         String surr = key.nextLine();
         try {
-            if (surr == "y") {
+            if (surr.equals("y")) {
                 surrender = true;
+                playerList.remove(player.getId()-1);
+                if(playerList.size()<=1){
+                    gameOver=true;
+                }
             }
-            if (surr == "n") {
+            if (surr.equals("n")) {
                 surrender = false;
             }
         } catch (InputMismatchException esurrender) {
