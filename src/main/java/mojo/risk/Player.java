@@ -337,6 +337,49 @@ public class Player {
 
 	}
 
+	public String printCards(){
+		String returning="";
+		for(int i=0;i<cardList.size();i++){
+			returning += "["+cardList.get(i).getTerritoryName()+" "+cardList.get(i).getType()+"]\n";
+		}
+
+		return returning;
+	}
+
+	public List<Card> getCards(){
+		List<Card> trading=new ArrayList<>();
+		int count=0;
+
+		for (int i = 0; i < this.cardList.size(); i++) {
+			trading.add(this.cardList.get(i));
+
+			for (int j = 1; j < this.cardList.size()-1; i++) {
+
+				if(this.cardList.get(i).getType().equals(this.cardList.get(j).getType()))
+				{
+					this.cardList.get(j);
+					count++;
+					if(count==3){
+						break;
+
+					}
+				}
+				if(count==3){
+					break;
+
+				}
+				else{
+					count=0;
+					trading.clear();
+				}
+				
+			}
+			
+		}
+
+		return this.cardList;
+	}
+
 	public void rollDices(int amount) {
 
 		if (!this.dice.isEmpty()) {

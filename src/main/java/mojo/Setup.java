@@ -50,7 +50,7 @@ public class Setup {
      * 
      */
     private   void makeDeck(){   
-        Card card1=new Card("Alaska", "Infantr");
+        Card card1=new Card("Alaska", "Infantry");
         deck.add(card1);
         Card card2=new Card("Alberta", "Cavalry");
         deck.add(card2);

@@ -137,12 +137,24 @@ public class GameEngine {
 	 * @return A string saying how many more units they have and how much they have
 	 *         now
 	 */
-	public String trade(Player player) {
-		int temp = player.getArmiesCount();
+	public String trade(Player p) {
+		int temp = p.getArmiesCount();
 		//
+		List<Card> pCards=p.getCards();
+
+		for(int i = 0; i<pCards.size();i++)
+		{
+			System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
+			deck.add(pCards.get(i));
+			p.remvoeCard(pCards.get(i));
+		}
+
+
+
+	
 		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
-		player.setArmiesCount(temp + cardgroup[cardSet]);
-		String returnable = "you got " + cardgroup[cardSet] + " more  units now you have " + player.getArmiesCount()
+		p.setArmiesCount(temp + cardgroup[cardSet]);
+		String returnable = "you got " + cardgroup[cardSet] + " more  units now you have " + p.getArmiesCount()
 				+ "in total";
 		if (cardSet != 12) {
 			cardSet++;
@@ -159,7 +171,8 @@ public class GameEngine {
 
 
 	public void handOutCard(Player p){
-		p.addCard( deck.get(0));
+		System.out.println("Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType());
+		p.addCard(deck.get(0));
 		deck.remove(0);
 
 	}

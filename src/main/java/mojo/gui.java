@@ -21,11 +21,13 @@ public class gui {
     public void start() {
        
         playerList = setupGui();
+        game.shuffleCards();
 
         while (gameOver != true) {
 
             for (int x = 0; x < playerList.size(); x++) {
                 System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
+                System.out.println("\n\n these are your cards\n "+playerList.get(x).printCards());
                 // User choice
                 newunits(playerList.get(x));
                 checkIfHandIsFull(playerList.get(x));
@@ -70,14 +72,15 @@ public class gui {
                 }
                 if(playerList.get(x).getAttackedAtLeastOnces()){
                     game.handOutCard(playerList.get(x));
+                    playerList.get(x).setAttackedAtLeastOnces(false);
 
                 }
             }
             // System.out.println("this is a test for: end of turn");
 
-            System.out.println("player"+playerList.get(0).getId()+" won!!!");
+            
         }
-
+        System.out.println("player"+playerList.get(0).getId()+" won!!!");
     }
 
 
@@ -271,7 +274,7 @@ public class gui {
      */
     public void checkIfHandIsFull(Player player){
         if(player.getCardCount()>=5){
-            game.trade( player);
+            // game.trade( player);
         }
     }
 
@@ -336,6 +339,7 @@ public class gui {
         String tra;
         if (player.getCardCount() >= 3) {
                 System.out.println("Would you like to trade a set of 3 cards?");
+                key.nextLine();
                 tra = key.nextLine();
                 try {
                     if (tra.equals("y")) {
