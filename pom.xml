@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>mojo</groupId>
     <artifactId>risk</artifactId>
@@ -16,6 +15,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.11.327</version>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -25,16 +29,16 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.0.0</version>
                     <dependencies>
-		                    <dependency>
-								<groupId>com.puppycrawl.tools</groupId>
-								<artifactId>checkstyle</artifactId>
-								<version>8.10</version>
-		                    </dependency>
-		                    <dependency>
-								<groupId>com.github.ngeor</groupId>
-								<artifactId>checkstyle-rules</artifactId>
-								<version>1.1.0</version>
-		                    </dependency>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>8.10</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.ngeor</groupId>
+                            <artifactId>checkstyle-rules</artifactId>
+                            <version>1.1.0</version>
+                        </dependency>
                     </dependencies>
                     <configuration>
                         <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
@@ -49,10 +53,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
 
-            <!--
-                You can run jacoco in the default profile with:
-                mvn jacoco:prepare-agent test jacoco:report
-            -->
+            <!-- You can run jacoco in the default profile with: mvn jacoco:prepare-agent test jacoco:report -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -79,11 +80,7 @@
     </reporting>
 
     <profiles>
-        <!--
-        This profile enables jacoco when unit tests are run.
-        You can run it with mvn -P jacoco test.
-        It also activates itself on Travis.
-        -->
+        <!-- This profile enables jacoco when unit tests are run. You can run it with mvn -P jacoco test. It also activates itself on Travis. -->
         <profile>
             <id>jacoco</id>
             <activation>
@@ -117,11 +114,7 @@
             </build>
         </profile>
 
-        <!--
-        For the Travis profile:
-        - we want to break the build on any checkstyle violation.
-        - we want to be able to publish coverage report to coveralls.
-        -->
+        <!-- For the Travis profile: - we want to break the build on any checkstyle violation. - we want to be able to publish coverage report to coveralls. -->
         <profile>
             <id>travis</id>
             <activation>
@@ -131,19 +124,7 @@
             </activation>
             <build>
                 <plugins>
-                    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>checkstyle</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>-->
+                    <!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> <executions> <execution> <id>checkstyle</id> <phase>test</phase> <goals> <goal>check</goal> </goals> </execution> </executions> </plugin>-->
                     <plugin>
                         <groupId>org.eluder.coveralls</groupId>
                         <artifactId>coveralls-maven-plugin</artifactId>
