@@ -47,11 +47,11 @@ public class gui {
 
                         // fortify option
                         if (choice == 3) {
-                            // fortiy(playerList.get(x));
+                            fortify(playerList.get(x));
                         }
                         // display owned territories
                         if (choice == 4) {
-                            // playerList.get(x).displayterritory();
+                            System.out.println(playerList.get(x).printableTerritories());
                         }
 
                         // endturn option
@@ -68,16 +68,10 @@ public class gui {
                         choice = key.nextInt();
                     }
                 }
-                // choose.close(); // Closing Scanner to lower resource usage - Oscar
-                // System.out.println("the number of players playing is "+playerList.size());
-                // if (playerList.size() == 1) {
-                // System.out.println("Player " + playerList.get(x).getId() + "wins!");
-                // gameOver = true;
-                // }
-                // if (surrender = true) {
-                // playerList.remove(x);
-                // }
+                if(playerList.get(x).getAttackedAtLeastOnces()){
+                    game.handOutCard(playerList.get(x));
 
+                }
             }
             // System.out.println("this is a test for: end of turn");
 
@@ -86,30 +80,6 @@ public class gui {
 
     }
 
-    // DONT NEED THIS THIS IS DONE BY SETUP
-    // public void startArmies(int numplayers){
-    // if(numplayers == 2){
-    // for(int x = 0; x <= numplayers; x++)
-    // player.get(x).getid(x).setArmiesCount(40);
-    // }
-    // if(numplayers == 3){
-    // for(int x = 0; x <= numplayers; x++)
-    // player.get(x).getid(x).setArmiesCount(35);
-    // }
-    // if(numplayers == 4){
-    // for(int x = 0; x <= numplayers; x++)
-    // player.get(x).getid(x).setArmiesCount(30);
-    // }
-    // if(numplayers == 5){
-    // for(int x = 0; x <= numplayers; x++)
-    // player.get(x).getid(x).setArmiesCount(25);
-    // }
-    // if(numplayers == 6){
-    // for(int x = 0; x <= numplayers; x++)
-    // player.get(x).getid(x).setArmiesCount(20);
-    // }
-    // return;
-    // }
 
     /**
      * this method will assign the first 42 territorys out
@@ -362,33 +332,26 @@ public class gui {
         return players;
     }
 
-    public boolean trade( Player player) {
-        boolean trade = false;
+    public void trade( Player player) {
         String tra;
         if (player.getCardCount() >= 3) {
-            do {
                 System.out.println("Would you like to trade a set of 3 cards?");
-                Scanner tradecard = new Scanner(System.in);
-                tra = tradecard.nextLine();
+                tra = key.nextLine();
                 try {
-                    if (tra == "y") {
+                    if (tra.equals("y")) {
                         game.trade( player);
-                        trade = true;
                     }
-                    if (tra == "n") {
-                        trade = true;
+                    if (tra.equals("n")) {
+                        
                     }
                 } catch (InputMismatchException etrade) { // catch non-number error
                     System.out.println("Not a Number. Please enter 2-6 players: ");
-                    tra = tradecard.nextLine();
+                    tra = key.nextLine();
+                    
                 }
-                tradecard.close();
-            } while (trade != true);
         } else {
             System.out.println("You do not have enough cards.");
-            return trade;
         }
-        return trade;
     }
 
     /**
@@ -456,66 +419,15 @@ public class gui {
      * @return
      */
     public void fortify(Player player) {
-        boolean fortify = false;
-        do {
-            System.out.println("Which territory do you want to move units from?\n" + player.printableTerritories());
-            Scanner from = new Scanner(System.in);
-            int moveFrom = from.nextInt();
-            try {
-                System.out.println("Which territory are you moving to?\n"
-                        + player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
-                Scanner to = new Scanner(System.in);
-                int moveTo = to.nextInt();
-                int territryUnit = player.getTerritory(moveFrom).getNumOfUnits();
-                try {
-                    if (territryUnit > 1) {
-                        System.out.println("How many units would you like to move?\n Total: " + (territryUnit - 1));
-                        Scanner unitmove = new Scanner(System.in);
-                        int troops = unitmove.nextInt();
+        System.out.println("where are you moving the armys from\n"+player.printableTerritories());
+        int answer=key.nextInt(); 
+        System.out.println("where do you want to fortity\n"+player.getTerritory(answer).getprintableListOfOwnedNeighboringTerritories(player.getId()));
+        int num=key.nextInt();
+        System.out.println("how many units are you going to move you have"+(player.getTerritory(answer).getNumOfUnits()-1));
+        int unitsMoving=key.nextInt();
+        game.fortify(player.getTerritory(answer),player.getTerritory(answer).getOwnedNeighboringTerritory(player.getId(), num),unitsMoving);
 
-                        // List<Territory> terrThatCanAttack=game.getAttackingTerritories(player);
-                        // String
-                        // printableList=makeStringFromListOfAttackingTerritories(terrThatCanAttack);
-                        // System.out.println("Where do you want to attack from?"+printableList );
-                        // Scanner attfrom = new Scanner(System.in);
-                        // //do a check for range
-                        // Territory attackfrom = terrThatCanAttack.get(attfrom.nextInt());
-
-                        game.fortify(player.getTerritory(moveFrom),
-                                player.getTerritory(moveFrom).getOwnedNeighboringTerritory(player.getId(), moveTo),
-                                troops);
-                        System.out.println("Do you want to fortify again? (y/n)\n");
-                        Scanner fortifyagain = new Scanner(System.in);
-                        String fortnite = fortifyagain.nextLine();
-                        try {
-                            if (fortnite == "y")
-                                fortify = false;
-                            if (fortnite == "n")
-                                fortify = true;
-                        } catch (InputMismatchException efortnight) {
-                            System.out.println("Please enter a valid answer (y/n)");
-                            String fortnight = fortifyagain.nextLine();
-                        }
-                        unitmove.close();
-                        fortifyagain.close();
-                    } else {
-                        System.out.println("PLease choose a valid number");
-                        fortify = false;
-                    }
-                } catch (InputMismatchException emoveto) {
-                    System.out.println(
-                            "Please choose a number in the territories available:" + player.printableTerritories());
-                    moveTo = to.nextInt();
-                }
-                to.close();
-            } catch (InputMismatchException emovefrom) {
-                System.out.println("Please choose a number in the territories available:"
-                        + player.getTerritory(moveFrom).getprintableListOfOwnedNeighboringTerritories(player.getId()));
-                moveFrom = from.nextInt();
-            }
-            from.close();
-        } while (fortify != true);
-        return;
+    //    }
     }
 
     public boolean surrender(Player player) {

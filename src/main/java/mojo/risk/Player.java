@@ -17,6 +17,9 @@ public class Player {
 	private int territoryCount;
 	private int prevTerritoryCount;
 	private int continentCount;
+	private boolean attackedAtLeastOnces=false;
+
+
 	private List<Dice> dice = new ArrayList<>();
 
 	// change type to Terriotry and for the getters and setters
@@ -366,6 +369,13 @@ public class Player {
 
 	public int getPrevTerritoryCount() {
 		return this.prevTerritoryCount;
+	}
+
+	public boolean getAttackedAtLeastOnces(){
+		return this.attackedAtLeastOnces;
+	}
+	public void setAttackedAtLeastOnces(boolean answer){
+		this.attackedAtLeastOnces=answer;
 	}
 
 }

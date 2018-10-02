@@ -113,21 +113,8 @@ public class GameEngine {
 			
 			//remove territory from previous owner  
 			defPlayer.removeTerritory(def);
-			// System.out.println(" ");
-			// System.out.println(" ");
-			// System.out.println("enemy ");
-
-			// defPlayer.printableTerritories();
-			// System.out.println(" ");
-			// System.out.println(" ");
-			// System.out.println(" ");
-
 			//set new owner
 			def.setOwner(act.getOwner());
-			// System.out.println("ower is "+def.getOwner());
-
-
-			// System.out.println("new territory have " + ((attackingUnits - attLostUnits)));
 			//set number of units now
 			def.setNumOfUnits(attackingUnits - attLostUnits);
 			act.setNumOfUnits(act.getNumOfUnits() - attackingUnits);
@@ -135,6 +122,7 @@ public class GameEngine {
 			attPlayer.addTerritory(def);
 
 			attPlayer.printableTerritories();
+			attPlayer.setAttackedAtLeastOnces(true);
 		}
 		 else 
 		{
@@ -163,11 +151,17 @@ public class GameEngine {
 		return returnable;
 	}
 
-	public int fortify(Territory from, Territory to, int numUnits) {
+	public void fortify(Territory from, Territory to, int numUnits) {
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);
-		to.setNumOfUnits(numUnits);
-		return 0; // zero for now
+		to.setNumOfUnits(to.getNumOfUnits()+numUnits);
+	}
+
+
+	public void handOutCard(Player p){
+		p.addCard( deck.get(0));
+		deck.remove(0);
+
 	}
 
 	/**
@@ -175,7 +169,7 @@ public class GameEngine {
 	 * 
 	 * @param deck the card list to be shuffled
 	 */
-	public static void shuffleCards(List<Card> deck) {
+	public  void shuffleCards() {
 		Collections.shuffle(deck);
 	}
 }
