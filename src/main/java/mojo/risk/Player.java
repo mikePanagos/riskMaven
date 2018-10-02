@@ -17,7 +17,7 @@ public class Player {
 	private int territoryCount;
 	private int prevTerritoryCount;
 	private int continentCount;
-	private List<Dice> dice=new ArrayList<>();
+	private List<Dice> dice = new ArrayList<>();
 
 	// change type to Terriotry and for the getters and setters
 	private List<Territory> tList = new ArrayList<Territory>();
@@ -193,10 +193,9 @@ public class Player {
 	 * @param territory object of the territory claimed
 	 */
 	public void addTerritory(Territory territory) {
-		tList.add(territory);
+		this.tList.add(territory);
 		// setTerritoryCount(tList.size()+1);
-		// setPrevTerritoryCount(tList.size());
-
+		// setPrevTerritoryCount(this.tList.size());
 
 		return;
 	}
@@ -207,16 +206,16 @@ public class Player {
 	 * @param territory object of the territory lost
 	 */
 	public void removeTerritory(Territory territory) {
-		tList.remove(territory);
-		setTerritoryCount(getTerritoryCount()-1);
+		this.tList.remove(territory);
+		setTerritoryCount(getTerritoryCount() - 1);
 		// setPrevTerritoryCount(tList.size());
 		return;
 	}
 
 	public void removeTerritoryByName(String name) {
-		for (int i = 0; i < tList.size(); i++) {
-			if (name.equals(tList.get(i).getName())) {
-				tList.remove(i);
+		for (int i = 0; i < this.tList.size(); i++) {
+			if (name.equals(this.tList.get(i).getName())) {
+				this.tList.remove(i);
 			}
 		}
 	}
@@ -228,8 +227,8 @@ public class Player {
 	 */
 	public String printableTerritories() {
 		String terr = "";
-		for (int i = 0; i < tList.size(); i++) {
-			terr += i + ". " + tList.get(i).getName() + " army on " + tList.get(i).getNumOfUnits() + ". ";
+		for (int i = 0; i < this.tList.size(); i++) {
+			terr += i + ". " + this.tList.get(i).getName() + " army on " + this.tList.get(i).getNumOfUnits() + ". ";
 		}
 		return terr;
 	}
@@ -242,12 +241,13 @@ public class Player {
 	public String getPrintableListOfTerritoryThatCanAttack() {
 		String terr = "";
 		int count = 0;
-		for (int i = 0; i < tList.size(); i++) {
-			if (tList.get(i).getNumOfUnits() >= 2)
-
-			{
-				terr += count + ". " + tList.get(i).getName() + " ";
-				count++;
+		for (int i = 0; i < this.tList.size(); i++) {
+			if (this.tList.get(i).getNumOfUnits() >= 2) {
+				// if (this.tList.get(i).checkNeighbors(id)) {
+					System.out.println(this.tList.get(i).getName());
+					terr += count + ". " + this.tList.get(i).getName() + " ";
+					count++;
+				// }
 			}
 		}
 		return terr;
@@ -262,15 +262,19 @@ public class Player {
 	public Territory getTerritoryThatCanAttack(int index) {
 		int count = 0;
 		int found = 0;
-		for (int i = 0; i < tList.size(); i++) {
-			if (tList.get(i).equals(Integer.toString(id))) {
+		for (int i = 0; i < this.tList.size(); i++) {
+			if (this.tList.get(i).getNumOfUnits() >= 2) {
+
 				if (count == index) {
+					System.out.println("looking at terr " + this.tList.get(i).getName());
 					found = i;
+					break;
+				} else {
+					count++;
 				}
 			}
-			count++;
 		}
-		return tList.get(found);
+		return this.tList.get(found);
 
 	}
 
@@ -285,7 +289,7 @@ public class Player {
 	 * @param continent name of the continent claimed
 	 */
 	public void addContinent(String continent) {
-		cList.add(continent);
+		this.cList.add(continent);
 		// i added this just for testing can be taken out later if not wanted
 		setContinentCount();
 		return;
@@ -306,8 +310,8 @@ public class Player {
 	 * This will print a list of all the continents owned by the player.
 	 */
 	public void getContinents() {
-		for (int i = 0; i < cList.size(); i++) {
-			System.out.println(cList.get(i) + " ");
+		for (int i = 0; i < this.cList.size(); i++) {
+			System.out.println(this.cList.get(i) + " ");
 		}
 		return;
 	}
@@ -329,39 +333,39 @@ public class Player {
 		}
 
 	}
-	public void rollDices(int amount)
-	{	
-		
-		if(!dice.isEmpty()){
+
+	public void rollDices(int amount) {
+
+		if (!this.dice.isEmpty()) {
 			clearDice();
 		}
 		// Random r=new Random();
 
 		for (int i = 0; i < amount; i++) {
 			// System.out.println("new dice for player "+this.getId());
-			dice.add(new Dice());
+			this.dice.add(new Dice());
 		}
 	}
 
-	public List<Integer> getDice(){
-		List<Integer> print =new ArrayList<>();
+	public List<Integer> getDice() {
+		List<Integer> print = new ArrayList<>();
 
-		for (int i = 0; i < dice.size(); i++) {
-			print.add(dice.get(i).getVal());
+		for (int i = 0; i < this.dice.size(); i++) {
+			print.add(this.dice.get(i).getVal());
 		}
 		return print;
 	}
 
-	private void clearDice(){
-		dice.clear();
-	}
-	public void setPrevTerritoryCount(int oldCount){
-		this.prevTerritoryCount=oldCount;
-	}
-	public int getPrevTerritoryCount(){
-		return this.prevTerritoryCount;
+	private void clearDice() {
+		this.dice.clear();
 	}
 
-	
+	public void setPrevTerritoryCount(int oldCount) {
+		this.prevTerritoryCount = oldCount;
+	}
+
+	public int getPrevTerritoryCount() {
+		return this.prevTerritoryCount;
+	}
 
 }

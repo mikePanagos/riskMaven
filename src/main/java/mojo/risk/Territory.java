@@ -70,8 +70,8 @@ public class Territory {
         // return list;
 
         String terr = "";
-        for (int i = 0; i < neighboringTerritories.size(); i++) {
-            terr += i + ". " + neighboringTerritories.get(i).getName() + " ";
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            terr += i + ". " + this.neighboringTerritories.get(i).getName() + " ";
         }
         return terr;
 
@@ -85,13 +85,29 @@ public class Territory {
     public String getprintableListOfOwnedNeighboringTerritories(int id) {
         String terr = "";
         int count = 0;
-        for (int i = 0; i < neighboringTerritories.size(); i++) {
-            if (neighboringTerritories.get(i).getOwner() == id) {
-                terr += count + ". " + neighboringTerritories.get(i).getName() + " ";
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            if (this.neighboringTerritories.get(i).getOwner() == id) {
+                terr += count + ". " + this.neighboringTerritories.get(i).getName() + " ";
             }
             count++;
         }
         return terr;
+    }
+
+
+
+    public boolean checkNeighbors(int id) {
+        int count = 0;
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            if (this.neighboringTerritories.get(i).getOwner() != id) {
+                count++;
+            }
+        }
+        if(count<=0){
+        return false;
+        }else{
+            return true;
+        }
     }
 
     /**
@@ -103,15 +119,15 @@ public class Territory {
         // String terr="";
         int count = 0;
         int found = 0;
-        for (int i = 0; i < neighboringTerritories.size(); i++) {
-            if (neighboringTerritories.get(i).getOwner() == id) {
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            if (this.neighboringTerritories.get(i).getOwner() == id) {
                 if (count == index) {
                     found = i;
                 }
             }
             count++;
         }
-        return neighboringTerritories.get(found);
+        return this.neighboringTerritories.get(found);
     }
 
     /**
@@ -123,9 +139,9 @@ public class Territory {
     public String printableListOfAttackableNeighboringTerritories(int id) {
         String terr = "";
         int count = 0;
-        for (int i = 0; i < neighboringTerritories.size(); i++) {
-            if (neighboringTerritories.get(i).getOwner() != id) {
-                terr += count + ". " + neighboringTerritories.get(i).getName() + " ";
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            if (this.neighboringTerritories.get(i).getOwner() != id) {
+                terr += count + ". " + this.neighboringTerritories.get(i).getName() + " ";
                 count++;
 
             }
@@ -144,21 +160,22 @@ public class Territory {
     public Territory getAttackableNeighboringTerritory(int id, int index) {
         int count = 0;
         int found = 0;
-        for (int i = 0; i < neighboringTerritories.size(); i++) {
-            if (neighboringTerritories.get(i).getOwner() != id) {
+        for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+            if (this.neighboringTerritories.get(i).getOwner() != id) {
                 if (count == index) {
                     found = i;
                 }
-            }
             count++;
+
+            }
         }
-        return neighboringTerritories.get(found);
+        return this.neighboringTerritories.get(found);
 
     }
     // setters
 
     public void setNeighboringTerritories(List<Territory> list) {
-        neighboringTerritories = list;
+        this.neighboringTerritories = list;
     }
 
     public void setOwner(int owner) {

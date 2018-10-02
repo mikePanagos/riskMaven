@@ -27,13 +27,16 @@ public class GameEngine {
 		return terr.getNumOfUnits();
 	}
 
-	public String attack(Territory act, Territory def, int attackingUnits) {
+	public void attack(Territory act, Territory def, int attackingUnits) {
+		// Scanner key = new Scanner(System.in);
 
 		int attUnits = attackingUnits;
 		int defUnits = def.getNumOfUnits();
 
 		int attackNumOfRolls = 0;
 		int defendNumOfRolls = 0;
+		// boolean attackAgain = true;
+		// while (attackAgain) {
 		if (attUnits >= 3) {
 			attackNumOfRolls = 3;
 		} else if (attUnits == 2) {
@@ -50,9 +53,11 @@ public class GameEngine {
 
 		List<Player> players = s.getPlayers();
 		int idOfAttPlayer = act.getOwner();
+		Player attPlayer = s.getPlayerById(idOfAttPlayer);
 		int idOfDefPLayer = def.getOwner();
-		// System.out.println("attacking units allow this amount of rolls" + attackNumOfRolls + " def this amount"
-		// 		+ defendNumOfRolls);
+		Player defPlayer = s.getPlayerById(idOfDefPLayer);
+		
+
 		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
 		players.get(idOfDefPLayer - 1).rollDices(defendNumOfRolls);
 		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
@@ -60,129 +65,82 @@ public class GameEngine {
 
 		Collections.sort(attDice);
 		Collections.reverse(attDice);
+	
 		Collections.sort(defDices);
 		Collections.reverse(defDices);
-		// System.out.println(
-		// 		"the amount of rolls for attact is " + attDice.size() + " and the number of def is " + defDices.size());
-
+	
+	
 		int defLostUnits = 0;
 		int attLostUnits = 0;
+		int biggerSize = 0;
 
 		if (attDice.size() > defDices.size()) {
 			// System.out.println("more attacking dice");
-
-			for (int i = 0; i < defDices.size(); i++) {
-				System.out.println("attack rolled a " + attDice.get(i));
-				System.out.println("the defence rolled a " + defDices.get(i));
-
-				if (attDice.get(i) > defDices.get(i)) {
-
-					System.out.println("attacking won defence will lose one unit");
-					defLostUnits++;
-				} else if (attDice.get(i) < defDices.get(i)) {
-					System.out.println(" defence won attacking  will lose one unit");
-
-					attLostUnits++;
-				} else {
-					System.out.println(" tie so attacking  will lose one unit");
-
-					attLostUnits++;
-				}
-			}
-
+			biggerSize = defDices.size();
 		} else {
+			biggerSize = attDice.size();
+		}
+		for (int i = 0; i < biggerSize; i++) {
+			System.out.println("attack rolled a " + attDice.get(i)+".        the defence rolled a " + defDices.get(i));
 
-			for (int i = 0; i < attDice.size(); i++) {
-				System.out.println("attack rolled a " + attDice.get(i));
-				System.out.println("the defence rolled a " + defDices.get(i));
-				// System.out.println("more def dice");
+			if (attDice.get(i) > defDices.get(i)) {
 
-				if (attDice.get(i) > defDices.get(i)) {
-					System.out.println("attacking won defence will lose one unit");
-					defLostUnits++;
-				} else if (attDice.get(i) < defDices.get(i)) {
-					System.out.println(" defence won attacking  will lose one unit");
+				System.out.println("attacking won defence will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
+				defLostUnits++;
+			} else if (attDice.get(i) < defDices.get(i)) {
+				System.out.println(" defence won attacking  will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
 
-					attLostUnits++;
-				} else {
-					System.out.println(" tie so attacking  will lose one unit");
+				attLostUnits++;
+			} else {
+				System.out.println(" tie so attacking  will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
 
-					attLostUnits++;
-				}
+
+				attLostUnits++;
 			}
-
 		}
 
 		if (def.getNumOfUnits() - defLostUnits <= 0) {
-			System.out.println("Player " + def.getOwner() + " lost " + def.getName() + "\n it now belongs to player "
+			System.out.println("PLAYER " + def.getOwner() + " lost " + def.getName() + "\n it now belongs to player "
 					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it");
-			players.get(def.getOwner()-1).removeTerritory(def);
+				System.out.println(" ");
+				System.out.println(" ");
+			
+			//remove territory from previous owner  
+			defPlayer.removeTerritory(def);
+			// System.out.println(" ");
+			// System.out.println(" ");
+			// System.out.println("enemy ");
+
+			// defPlayer.printableTerritories();
+			// System.out.println(" ");
+			// System.out.println(" ");
+			// System.out.println(" ");
+
+			//set new owner
 			def.setOwner(act.getOwner());
-			System.out.println("new territory have "+((attackingUnits - attLostUnits)));
+			// System.out.println("ower is "+def.getOwner());
+
+
+			// System.out.println("new territory have " + ((attackingUnits - attLostUnits)));
+			//set number of units now
 			def.setNumOfUnits(attackingUnits - attLostUnits);
 			act.setNumOfUnits(act.getNumOfUnits() - attackingUnits);
-			players.get(act.getOwner()-1).addTerritory(def);
+			//add territory to list
+			attPlayer.addTerritory(def);
 
-
-
-
-			System.out.println(players.get(act.getOwner()-1).printableTerritories());
-		} else {
+			attPlayer.printableTerritories();
+		}
+		 else 
+		{
 			def.setNumOfUnits(def.getNumOfUnits() - defLostUnits);
 			act.setNumOfUnits(act.getNumOfUnits() - attLostUnits);
-
-
 		}
-
-		// if (attack < defence) {
-		// System.out.println("Defeat!");
-		// attnewunits = attunits - attack;
-		// act.setNumOfUnits(attnewunits);//added this here so it would be correct
-		// } else if (attack > defence) {
-		// System.out.println("Victory!");
-		// defnewunits = defUnits - defence;
-		// if(def.getNumOfUnits()-attrolls<1)
-		// {
-		// System.out.println("you gained a new territory");
-
-		// players.get(def.getOwner()-1).removeTerritoryByName(def.getName());
-
-		// def.setOwner(act.getOwner());
-		// System.out.println("new onwer of def is "+def.getOwner());
-		// players.get(act.getOwner()-1).addTerritory(def);
-
-		// //-1 bc its in a list with index 0-numberofplayers
-		// System.out.println(players.get(act.getOwner()-1).printableTerritories());
-
-		// System.out.println("player "+act.getOwner()+" just took control of "+
-		// def.getName());
-		// act.setNumOfUnits(act.getNumOfUnits()-1);
-		// def.setNumOfUnits(1);
-		// newCard(players.get(act.getOwner()-1));
-
-		// }
-		// } else {
-		// // what happens is there is a tie
-		// System.out.println("Defeat!");
-		// attnewunits = attunits - defence;
-		// if(attackingUnits!=0)
-		// {
-		// act.setNumOfUnits(act.getNumOfUnits()-1);
-		// }
-
-		// }
-		// return null;
-		// }
-
-		// /**
-		// * gives one card to player who won an attack
-		// * @param player
-		// */
-		// public void newCard(Player player){
-		// System.out.println("player "+player.getId()+" got "+deck.get(0).printCard());
-		// player.addCard(deck.get(0));
-		// deck.remove(0);
-		return "0";
 	}
 
 	/**

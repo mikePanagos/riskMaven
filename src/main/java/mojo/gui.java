@@ -399,6 +399,7 @@ public class gui {
     public void attack(Player player) {
         boolean attack = false; // Boolean used to determine if player would like to attack again
         do {
+            System.out.println(" here");
             String attackagain;
             // List<Territory> terrThatCanAttack = game.getAttackingTerritories(player);
             // String printableList =
@@ -408,12 +409,17 @@ public class gui {
             // do a check for range
             int indexOfTerr = key.nextInt();
             Territory attackfrom = player.getTerritoryThatCanAttack(indexOfTerr);
+            System.out.println("you are attacking from "+attackfrom.getName());
+            System.out.println("with neights"+attackfrom.getNeighboringTerritories());
+
             // Territory defendingTerritoriesList = ;
             String defendingTerritories = attackfrom.printableListOfAttackableNeighboringTerritories(player.getId());
             System.out.println("Where do you want to attack?" + defendingTerritories);
+
             // Scanner attackTo = new Scanner(System.in);
             int attackToIndex = key.nextInt();
             Territory defendingTerr = attackfrom.getAttackableNeighboringTerritory(player.getId(), attackToIndex);
+            System.out.println("you are attacking "+defendingTerr.getName());
             int attackingUnits=0;
             System.out.println("how many units do you want to attack with"+(attackfrom.getNumOfUnits()-1));
              attackingUnits =key.nextInt();

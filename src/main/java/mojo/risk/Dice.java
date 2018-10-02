@@ -15,7 +15,7 @@ public class Dice {
 
     public void diceroll() {
         Random rand = new Random();
-        this.number = rand.nextInt(6); // return random int
+        this.number = rand.nextInt(6)+1; // return random int
     }
     public int getVal(){
         return this.number;

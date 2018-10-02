@@ -685,4 +685,17 @@ public class Setup {
     public List<Card> getDeck(){
         return deck;
     }
+    public Player getPlayerById(int id){
+        int i=0;
+        for ( i = 0; i < playersList.size(); i++) {
+
+            if(playersList.get(i).getId()==id)
+            {
+                break;
+            }
+            
+        }
+        return playersList.get(i);
+
+    }
 }
