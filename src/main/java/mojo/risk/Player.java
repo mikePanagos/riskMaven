@@ -352,10 +352,11 @@ public class Player {
 
 		for (int i = 0; i < this.cardList.size(); i++) {
 			trading.add(this.cardList.get(i));
+			count++;
 
-			for (int j = 1; j < this.cardList.size()-1; i++) {
+			for (int j = 1; j < this.cardList.size(); j++) {
 
-				if(this.cardList.get(i).getType().equals(this.cardList.get(j).getType()))
+				if( this.cardList.get(i).getType().equals( this.cardList.get(j).getType() ) )
 				{
 					this.cardList.get(j);
 					count++;
@@ -364,20 +365,21 @@ public class Player {
 
 					}
 				}
-				if(count==3){
-					break;
-
-				}
-				else{
-					count=0;
-					trading.clear();
-				}
+			
 				
+			}
+			if(count==3){
+				break;
+
+			}
+			else{
+				count=0;
+				trading.clear();
 			}
 			
 		}
 
-		return this.cardList;
+		return trading;
 	}
 
 	public void rollDices(int amount) {

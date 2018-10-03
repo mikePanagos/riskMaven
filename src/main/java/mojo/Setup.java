@@ -38,6 +38,15 @@ public class Setup {
         }
 
     }
+    /**
+     * this is for testing reasons only
+     */
+    public static  Setup getInstances(int num){
+        
+            init=new Setup();
+            return init;
+
+    }
     public static  void SetupPLayers(int numOfPlayers){
         
             init.makePLayers(numOfPlayers);

@@ -28,22 +28,23 @@ public class TerritoryTest {
 
     }
 
-    // @Test
-    // public void territorytesting2() {
-    //     Territory japan = new Territory("japan", "Asia",  0, 0); 
-    //     Territory mongola = new Territory("mongola", "Asia",  0, 0); 
-    //     Territory kamchatka = new Territory("kamchatka", "Asia",  0, 0); 
-    //     // test case for Territory it test adding a Territory then added Neighboring
-    //     // Territory to make sure it still points to the right thing
-    //     List<Territory> neighboringTerritories = new ArrayList<>();
-    //     neighboringTerritories.add(mongola);
-    //     neighboringTerritories.add(kamchatka);
-    //     japan.setNeighboringTerritories(neighboringTerritories);
-    //     kamchatka.setOwner(1);
-    //     kamchatka.setNumOfUnits(50);
-    //     List<Territory> list = new ArrayList<>(japan.getNeighboringTerritories());
-    //     assertTrue("someLibraryMethod should return 'true'", (list.get(1).getName().equals("kamchatka")));
+    @Test
+    public void territorytesting2() {
+        Territory japan = new Territory("japan", "Asia",  0, 0); 
+        Territory mongola = new Territory("mongola", "Asia",  0, 0); 
+        Territory kamchatka = new Territory("kamchatka", "Asia",  0, 0); 
+        // test case for Territory it test adding a Territory then added Neighboring
+        // Territory to make sure it still points to the right thing
+        List<Territory> neighboringTerritories = new ArrayList<>();
+        neighboringTerritories.add(mongola);
+        neighboringTerritories.add(kamchatka);
+        japan.setNeighboringTerritories(neighboringTerritories);
+        kamchatka.setOwner(1);
+        kamchatka.setNumOfUnits(50);
+        String janString= japan.getNeighboringTerritories();
+        System.out.println(janString);
+        assertTrue("someLibraryMethod should return 'true'", (japan.getNeighboringTerritories().equals("0. mongola 1. kamchatka ")));
 
-    // }
+    }
 
 }

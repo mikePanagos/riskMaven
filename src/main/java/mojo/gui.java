@@ -274,7 +274,7 @@ public class gui {
      */
     public void checkIfHandIsFull(Player player){
         if(player.getCardCount()>=5){
-            // game.trade( player);
+            game.trade(player);
         }
     }
 
