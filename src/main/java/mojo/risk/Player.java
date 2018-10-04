@@ -17,6 +17,7 @@ public class Player {
 	private int territoryCount;
 	private int prevTerritoryCount;
 	private int continentCount;
+	private int terrThatCanAttack;
 	private boolean attackedAtLeastOnces=false;
 
 
@@ -197,8 +198,8 @@ public class Player {
 	 */
 	public void addTerritory(Territory territory) {
 		this.tList.add(territory);
-		// setTerritoryCount(tList.size()+1);
-		// setPrevTerritoryCount(this.tList.size());
+		setTerritoryCount(tList.size());
+		
 
 		return;
 	}
@@ -253,6 +254,7 @@ public class Player {
 				// }
 			}
 		}
+		setAttackableTerritoryCount();
 		return terr;
 
 	}
@@ -269,7 +271,7 @@ public class Player {
 			if (this.tList.get(i).getNumOfUnits() >= 2) {
 
 				if (count == index) {
-					System.out.println("looking at terr " + this.tList.get(i).getName());
+					// System.out.println("looking at terr " + this.tList.get(i).getName());
 					found = i;
 					break;
 				} else {
@@ -277,7 +279,26 @@ public class Player {
 				}
 			}
 		}
+		
 		return this.tList.get(found);
+
+	}
+
+	public int getAttackableTerritoryCount(){
+		setAttackableTerritoryCount();
+		// System.out.println("count is "+this.terrThatCanAttack);
+		return this.terrThatCanAttack;
+
+	}
+	public void setAttackableTerritoryCount(){
+		int count = 0;
+		for (int i = 0; i < this.tList.size(); i++) {
+			// System.out.println((this.tList.get(i).getNumOfUnits() >= 2	));
+			if (this.tList.get(i).getNumOfUnits() >= 2) {
+					count++;
+			}
+		}
+		this.terrThatCanAttack=count;
 
 	}
 
@@ -422,5 +443,6 @@ public class Player {
 	public void setAttackedAtLeastOnces(boolean answer){
 		this.attackedAtLeastOnces=answer;
 	}
+
 
 }

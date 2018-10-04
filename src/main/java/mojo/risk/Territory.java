@@ -64,11 +64,11 @@ public class Territory {
         return this.numOfUnits;
     }
 
+    /**
+     * 
+     * @return a string of all territoier neighbors
+     */
     public String getNeighboringTerritories() {
-        // { List<Territory> list=new ArrayList<>(neighboringTerritories);
-
-        // return list;
-
         String terr = "";
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
             terr += i + ". " + this.neighboringTerritories.get(i).getName() + " ";
@@ -95,7 +95,11 @@ public class Territory {
     }
 
 
-
+    /**
+     * checks whether the players with id owns all neighbor or if he can attacka  neighbor
+     * @param id
+     * @return
+     */
     public boolean checkNeighbors(int id) {
         int count = 0;
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
@@ -116,6 +120,7 @@ public class Territory {
      * @return the territory
      */
     public Territory getOwnedNeighboringTerritory(int id, int index) {
+        
         // String terr="";
         int count = 0;
         int found = 0;
@@ -150,6 +155,19 @@ public class Territory {
 
     }
 
+    // public int getCountOfAttackableNeighbors(int id){
+    //     int count = 0;
+    //     for (int i = 0; i < this.neighboringTerritories.size(); i++) {
+    //         if (this.neighboringTerritories.get(i).getOwner() != id) {
+    //             //  count + ". " + this.neighboringTerritories.get(i).getName() + " ";
+    //             count++;
+
+    //         }
+    //     }
+    //     return count;
+
+    // }
+
     /**
      * get Neighboring Territory that player wants to attack
      * 
@@ -178,6 +196,17 @@ public class Territory {
         this.neighboringTerritories = list;
     }
 
+   
+    public int getNumOfNeighborsNotOwned(){
+        int count=0;
+        for (int i = 0; i < neighboringTerritories.size(); i++) {
+            if(this.neighboringTerritories.get(i).getOwner()!=getOwner()){
+                count++;
+
+            }            
+        }
+        return count;
+    }
     public void setOwner(int owner) {
         this.owner = owner;
     }

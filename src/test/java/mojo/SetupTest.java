@@ -20,9 +20,9 @@ public class SetupTest {
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(0).getId() == 1));
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).getId() == 2));
 
-        for (int i = 0; i < playerList.size(); i++) {
-            System.out.println("player name is " + playerList.get(i).getId());
-        }
+        // for (int i = 0; i < playerList.size(); i++) {
+        //     System.out.println("player name is " + playerList.get(i).getId());
+        // }
     }
 
     /**
@@ -165,7 +165,7 @@ public class SetupTest {
     Setup.SetupPLayers(6);
     List<Territory> ter= s.getTerritories();
 
-    System.out.println(ter.get(4).getNeighboringTerritories());
+    System.out.println("test 11 "+ter.get(4).getNeighboringTerritories());
 
     assertTrue("someLibraryMethod should return 'true'",(ter.get(4).getNeighboringTerritories().equals("0. Iceland 1. Northwest 2. Ontario 3. Quebec ")));
     }

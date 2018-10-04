@@ -29,7 +29,7 @@ public class PlayerTest {
         p.addCard(card7);
 
         List<Card> list=p.getCards();
-
+        System.out.println("test 1 nothing print");
         for (int i = 0; i < list.size(); i++) {
 
             System.out.println(list.get(i).getTerritoryName()+" "+list.get(i).getType());
@@ -51,6 +51,7 @@ public class PlayerTest {
         p.addCard(card7);
 
         List<Card> list=p.getCards();
+        System.out.println("test2 ");
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -85,7 +86,7 @@ public class PlayerTest {
         List<Territory> ter= s.getTerritories();
         List<Player> playerList = s.getPlayers();
         playerList.get(1).addTerritory(ter.get(0));
-   System.out.println(playerList.get(1).printableTerritories());
+   System.out.println("test 3 "+playerList.get(1).printableTerritories());
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
     }
    
@@ -99,7 +100,7 @@ public class PlayerTest {
         List<Territory> ter=s.getTerritories();
         List<Player> playerList =s.getPlayers();
         playerList.get(1).addTerritory(ter.get(0));
-        System.out.println(playerList.get(1).printableTerritories());
+        System.out.println("test 4 "+playerList.get(1).printableTerritories());
         playerList.get(2).addTerritory(ter.get(1));
    
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
