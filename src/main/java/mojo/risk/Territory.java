@@ -14,6 +14,7 @@ public class Territory {
     private int owner;
     private int numOfUnits;
     // private boolean canAttack;
+  
     private List<Territory> neighboringTerritories = new ArrayList<>();
 
     // basic constructor
@@ -38,17 +39,30 @@ public class Territory {
      * Using this constructor to fix errors in gui. Strictly used for testing. -
      * Oscar
      */
-    public Territory() {
-        this.name = "Territory";
-        this.continentName = "Continent";
-        this.numOfUnits = 0;
-        return;
+    public Territory ( ) {
+    	this.name = "Territory";
+    	this.continentName = "Continent";
+    	this.numOfUnits = 0;
+    	return;
     }
-
-    // getters
-    public String getName() {
+    
+    /**
+     * Constructor used to make deep copies of territories.
+     * @param t Territory to use as base copy
+     * @return new instance of Territory as an exact copy
+     */
+    public Territory (Territory t) {
+    	this.name = t.getName();
+    	this.continentName = t.getcontinentName();
+    	this.neighboringTerritories = t.neighboringTerritories;
+    	this.numOfUnits = t.getNumOfUnits();
+    	this.owner = t.getOwner();
+    	return;
+    }
+    
+    //getters
+    public String getName(){
         return this.name;
-
     }
 
     public String getcontinentName() {
