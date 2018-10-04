@@ -1,4 +1,5 @@
 package mojo;
+
 import java.util.*;
 
 import mojo.risk.*;
@@ -6,149 +7,182 @@ import mojo.risk.*;
 public class GameEngine {
 	// Territory territory;
 	// Player player;
-	Setup s =new Setup();
-	
-	public void GameEngine () {
-		System.out.println("Game Engine Initiated.");
+	private static GameEngine init = new GameEngine();
+	Setup s = Setup.getInstances();
+	private int cardSet = 0;
+	private List<Card> deck = s.getDeck();
+
+	private GameEngine() {
+
 	}
-	
+
+	public static GameEngine getInit() {
+		return init;
+	}
+
 	public int giveunits(Territory terr, int addingUnits) {
 		int units = terr.getNumOfUnits();
 		units = units + addingUnits;
 		terr.setNumOfUnits(units);
 		return terr.getNumOfUnits();
 	}
+
+	public void attack(Territory act, Territory def, int attackingUnits) {
+		// Scanner key = new Scanner(System.in);
+
+		int attUnits = attackingUnits;
+		int defUnits = def.getNumOfUnits();
+
+		int attackNumOfRolls = 0;
+		int defendNumOfRolls = 0;
+		// boolean attackAgain = true;
+		// while (attackAgain) {
+		if (attUnits >= 3) {
+			attackNumOfRolls = 3;
+		} else if (attUnits == 2) {
+			attackNumOfRolls = 2;
+		} else {
+			attackNumOfRolls = 1;
+		}
+
+		if (defUnits >= 2) {
+			defendNumOfRolls = 2;
+		} else {
+			defendNumOfRolls = 1;
+		}
+
+		List<Player> players = s.getPlayers();
+		int idOfAttPlayer = act.getOwner();
+		Player attPlayer = s.getPlayerById(idOfAttPlayer);
+		int idOfDefPLayer = def.getOwner();
+		Player defPlayer = s.getPlayerById(idOfDefPLayer);
+		
+
+		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
+		players.get(idOfDefPLayer - 1).rollDices(defendNumOfRolls);
+		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
+		List<Integer> defDices = players.get(idOfDefPLayer - 1).getDice();
+
+		Collections.sort(attDice);
+		Collections.reverse(attDice);
 	
-	public String attack(Territory act, Territory def,int attachingUnits) {
-		int[] dice = new int[5];
-		int attnewunits=0;
-		int defnewunits=0;
-		int attunits = attachingUnits;
-		int defunits = def.getNumOfUnits();
-		int attrolls=0;
-		int defrolls=0;
-		int atttotal = 0;
-		int deftotal = 0;
-		for (int i = 0; i < 5; i++) {
-			dice[i] = diceroll();
-			System.out.println(dice[i]);
-		}
-		if (attunits > 3) {
-			attrolls = 3;
-		} else if (attunits == 2) {
-			attrolls = 2;
+		Collections.sort(defDices);
+		Collections.reverse(defDices);
+	
+	
+		int defLostUnits = 0;
+		int attLostUnits = 0;
+		int biggerSize = 0;
+
+		if (attDice.size() > defDices.size()) {
+			// System.out.println("more attacking dice");
+			biggerSize = defDices.size();
 		} else {
-			attrolls = 1;
+			biggerSize = attDice.size();
 		}
-		if (defunits > 2) {
-			defrolls = 2;
-		} else {
-			defrolls = 1;
-		}
+		for (int i = 0; i < biggerSize; i++) {
+			System.out.println("attack rolled a " + attDice.get(i)+".        the defence rolled a " + defDices.get(i));
 
-		// this was all wrong 
-		// for (int j = 0; j <5 - defrolls; j++) {
-		// 	dice[j] = atttotal;
-			
-		// }
-		// for (int d = attrolls + 1; d < 5; d++) {
-		// 	dice[d] = deftotal;
-		// }
-		for (int j = 0; j <5 - defrolls; j++) {
-			  atttotal+=dice[j];
-			
-		}
-		for (int d = attrolls + 1; d < 5; d++) {
-			deftotal+=dice[d];
-		}
-		int attack = atttotal / 3;
-		int defence = deftotal / 3;
-		if (attack < defence) {
-			System.out.println("Defeat!");
-			attnewunits = attunits - attack;
-			act.setNumOfUnits(attnewunits);//added this here so it would be correct
-		} else if (attack > defence) {
-			System.out.println("Victory!");
-			defnewunits = defunits - defence;
-			if(def.getNumOfUnits()-attrolls<1)
-			{
-				System.out.println("you gained a new territory");
-				List<Player> players=s.getPlayers();
-				players.get(def.getOwner()-1).removeTerritoryByName(def.getName());
+			if (attDice.get(i) > defDices.get(i)) {
 
-				def.setOwner(act.getOwner());
-				System.out.println("new onwer of def is "+def.getOwner());
-				players.get(act.getOwner()-1).addTerritory(def);
-				System.out.println(players.get(act.getOwner()-1).printableTerritories());
+				System.out.println("attacking won defence will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
+				defLostUnits++;
+			} else if (attDice.get(i) < defDices.get(i)) {
+				System.out.println(" defence won attacking  will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
 
-				System.out.println("player "+act.getOwner()+" just took control of "+ def.getName());
-				act.setNumOfUnits(act.getNumOfUnits()-1);
-				def.setNumOfUnits(1);
-				// need to figure out what to do here 
-				// we need to take out the territory form the def list and add it to the player attacks list but we do not have them here
+				attLostUnits++;
+			} else {
+				System.out.println(" tie so attacking  will lose one unit");
+				System.out.println(" ");
+				System.out.println(" ");
 
+
+				attLostUnits++;
 			}
-		} else {
-			// what happens is there is a tie
-			System.out.println("Defeat!");
-			attnewunits = attunits - defence;
-			if(attachingUnits!=0)
-			{
-				act.setNumOfUnits(attnewunits);
-			}
-			
 		}
 
-		// this was wrong too
-		// act.setNumOfUnits(attnewunits);
-		// def.setNumOfUnits(defnewunits);
-		// if (defnewunits < 1) {
-		// 	def.setOwner(act.getOwner());
-		// 	def.setNumOfUnits(1);
-		// 	act.setNumOfUnits(attnewunits - 1);
-		// } else if (attnewunits < 2) {
-		// 	System.out.println("Attacking territory only has 1 army");
-		// } else {
-		// 	act.setNumOfUnits(attnewunits);
-		// 	def.setNumOfUnits(defnewunits);
-		// }
+		if (def.getNumOfUnits() - defLostUnits <= 0) {
+			System.out.println("PLAYER " + def.getOwner() + " lost " + def.getName() + "\n it now belongs to player "
+					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it");
+				System.out.println(" ");
+				System.out.println(" ");
+			
+			//remove territory from previous owner  
+			defPlayer.removeTerritory(def);
+			//set new owner
+			def.setOwner(act.getOwner());
+			//set number of units now
+			def.setNumOfUnits(attackingUnits - attLostUnits);
+			act.setNumOfUnits(act.getNumOfUnits() - attackingUnits);
+			//add territory to list
+			attPlayer.addTerritory(def);
 
+			attPlayer.printableTerritories();
+			attPlayer.setAttackedAtLeastOnces(true);
+		}
+		 else 
+		{
+			def.setNumOfUnits(def.getNumOfUnits() - defLostUnits);
+			act.setNumOfUnits(act.getNumOfUnits() - attLostUnits);
+		}
+	}
 
-		return null;
-	}
-	
-	public int diceroll() {
-		Random rand = new Random();
-		int x = rand.nextInt(6); // return random int
-		return x;
-	}
-	
 	/**
-	* 
-	* @param cardset the amount of trade that has already happen and the according amont of units given for that 
-	* @param player pass in the current player 
-	* @return A string saying how many more units they have and how much they have now
-	*/
-	public String trade(int cardset, Player player){
-		int temp = player.getArmiesCount();
+	 * 
+	 * @param player pass in the current player
+	 * @return A string saying how many more units they have and how much they have
+	 *         now
+	 */
+	public String trade(Player p) {
+		int temp = p.getArmiesCount();
 		//
-		int[] cardgroup = {3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45};
-		player.setArmiesCount(temp+cardgroup[cardset]);
-		return "you got "+cardgroup[cardset]+" more  units now you have "+player.getArmiesCount()+"in total";
-	}
+		List<Card> pCards=p.getCards();
+
+		for(int i = 0; i<pCards.size();i++)
+		{
+			System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
+			deck.add(pCards.get(i));
+			p.remvoeCard(pCards.get(i));
+		}
+
+
+
 	
-	public int fortify(Territory from, Territory to, int numUnits) {
+		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
+		p.setArmiesCount(temp + cardgroup[cardSet]);
+		String returnable = "you got " + cardgroup[cardSet] + " more  units now you have " + p.getArmiesCount()
+				+ "in total";
+		if (cardSet != 12) {
+			cardSet++;
+		}
+
+		return returnable;
+	}
+
+	public void fortify(Territory from, Territory to, int numUnits) {
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);
-		to.setNumOfUnits(numUnits);
-		return 0; //zero for now
+		to.setNumOfUnits(to.getNumOfUnits()+numUnits);
 	}
 
-    /**
-     * This method will return a list of cards shuffled
-     * @param deck the card list to be shuffled
-     */
-    public static void shuffleCards(List<Card> deck) {
-    	Collections.shuffle(deck);
-    }
+
+	public void handOutCard(Player p){
+		System.out.println("Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType());
+		p.addCard(deck.get(0));
+		deck.remove(0);
+
+	}
+
+	/**
+	 * This method will return a list of cards shuffled
+	 * 
+	 * @param deck the card list to be shuffled
+	 */
+	public  void shuffleCards() {
+		Collections.shuffle(deck);
+	}
 }

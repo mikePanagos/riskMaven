@@ -4,29 +4,62 @@ import mojo.risk.*;
 
 public class Setup {
     // set up borad
-    private static List<Territory> board = new ArrayList<>();
-    private static List<Continent> continents = new ArrayList<>();
-    private static List<Player> playersList = new ArrayList<>();
-    private static  List<Card> deck = new ArrayList<>();
+    private static Setup init=null;
+    private  List<Territory> board = new ArrayList<>();
+    private  List<Continent> continents = new ArrayList<>();
+    private   List<Player> playersList = new ArrayList<>();
+    private    List<Card> deck = new ArrayList<>();
     
     
     /*
     *
     *
     */
-    public static void setup(int numPlayers) {
+    private Setup() {
+        makeTerritory();
+        makeDeck();
+        
+    }
+    private Setup(int numPlayers) {
         makeTerritory();
         makePLayers(numPlayers);
         makeDeck();
         
+    }
+    public static  Setup getInstances(){
+        if(init!=null)
+        {
+            return init;
+        }
+        else
+        {
+            init=new Setup();
+            return init;
+        }
+
+    }
+    /**
+     * this is for testing reasons only
+     */
+    public static  Setup getInstances(int num){
+        
+            init=new Setup();
+            return init;
+
+    }
+    public static  void SetupPLayers(int numOfPlayers){
+        
+            init.makePLayers(numOfPlayers);
+     
+
     }
     /**
      * assimbles a deck of cards
      * 
      * 
      */
-    private static void makeDeck(){   
-        Card card1=new Card("Alaska", "Infantr");
+    private   void makeDeck(){   
+        Card card1=new Card("Alaska", "Infantry");
         deck.add(card1);
         Card card2=new Card("Alberta", "Cavalry");
         deck.add(card2);
@@ -117,7 +150,7 @@ public class Setup {
     * this function makes all the territory all makes the Continent then calles a
     * funtion that will make the neighbors
     */
-    private static void makeTerritory() {
+    private   void makeTerritory() {
         // String[] NorthA = {"Alaska", "Alberta", "Central America", "Eastern United
         // States",
         // "Greenland", "Northwest", "Ontario", "Quebec", "Western United States"};
@@ -596,7 +629,7 @@ public class Setup {
     // return list with terriroyrs arraylist in element 0 and players in elemnet 1
     
     
-    public static int numUnitAtStart(int num) {
+    public   int numUnitAtStart(int num) {
         if (num == 2) {
             return 40;
         } else if (num == 3) {
@@ -611,7 +644,7 @@ public class Setup {
         }
     }
     
-    public static void makePLayers(int numPlayers) {
+    public   void makePLayers(int numPlayers) {
         
         int numUnitsPerPlayer = numUnitAtStart(numPlayers);
         
@@ -660,5 +693,18 @@ public class Setup {
     }
     public List<Card> getDeck(){
         return deck;
+    }
+    public Player getPlayerById(int id){
+        int i=0;
+        for ( i = 0; i < playersList.size(); i++) {
+
+            if(playersList.get(i).getId()==id)
+            {
+                break;
+            }
+            
+        }
+        return playersList.get(i);
+
     }
 }

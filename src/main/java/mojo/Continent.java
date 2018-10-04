@@ -3,7 +3,7 @@ import mojo.risk.*;
 import java.util.*;
 
 /**
-* @auther Michael Panagos
+* @author Michael Panagos
 */
 public class Continent{
     private String name;
@@ -21,4 +21,6 @@ public class Continent{
     public String getContinentName(){
         return this.name;
     }
+    //make a check for ownership 
+    //if one person owns all then return true
 }
