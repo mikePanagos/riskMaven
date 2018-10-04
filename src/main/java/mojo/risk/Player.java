@@ -41,6 +41,20 @@ public class Player {
 		setTerritoryCount(0);
 		setContinentCount(0);
 	}
+	/**
+	 * This is the constructor used to make deep copies of player objects.
+	 * 
+	 * @param p The player object used to make the copy
+	 * @return Player object that is a deep copy not a reference 
+	 */
+	public Player(Player p) {
+		this.id = p.id;
+		this.armiesCount = p.getArmiesCount();
+		this.cardCount = p.getCardCount();
+		this.pointCount = p.getPointCount();
+		this.territoryCount = p.getTerritoryCount();
+		this.continentCount = p.getContinentCount();
+	}
 
 	/**
 	 * This constructor will initiate a Player class with the default values for all

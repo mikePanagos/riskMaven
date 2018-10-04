@@ -11,6 +11,7 @@ public class gui {
     GameEngine game = new GameEngine();
     Setup s = new Setup();
     Scanner key = new Scanner(System.in);
+    GameLogger log = new GameLogger();
     // Territory territory = new Territory();
     List<Territory> territory;
 
@@ -25,6 +26,7 @@ public class gui {
 
             for (int x = 0; x < playerList.size(); x++) {
                 System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
+                log.updateLog("Player " + playerList.get(x).getId() + "'s turn.");
                 // User choice
                 newunits(playerList.get(x));
                 endTurn = false;
@@ -37,10 +39,12 @@ public class gui {
                         // trade option
                         if (choice == 1) {
                             trade(counter, playerList.get(x));
+                            log.updateLog("Player " + playerList.get(x).getId() + "has decided to traded in their cards.");
                         }
                         // attack option
                         if (choice == 2) {
                             attack(playerList.get(x));
+                            log.updateLog("Player " + playerList.get(x).getId() + " has decided to attack!");
                         }
 
                         // fortify option
@@ -263,6 +267,8 @@ public class gui {
         player.setArmiesCount(units + player.getArmiesCount());
         System.out.println("You are getting " + units + " units this turn now\n you have " + player.getArmiesCount()
                 + " in total");
+        log.updateLog("Player " + player.getId() + " is getting " + units + " units this turn.");
+        log.updateLog("Player " + player.getId() + " now has " + player.getArmiesCount() + " units in total.");
         System.out
                 .println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
         // Scanner area = new Scanner(System.in);

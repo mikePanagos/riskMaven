@@ -15,7 +15,7 @@ public class Territory{
     private int owner;
     private int numOfUnits;
     // private boolean canAttack;
-    private List<Territory> neighboringTerritories=new ArrayList<>();
+    public List<Territory> neighboringTerritories=new ArrayList<>();
     
     // basic constructor 
     public Territory(String name,String continentName, int owner,int numOfUnits){
@@ -42,6 +42,20 @@ public class Territory{
     	this.name = "Territory";
     	this.continentName = "Continent";
     	this.numOfUnits = 0;
+    	return;
+    }
+    
+    /**
+     * Constructor used to make deep copies of territories.
+     * @param t Territory to use as base copy
+     * @return new instance of Territory as an exact copy
+     */
+    public Territory (Territory t) {
+    	this.name = t.getName();
+    	this.continentName = t.getcontinentName();
+    	this.neighboringTerritories = t.neighboringTerritories;
+    	this.numOfUnits = t.getNumOfUnits();
+    	this.owner = t.getOwner();
     	return;
     }
     
