@@ -10,7 +10,7 @@ import java.io.*;
  *
  */
 public class GameLogger {
-	PrintWriter log; // File used to write log to. Example: ~\Risk\Log\log_01 *in windows
+	PrintStream log; // File used to write log to. Example: ~\Risk\Log\log_01 *in windows
 	
 	public GameLogger() {
 		/*
@@ -18,7 +18,7 @@ public class GameLogger {
 		 * If not able to create print exception to console.
 		 */
 		try {
-			log = new PrintWriter("~/Risk/log", "UTF-8");
+			log = new PrintWriter("log.txt", "UTF-8");
 			System.out.println("GameLogger successfully initiated.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,13 +26,13 @@ public class GameLogger {
 		
 	};
 	
-	public String updateLog(String move) {
+	public void updateLog(String move) {
 		log.println(move);
 		return move;
 	};
 	
 	public String getLog() {
-		File file = new File("~/Risk/log");
+		File file = new File("log.txt"");
 		String str = "";
 		
 		try {
