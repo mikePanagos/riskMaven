@@ -48,6 +48,16 @@ public class Player {
 		setTerritoryCount(0);
 		setContinentCount(0);
 	}
+	
+	public Player(Player p) {
+		this.id = p.getId();
+		this.armiesCount = p.getArmiesCount();
+		this.cardCount = p.getCardCount();
+		this.pointCount = p.getPointCount();
+		this.prevTerritoryCount = p.getPrevTerritoryCount();
+		this.continentCount = p.getContinentCount();
+		this.territoryCount = p.getTerritoryCount();
+	}
 
 	/**
 	 * This constructor will initiate a Player class with the default values for all
