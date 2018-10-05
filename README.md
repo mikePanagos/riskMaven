@@ -2,6 +2,6 @@
 test coverage
 https://codecov.io/gh/mikePanagos/risky/tree/master/src/main/java/mojo
 Team mojo
-    michael panagos
-    Oscar Tovar
-    Jarrad McMahan
+michael panagos
+Oscar Tovar
+Jarrad McMahan
