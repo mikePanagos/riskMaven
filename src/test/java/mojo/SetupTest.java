@@ -164,6 +164,7 @@ public class SetupTest {
             Setup s = Setup.getInstances(2);
     Setup.SetupPLayers(6);
     List<Territory> ter= s.getTerritories();
+    System.out.println(" ");
 
     System.out.println("test 11 "+ter.get(4).getStrNeighboringTerritories());
 

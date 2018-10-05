@@ -21,6 +21,8 @@ public class TerritoryTest {
         kamchatka.setOwner(1);
         kamchatka.setNumOfUnits(50);
         String nOfJapan= japan.getStrNeighboringTerritories();
+        System.out.println(" ");
+
         System.out.println("test one "+nOfJapan);
 
         
@@ -42,6 +44,8 @@ public class TerritoryTest {
         kamchatka.setOwner(1);
         kamchatka.setNumOfUnits(50);
         String janString= japan.getStrNeighboringTerritories();
+        System.out.println(" ");
+
         System.out.println("test 2 "+janString);
         assertTrue("someLibraryMethod should return 'true'", (japan.getStrNeighboringTerritories().equals("0. mongola 1. kamchatka ")));
 
