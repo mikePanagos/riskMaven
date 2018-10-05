@@ -57,6 +57,7 @@ public class Player {
 		this.prevTerritoryCount = p.getPrevTerritoryCount();
 		this.continentCount = p.getContinentCount();
 		this.territoryCount = p.getTerritoryCount();
+		this.tList=getTerritoryList()
 	}
 
 	/**
@@ -73,8 +74,20 @@ public class Player {
 		this.pointCount = 0;
 		this.territoryCount = 0;
 		this.continentCount = 0;
-	}
+		
 
+	}
+	
+	private List<Terriotry> getTerritoryList(){
+		
+		return setTerritoryList();
+	}
+	private void setTerritoryList(){
+
+
+
+		return tList;
+	}
 	/**
 	 * This is the getter for the id.
 	 * 
