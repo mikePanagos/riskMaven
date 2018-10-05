@@ -16,6 +16,7 @@ public class Territory {
     // private boolean canAttack;
     private List<Territory> neighboringTerritories = new ArrayList<>();
 
+
     // basic constructor
     public Territory(String name, String continentName, int owner, int numOfUnits) {
         this.name = name;
@@ -28,13 +29,26 @@ public class Territory {
         // }
     }
 
+
+    /**
+    *
+    * @param Territory this is to make a deep copy for undoing purposes
+    * @return
+    */
+    public Territory(Territory t){
+        this.name = t.getName(;
+        this.continentName = t.getContinentName();
+        this.owner = t.getOwner();
+        this.numOfUnits = t.getNumOfUnits();
+        this.neighboringTerritories = t.getNeighboringTerritories();
+    }
+
+
     /**
      * Default constructor used to instantiate an empty Territory. Used for
      * demo/beta purposes.
      * 
      * @return empty instance of a territory
-     */
-    /*
      * Using this constructor to fix errors in gui. Strictly used for testing. -
      * Oscar
      */
@@ -43,6 +57,9 @@ public class Territory {
         this.continentName = "Continent";
         this.numOfUnits = 0;
         return;
+    }
+    public List<Territory> getNeighboringTerritories(){
+        return this.neighboringTerritories;
     }
 
     // getters
