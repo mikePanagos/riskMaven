@@ -23,7 +23,7 @@ public class Player {
 
 	private List<Dice> dice = new ArrayList<>();
 
-	// change type to Terriotry and for the getters and setters
+	// change type to Territory and for the getters and setters
 	private List<Territory> tList = new ArrayList<Territory>();
 	private List<String> cList = new ArrayList<String>();
 	private List<Card> cardList = new ArrayList<>();
@@ -272,6 +272,8 @@ public class Player {
 	 * This will print a list of the territories owned by the player.
 	 *
 	 * michael is editing this to make a string for printing
+	 * 
+	 * todo: edit test so that it accepts formatted output
 	 */
 	public String printableTerritories() {
 		String terr = "";

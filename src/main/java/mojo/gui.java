@@ -17,6 +17,8 @@ public class gui {
     boolean surrender = false;
     boolean endTurn = false;
     List<Player> playerList;
+    public GameLogger log = new GameLogger(); // Game logging
+    //WebConnection link = new WebConnection();
 
     public void start() {
 
@@ -28,6 +30,10 @@ public class gui {
             for (int x = 0; x < playerList.size(); x++) {
                 System.out.println("\nPlayer " + playerList.get(x).getId() + "'s turn:\n");
                 System.out.println("\n\n these are your cards\n " + playerList.get(x).printCards());
+                log.updateLog("Player " + playerList.get(x).getId() + " is now starting their turn.");
+                log.updateLog("Player " + playerList.get(x).getId() + " received the following cards.");
+                log.updateLog(playerList.get(x).printCards());
+                log.stopLogging();
                 // User choice
                 newunits(playerList.get(x));
                 checkIfHandIsFull(playerList.get(x));
@@ -79,7 +85,7 @@ public class gui {
             // System.out.println("this is a test for: end of turn");
 
         }
-        System.out.println("player" + playerList.get(0).getId() + " won!!!");
+        System.out.println("Player" + playerList.get(0).getId() + " won!!!");
     }
 
     /**
@@ -96,7 +102,7 @@ public class gui {
         boolean inRange = false;
         // Random rand = new Random();
 
-        System.out.println(" would you like to 1. pick a random territory for all  or 2. pick territory?");
+        System.out.println("Would you like to:\n1. Pick a random territory for all \n2. Pick a territory");
         choice = key.next();
         choiceInt = askingForANumber(choice);
         while (!inRange) {
@@ -104,69 +110,70 @@ public class gui {
                 choiceInt = askingForANumber(choice);
                 inRange = true;
             } else {
-                System.out.println(" PLEASE ENTER 1 0R 2");
+                System.out.println("PLEASE ENTER 1 0R 2");
                 choice = key.next();
                 choiceInt = askingForANumber(choice);
             }
         }
 
         switch (choiceInt) {
-        case 1: {
-            while (!done) {
-                for (int i = 0; i < pList.size(); i++) {
-
-                    pList.get(i).addTerritory(territory.get(0));
-                    territory.get(0).setNumOfUnits(territory.get(0).getNumOfUnits() + 1);
-                    territory.get(0).setOwner(pList.get(i).getId());
-                    pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
-                    territory.remove(0);
-                    // s.removeTerritory(0);
-                    count++;
-                    if (count > 41) {
-                        done = true;
-                        break;
-                    }
-                }
-
-            }
+	        case 1: {
+	            while (!done) {
+	                for (int i = 0; i < pList.size(); i++) {
+	
+	                    pList.get(i).addTerritory(territory.get(0));
+	                    territory.get(0).setNumOfUnits(territory.get(0).getNumOfUnits() + 1);
+	                    territory.get(0).setOwner(pList.get(i).getId());
+	                    pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
+	                    territory.remove(0);
+	                    // s.removeTerritory(0);
+	                    count++;
+	                    if (count > 41) {
+	                        done = true;
+	                        break;
+	                    }
+	                }
+	
+	            }
+	            break;
+	        }
+	        case 2: {
+	            while (!done) {
+	                for (int i = 0; i < pList.size(); i++) {
+	                    System.out.println("What territory do you want Player " + pList.get(i).getId() + "?");
+	                    System.out.println(printTerritories());
+	                    inRange = false;
+	                    choiceInt = askingForANumber(key.next());
+	                    while (!inRange) {
+	
+	                        if (choiceInt > territory.size() - 1) {
+	                            System.out.println("Please try again! What territory do you want Player " + pList.get(i).getId() + "?");
+	                            choiceInt = askingForANumber(key.next());
+	
+	                        } else {
+	                            inRange = true;
+	                        }
+	                    }
+	                    if (territory.size()  >=1) {
+	                        pList.get(i).addTerritory(territory.get(choiceInt));
+	                        territory.get(choiceInt).setNumOfUnits(territory.get(choiceInt).getNumOfUnits() + 1);
+	                        territory.get(choiceInt).setOwner(pList.get(i).getId());
+	                        pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
+	                        territory.remove(choiceInt);
+	                    } 
+	                }
+	                if(territory.size()<=0) {
+	                    done = true;
+	                }
+	
+	            }
+	            break;
+	        }
         }
-        case 2: {
-            while (!done) {
-                for (int i = 0; i < pList.size(); i++) {
-                    System.out.println("what territory do you want? player " + pList.get(i).getId());
-                    System.out.println(printTerritories());
-                    inRange = false;
-                    choiceInt = askingForANumber(key.next());
-                    while (!inRange) {
-
-                        if (choiceInt > territory.size() - 1) {
-                            System.out.println("try again what territory do you want? player " + pList.get(i).getId());
-                            choiceInt = askingForANumber(key.next());
-
-                        } else {
-                            inRange = true;
-                        }
-                    }
-                    if (territory.size()  >=1) {
-                        pList.get(i).addTerritory(territory.get(choiceInt));
-                        territory.get(choiceInt).setNumOfUnits(territory.get(choiceInt).getNumOfUnits() + 1);
-                        territory.get(choiceInt).setOwner(pList.get(i).getId());
-                        pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
-                        territory.remove(choiceInt);
-                    } 
-                }
-                if(territory.size()<=0) {
-                    done = true;
-                }
-
-            }
-            break;
-        }
-        }
-
-        System.out.println(territory.size()+" size is ");
-        System.out.println(s.getTerritories().size()+"size is");
-
+        /* Used for testing purposes.
+        System.out.println("Size is: " + territory.size());
+        System.out.println("Size is: " + s.getTerritories().size());
+		*/
     }
 
     public String printTerritories() {
@@ -181,7 +188,8 @@ public class gui {
      * @param players list of all players
      */
     public void handOutRestOfUnits(List<Player> players) {
-        System.out.println("\nall terriories have been assigned and have one unit on each now you need to add the rest off your units to terriories\n");
+    	System.out.println();
+        System.out.println("All terriories have been assigned and have one unit on each. You need to add the rest off your units to terriories.\n");
 
         for (int i = 0; i < players.size(); i++) {
             while (players.get(i).getArmiesCount() != 0) {
@@ -197,15 +205,15 @@ public class gui {
         int choice;
         int unitsAdding = 0;
         boolean inRange = false;
-        System.out.println("here are your territories player " + p.getId() + "\n " + p.printableTerritories());
+        System.out.println("Here are your territories player " + p.getId() + "\n " + p.printableTerritories());
 
-        System.out.println("where would you like to place your units");
+        System.out.println("Where would you like to place your units");
         userString = key.next();
         choice = askingForANumber(userString);
         while (!inRange) {
 
             if (choice >( p.getTerritoryCount() - 1)) {
-                System.out.println("number out of range please pick between 0 and " + (p.getTerritoryCount()-1));
+                System.out.println("Number out of range please pick between 0 and " + (p.getTerritoryCount()-1));
                 userString = key.next();
                 choice = askingForANumber(userString);
 
@@ -213,16 +221,17 @@ public class gui {
                 inRange = true;
             }
         }
-        System.out.println("\nhow many units would you liek to place on " + p.getTerritory(choice).getName()
-                + "/n you have " + p.getArmiesCount());
+        System.out.println();
+        System.out.println("How many units would you like to place on " + p.getTerritory(choice).getName()
+                + ".\n You have " + p.getArmiesCount());
         inRange = false;
         userString = key.next();
         unitsAdding=askingForANumber(userString);
         while (!inRange) {
 
             if (unitsAdding > p.getArmiesCount()) {
-                System.out.println("sorry you dont have that many units pick a lower number");
-                System.out.println("how many units would you liek to place on " + p.getTerritory(choice).getName());
+                System.out.println("Sorry you dont have that many units. Please pick a lower number.");
+                System.out.println("How many units would you like to place on " + p.getTerritory(choice).getName());
                 userString = key.next();
                 unitsAdding=askingForANumber(userString);
             }
@@ -267,29 +276,30 @@ public class gui {
             // }
         }
         player.setArmiesCount(units + player.getArmiesCount());
-        System.out.println("You are getting " + units + " units this turn now\n you have " + player.getArmiesCount()
-                + " in total");
-        System.out
-                .println("Your territories:\n" + player.printableTerritories() + "\nWhere would you like to put them?");
+        System.out.println("You are getting " + units + " units this turn now");
+        System.out.println("You have " + player.getArmiesCount()
+                + " armies in total");
+        System.out.println("Your territories:\n" + player.printableTerritories());
+        System.out.println("Where would you like to put them?");
         // Scanner area = new Scanner(System.in);
         int put = key.nextInt();
 
         try {
             player.getTerritory(put);
-            System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
+            System.out.println("How many units would you like to place on " + player.getTerritory(put).getName());
             int unitsAdding = key.nextInt();
             while (unitsAdding > player.getArmiesCount()) {
-                System.out.println("sorry you dont have that many units pick a lower number");
-                System.out.println("how many units would you liek to place on " + player.getTerritory(put).getName());
+                System.out.println("Sorry you dont have that many units. Please pick a lower number.");
+                System.out.println("How many units would you like to place on " + player.getTerritory(put).getName());
                 unitsAdding = key.nextInt();
             }
 
             player.getTerritory(put).setNumOfUnits(player.getTerritory(put).getNumOfUnits() + unitsAdding);
             player.setArmiesCount(player.getArmiesCount() - unitsAdding);
-            System.out.println("you have " + player.getTerritory(put).getNumOfUnits() + " units on territory"
+            System.out.println("You have " + player.getTerritory(put).getNumOfUnits() + " units on territory"
                     + player.getTerritory(put).getName());
         } catch (InputMismatchException eplace) {
-            System.out.println("Please choose aw number in the territories available:" + player.printableTerritories());
+            System.out.println("Please choose a number corresponding to the territories available:" + player.printableTerritories());
             put = key.nextInt();
         }
         // area.close(); // Closing Scanner to lower resource usage - Oscar
@@ -341,7 +351,7 @@ public class gui {
                 Setup.SetupPLayers(numberofplayers);
                 playrange = true; // if number is in range then continue
             } else {
-                System.out.println("not in number of player range please pick a number from 1 to 6");
+                System.out.println("Number not in valid range. Please pick a number from 1 to 6");
             }
         }
         ; // end loop when returned true
@@ -404,7 +414,7 @@ public class gui {
             indexOfTerr = askingForANumber(userString);
             while(!inRange){
                 if(indexOfTerr>(player.getAttackableTerritoryCount()-1)){
-                    System.out.println("invald number try again"+player.getAttackableTerritoryCount());
+                    System.out.println("Invalid number. Please try again " + player.getAttackableTerritoryCount());
                     userString=key.next();
                     indexOfTerr = askingForANumber(userString);
 
@@ -417,7 +427,7 @@ public class gui {
             }
             
             Territory attackfrom = player.getTerritoryThatCanAttack(indexOfTerr);
-            System.out.println("you are attacking from " + attackfrom.getName());
+            System.out.println("You are attacking from " + attackfrom.getName());
             // System.out.println("with neights" + attackfrom.getNeighboringTerritories());
 
             // Territory defendingTerritoriesList = ;
@@ -433,7 +443,7 @@ public class gui {
             while(!inRange){
                 System.out.println(attackfrom.getNumOfNeighborsNotOwned()+" num of terrs");
                 if(attackToIndex>(attackfrom.getNumOfNeighborsNotOwned()-1)){
-                    System.out.println("invald number try again");
+                    System.out.println("Invalid number try again");
                     userString=key.next();
                     attackToIndex = askingForANumber(userString);
 
@@ -445,12 +455,12 @@ public class gui {
 
             }
             Territory defendingTerr = attackfrom.getAttackableNeighboringTerritory(player.getId(), attackToIndex);
-            System.out.println("you are attacking " + defendingTerr.getName());
+            System.out.println("You are attacking " + defendingTerr.getName());
             int attackingUnits = 0;
-            System.out.println("how many units do you want to attack with" + (attackfrom.getNumOfUnits() - 1));
+            System.out.println("How many units do you want to attack with " + (attackfrom.getNumOfUnits() - 1));
             attackingUnits = key.nextInt();
             while (attackingUnits > attackfrom.getNumOfUnits()) {
-                System.out.println("invailed numebr try again. how many units do you want to attack with"
+                System.out.println("Invalid number try again. How many units do you want to attack with "
                         + (attackfrom.getNumOfUnits() - 1));
 
                 userString=key.next();
@@ -485,13 +495,13 @@ public class gui {
      * @return
      */
     public void fortify(Player player) {
-        System.out.println("where are you moving the armys from\n" + player.printableTerritories());
+        System.out.println("Where are you moving the armys from\n" + player.printableTerritories());
         int answer = key.nextInt();
-        System.out.println("where do you want to fortity\n"
+        System.out.println("Where do you want to fortity\n"
                 + player.getTerritory(answer).getprintableListOfOwnedNeighboringTerritories(player.getId()));
         int num = key.nextInt();
-        System.out.println(
-                "how many units are you going to move you have" + (player.getTerritory(answer).getNumOfUnits() - 1));
+        System.out.println("How many units are you going to move.");
+        System.out.println("You have " + (player.getTerritory(answer).getNumOfUnits() - 1));
         int unitsMoving = key.nextInt();
         game.fortify(player.getTerritory(answer),
                 player.getTerritory(answer).getOwnedNeighboringTerritory(player.getId(), num), unitsMoving);
@@ -536,7 +546,7 @@ public class gui {
     public int askingForANumber(String input) {
 
         while (!numberCheck(input)) {
-            System.out.println("Invalid number try again");
+            System.out.println("Invalid number try again.");
             input = key.next();
         }
         return Integer.parseInt(input);
