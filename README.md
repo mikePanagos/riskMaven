@@ -4,7 +4,7 @@ make deck list
 
 
 in gui
-assign fisrt 42 terrs
+assign first 42 terrs
 edit gui pass obj
 choices for gui need to be finished
 
