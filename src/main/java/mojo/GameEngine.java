@@ -81,22 +81,22 @@ public class GameEngine {
 			biggerSize = attDice.size();
 		}
 		for (int i = 0; i < biggerSize; i++) {
-			System.out.println("attack rolled a " + attDice.get(i)+".        the defence rolled a " + defDices.get(i));
+			System.out.println("Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDices.get(i));
 
 			if (attDice.get(i) > defDices.get(i)) {
 
-				System.out.println("attacking won defence will lose one unit");
+				System.out.println("Attacking won defense will lose one unit");
 				System.out.println(" ");
 				System.out.println(" ");
 				defLostUnits++;
 			} else if (attDice.get(i) < defDices.get(i)) {
-				System.out.println(" defence won attacking  will lose one unit");
+				System.out.println(" defense won attacking will lose one unit");
 				System.out.println(" ");
 				System.out.println(" ");
 
 				attLostUnits++;
 			} else {
-				System.out.println(" tie so attacking  will lose one unit");
+				System.out.println(" tie so attacking will lose one unit");
 				System.out.println(" ");
 				System.out.println(" ");
 
@@ -106,7 +106,7 @@ public class GameEngine {
 		}
 
 		if (def.getNumOfUnits() - defLostUnits <= 0) {
-			System.out.println("PLAYER " + def.getOwner() + " lost " + def.getName() + "\n it now belongs to player "
+			System.out.println("PLAYER " + def.getOwner() + " lost " + def.getName() + ".\n It now belongs to player "
 					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it");
 				System.out.println(" ");
 				System.out.println(" ");
@@ -154,8 +154,8 @@ public class GameEngine {
 	
 		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
 		p.setArmiesCount(temp + cardgroup[cardSet]);
-		String returnable = "you got " + cardgroup[cardSet] + " more  units now you have " + p.getArmiesCount()
-				+ "in total";
+		String returnable = "You got " + cardgroup[cardSet] + " more units. You now have " + p.getArmiesCount()
+				+ "in total.";
 		if (cardSet != 12) {
 			cardSet++;
 		}
