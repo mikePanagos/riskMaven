@@ -16,6 +16,11 @@ public class Card {
 		this.setType("");
 	}
 	
+	public Card (Card c) {
+		this.territoryName = c.getTerritoryName();
+		this.type = c.getType();
+	}
+	
 	/**
 	 * Constructor that sets the territory name and type.
 	 * @param territoryName territory name that the card carries

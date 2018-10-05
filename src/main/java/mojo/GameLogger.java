@@ -18,7 +18,7 @@ public class GameLogger {
 		 * If not able to create print exception to console.
 		 */
 		try {
-			log = new PrintWriter("log.txt", "UTF-8");
+			log = new PrintStream("log.txt", "UTF-8");
 			System.out.println("GameLogger successfully initiated.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -28,11 +28,11 @@ public class GameLogger {
 	
 	public void updateLog(String move) {
 		log.println(move);
-		return move;
+		return;
 	};
 	
 	public String getLog() {
-		File file = new File("log.txt"");
+		File file = new File("log.txt");
 		String str = "";
 		
 		try {
