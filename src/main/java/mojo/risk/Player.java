@@ -57,7 +57,8 @@ public class Player {
 		this.prevTerritoryCount = p.getPrevTerritoryCount();
 		this.continentCount = p.getContinentCount();
 		this.territoryCount = p.getTerritoryCount();
-		this.tList=getTerritoryList()
+		this.tList=p.getTerritoryList();
+		this.cardList=p.getCardList();
 	}
 
 	/**
@@ -77,16 +78,36 @@ public class Player {
 		
 
 	}
-	
-	private List<Terriotry> getTerritoryList(){
+	/**
+	 * 
+	 * @return deep copy only
+	 */
+	public List<Territory> getTerritoryList(){
 		
-		return setTerritoryList();
+		List<Territory> copy=new ArrayList<>();
+		for (int i = 0; i < tList.size(); i++) {
+			copy.add(new Territory(tList.get(i)));
+		}
+
+
+		return copy;
 	}
-	private void setTerritoryList(){
+	public void setTerritoryList(List<Territory> t){
+		this.tList=t;
+
+	}
+	/**
+	 * 
+	 * @return deep copy only
+	 */
+	public List<Card> getCardList(){
+		List<Card> copy=new ArrayList<>();
+		for (int i = 0; i < cardList.size(); i++) {
+			copy.add(new Card(cardList.get(i)));
+		}
 
 
-
-		return tList;
+		return copy;
 	}
 	/**
 	 * This is the getter for the id.

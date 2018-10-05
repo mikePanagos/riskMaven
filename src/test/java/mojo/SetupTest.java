@@ -165,8 +165,8 @@ public class SetupTest {
     Setup.SetupPLayers(6);
     List<Territory> ter= s.getTerritories();
 
-    System.out.println("test 11 "+ter.get(4).getNeighboringTerritories());
+    System.out.println("test 11 "+ter.get(4).getStrNeighboringTerritories());
 
-    assertTrue("someLibraryMethod should return 'true'",(ter.get(4).getNeighboringTerritories().equals("0. Iceland 1. Northwest 2. Ontario 3. Quebec ")));
+    assertTrue("someLibraryMethod should return 'true'",(ter.get(4).getStrNeighboringTerritories().equals("0. Iceland 1. Northwest 2. Ontario 3. Quebec ")));
     }
 }

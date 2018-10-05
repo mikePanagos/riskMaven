@@ -36,7 +36,7 @@ public class Territory {
     * @return
     */
     public Territory(Territory t){
-        this.name = t.getName(;
+        this.name = t.getName();
         this.continentName = t.getContinentName();
         this.owner = t.getOwner();
         this.numOfUnits = t.getNumOfUnits();
@@ -58,7 +58,14 @@ public class Territory {
         this.numOfUnits = 0;
         return;
     }
-    public List<Territory> getNeighboringTerritories(){
+    /**
+     * 
+     * @return continent name
+     */
+    public String getContinentName(){
+        return this.continentName;
+    }
+    private List<Territory> getNeighboringTerritories(){
         return this.neighboringTerritories;
     }
 
@@ -85,7 +92,7 @@ public class Territory {
      * 
      * @return a string of all territoier neighbors
      */
-    public String getNeighboringTerritories() {
+    public String getStrNeighboringTerritories() {
         String terr = "";
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
             terr += i + ". " + this.neighboringTerritories.get(i).getName() + " ";

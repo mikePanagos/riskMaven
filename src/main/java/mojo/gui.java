@@ -115,10 +115,12 @@ public class gui {
             while (!done) {
                 for (int i = 0; i < pList.size(); i++) {
 
-                    pList.get(i).addTerritory(territory.get(count));
-                    territory.get(count).setNumOfUnits(territory.get(count).getNumOfUnits() + 1);
-                    territory.get(count).setOwner(pList.get(i).getId());
+                    pList.get(i).addTerritory(territory.get(0));
+                    territory.get(0).setNumOfUnits(territory.get(0).getNumOfUnits() + 1);
+                    territory.get(0).setOwner(pList.get(i).getId());
                     pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
+                    territory.remove(0);
+                    // s.removeTerritory(0);
                     count++;
                     if (count > 41) {
                         done = true;
@@ -132,7 +134,7 @@ public class gui {
             while (!done) {
                 for (int i = 0; i < pList.size(); i++) {
                     System.out.println("what territory do you want? player " + pList.get(i).getId());
-                    System.out.println(s.printTerritories());
+                    System.out.println(printTerritories());
                     inRange = false;
                     choiceInt = askingForANumber(key.next());
                     while (!inRange) {
@@ -145,15 +147,16 @@ public class gui {
                             inRange = true;
                         }
                     }
-                    if (territory.size() > 1) {
+                    if (territory.size()  >=1) {
                         pList.get(i).addTerritory(territory.get(choiceInt));
                         territory.get(choiceInt).setNumOfUnits(territory.get(choiceInt).getNumOfUnits() + 1);
                         territory.get(choiceInt).setOwner(pList.get(i).getId());
                         pList.get(i).setArmiesCount(pList.get(i).getArmiesCount() - 1);
-                        s.removeTerritory(choiceInt);
-                    } else {
-                        done = true;
-                    }
+                        territory.remove(choiceInt);
+                    } 
+                }
+                if(territory.size()<=0) {
+                    done = true;
                 }
 
             }
@@ -161,8 +164,18 @@ public class gui {
         }
         }
 
+        System.out.println(territory.size()+" size is ");
+        System.out.println(s.getTerritories().size()+"size is");
+
     }
 
+    public String printTerritories() {
+        String list=" ";
+        for(int i=0; i<territory.size();i++){
+            list+= " "+i+". "+territory.get(i).getName()+".";
+        }
+        return list;
+    }
     /**
      * @auther michael
      * @param players list of all players
@@ -334,7 +347,7 @@ public class gui {
         ; // end loop when returned true
 
         List<Player> players = s.getPlayers();
-        territory = s.getTerritories();
+        territory = new ArrayList<>(s.getTerritories());
 
         Collections.shuffle(players);
         System.out.println("The order of players is:");

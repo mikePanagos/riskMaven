@@ -42,6 +42,7 @@ public class Setup {
      * this is for testing reasons only
      */
     public static  Setup getInstances(int num){
+        //this is for testing reasons only
         
             init=new Setup();
             return init;
@@ -674,13 +675,7 @@ public class Setup {
     public List<Territory> getTerritories() {
         return board;
     }
-    public String printTerritories() {
-        String list=" ";
-        for(int i=0; i<board.size();i++){
-            list+= " "+i+". "+board.get(i).getName()+".";
-        }
-        return list;
-    }
+    
     public void removeTerritory(int i){
         board.remove(i);
     }
