@@ -1,6 +1,6 @@
 
 test coverage
-https://codecov.io/gh/mikePanagos/risky/tree/master/src/main/java/mojo
+[![codecov](https://codecov.io/gh/mikePanagos/risky/tree/master/src/main/java/mojo)
 Team mojo
 michael panagos
 Oscar Tovar
