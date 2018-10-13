@@ -8,28 +8,44 @@ public class NotificationCenter {
 	private List<Player> observers;
 	private Notification notification;
 	
+	/**
+	 * Constructor used to initiate the notification center.
+	 */
 	NotificationCenter() {
 		observers = new ArrayList<Player>();
 		return;
 	}
 	
+	/**
+	 * This method will add a player to the list of observers kept.
+	 * @param player
+	 */
 	public void add(Player player) {
 		observers.add(player);
 		return;
 	}
-	/*
-	public Notification getNotification() {
-		return this.notification;
-	}
-	*/
+	
+	/**
+	 * This method will set the notification to be sent.
+	 * @param notification The notification that was created by the game
+	 */
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 		return;
 	}
 	
+	/**
+	 * This method will update the player who is supposed to receive the notification.
+	 */
 	public void updatePlayer() {
-		
-		//player.update();
+		Player playerToNotify = null;
+		for (int i = 0; i < observers.size(); i++) {
+			if (observers.get(i).getId() == notification.getReceiver()) {
+				playerToNotify = observers.get(i);
+				break;
+			}
+		}
+		playerToNotify.sendNotification(notification);
 		return;
 	}
 }
