@@ -13,7 +13,7 @@ public class AttackNotification implements Notification {
 	 * @param defendingPlayer the id of the player whose territory is under attack
 	 * @param territoryUnderAttack the name of the territory under attack
 	 */
-	AttackNotification(int attackingPlayer, int defendingPlayer, String territoryUnderAttack) {
+	public AttackNotification(int attackingPlayer, int defendingPlayer, String territoryUnderAttack) {
 		this.territory = territoryUnderAttack;
 		setSender(attackingPlayer);
 		setReceiver(defendingPlayer);
