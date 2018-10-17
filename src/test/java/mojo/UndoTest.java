@@ -4,6 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.*;
 import mojo.risk.*;
+import mojo.undo.*;
 
 public class UndoTest {
 
@@ -20,9 +21,11 @@ public class UndoTest {
         u.saveState(p);
         p.get(0).removeTerritory(t.get(0));
 
-        u.undo(p);
+        u.undo(p,1);
         System.out.println("undo test 1: "+p.get(0).printableTerritories());
         assertTrue("someLibraryMethod should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("condition",true);
+
 
     }
     //test to remove one teritory form one player and add it to anthor then undo it
@@ -45,11 +48,13 @@ public class UndoTest {
         p.get(1).addTerritory(t.get(0));
         System.out.println("undo test 2: "+p.get(1).printableTerritories());
 
-        u.undo(p);
+        u.undo(p,1);
         System.out.println("undo test 2: "+p.get(0).printableTerritories());
         System.out.println("undo test 2: "+p.get(1).printableTerritories());
 
         assertTrue("someLibraryMethod should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("condition",true);
+
 
     }
 

@@ -1,28 +1,58 @@
-package mojo;
+package mojo.undo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import mojo.risk.*;
+import mojo.*;
 
 public class Undo {
     Undo init = null;
+    private int count=1;
     Setup s = Setup.getInstances();
     private List<Territory> tlist = s.getTerritories();
     private List<Player> pListPrev = new ArrayList<>();
+    private List<StateOfGame> stateList=new ArrayList<>();
 
     public  Undo() {
-        System.out.println("here");
+        // System.out.println("here");
 
     }
+    /**
+     * 
+     * @param p list of players to save there state 
+     * this will make an obj that stores the turn number and list of players at current time
+     */
     public void saveState(List<Player> p) {
-
+        List<Player> save = new ArrayList<>();
         for (int i = 0; i < p.size(); i++) {
-            pListPrev.add(new Player(p.get(i)));
+            save.add(new Player(p.get(i)));
         }
+        // System.out.println(save.size()+" prev player list size is ");
+        stateList.add(new StateOfGame(count,save));
+        count++;
     }
+    /**
+     * 
+     * @param pl player list that need to be reverted
+     * @param turn turn to revert to
+     * @return
+     */
+    public List<Player> undo(List<Player> pl,int turn) {
+        System.out.println(turn+" turn ");
+        // System.out.println(stateList.size()+" how many states there are ");
 
-    public List<Player> undo(List<Player> pl) {
+        for (int i = 0; i < stateList.size(); i++) {
+            if(stateList.get(i).getTurn()==turn)
+            {
+                // System.out.println("found the state");
+                pListPrev=stateList.get(i).getPlayerListPrev();
+                // System.out.println(pListPrev.size()+" size of player list of past");
+            }
+        }
+
+        // System.out.println(stateList);
+        if(pListPrev.size()>0){
         for (int i = 0; i < pl.size(); i++) {
 
             pl.get(i).setArmiesCount(pListPrev.get(i).getArmiesCount());
@@ -30,13 +60,13 @@ public class Undo {
             pl.get(i).setCardCount(pListPrev.get(i).getCardCount());
             pl.get(i).setTerritoryList(resetTerList(pListPrev.get(i)));
             // pl.get(i).setCarList()
-        }
+        }}
         return pListPrev;
     }
 
     /**
-     * 
-     * @param p
+     * resets the ter list for each player.
+     * @param p 
      * @return
      */
     private List<Territory> resetTerList(Player p) {
@@ -54,7 +84,7 @@ public class Undo {
     }
 
     /**
-     * 
+     *  finds a terr by name and returns that terr
      * @param name
      * @return
      */
