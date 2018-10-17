@@ -1,8 +1,9 @@
 package mojo;
 
+import mojo.notification.*;
 import java.util.*;
-
 import mojo.risk.*;
+import mojo.Risk;
 
 public class GameEngine {
 	// Territory territory;
@@ -11,6 +12,7 @@ public class GameEngine {
 	Setup s = Setup.getInstances();
 	private int cardSet = 0;
 	private List<Card> deck = s.getDeck();
+	NotificationCenter notificationCenter = new NotificationCenter();
 
 	private GameEngine() {
 
@@ -54,22 +56,29 @@ public class GameEngine {
 		List<Player> players = s.getPlayers();
 		int idOfAttPlayer = act.getOwner();
 		Player attPlayer = s.getPlayerById(idOfAttPlayer);
-		int idOfDefPLayer = def.getOwner();
-		Player defPlayer = s.getPlayerById(idOfDefPLayer);
+		int idOfDefPlayer = def.getOwner();
+		Player defPlayer = s.getPlayerById(idOfDefPlayer);
 		
+		// Create Attack Notification
+		Notification notification = new AttackNotification(idOfAttPlayer, idOfDefPlayer, def.getName());
+		
+		// Send Notification to Notification Center
+		// TODO create publicly accessible notification center
+		notificationCenter.setNotification(notification);
+		notificationCenter.updatePlayer();
 
 		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
-		players.get(idOfDefPLayer - 1).rollDices(defendNumOfRolls);
+		players.get(idOfDefPlayer - 1).rollDices(defendNumOfRolls);
 		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
-		List<Integer> defDices = players.get(idOfDefPLayer - 1).getDice();
+		List<Integer> defDices = players.get(idOfDefPlayer - 1).getDice();
 
 		Collections.sort(attDice);
 		Collections.reverse(attDice);
-	
+
 		Collections.sort(defDices);
 		Collections.reverse(defDices);
-	
-	
+
+
 		int defLostUnits = 0;
 		int attLostUnits = 0;
 		int biggerSize = 0;
@@ -110,8 +119,8 @@ public class GameEngine {
 					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it");
 				System.out.println(" ");
 				System.out.println(" ");
-			
-			//remove territory from previous owner  
+
+			//remove territory from previous owner
 			defPlayer.removeTerritory(def);
 			//set new owner
 			def.setOwner(act.getOwner());
@@ -124,7 +133,7 @@ public class GameEngine {
 			attPlayer.printableTerritories();
 			attPlayer.setAttackedAtLeastOnces(true);
 		}
-		 else 
+		 else
 		{
 			def.setNumOfUnits(def.getNumOfUnits() - defLostUnits);
 			act.setNumOfUnits(act.getNumOfUnits() - attLostUnits);
@@ -132,7 +141,7 @@ public class GameEngine {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param player pass in the current player
 	 * @return A string saying how many more units they have and how much they have
 	 *         now
@@ -151,7 +160,7 @@ public class GameEngine {
 
 
 
-	
+
 		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
 		p.setArmiesCount(temp + cardgroup[cardSet]);
 		String returnable = "You got " + cardgroup[cardSet] + " more units. You now have " + p.getArmiesCount()
@@ -179,7 +188,7 @@ public class GameEngine {
 
 	/**
 	 * This method will return a list of cards shuffled
-	 * 
+	 *
 	 * @param deck the card list to be shuffled
 	 */
 	public  void shuffleCards() {

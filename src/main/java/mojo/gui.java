@@ -17,7 +17,7 @@ public class gui {
     boolean surrender = false;
     boolean endTurn = false;
     List<Player> playerList;
-    public GameLogger log = new GameLogger(); // Game logging
+    GameLogger log = new GameLogger(); // Game logging
     //WebConnection link = new WebConnection();
 
     public void start() {
@@ -33,7 +33,6 @@ public class gui {
                 log.updateLog("Player " + playerList.get(x).getId() + " is now starting their turn.");
                 log.updateLog("Player " + playerList.get(x).getId() + " received the following cards.");
                 log.updateLog(playerList.get(x).printCards());
-                log.stopLogging();
                 // User choice
                 newunits(playerList.get(x));
                 checkIfHandIsFull(playerList.get(x));
@@ -239,7 +238,8 @@ public class gui {
                 inRange=true;
             }
         }
-
+        log.updateLog("Player " + p.getId() + " placed " + unitsAdding + " units on "
+        		+ p.getTerritory(choice).getName() + ".");
         p.getTerritory(choice).setNumOfUnits(p.getTerritory(choice).getNumOfUnits() + unitsAdding);
         p.setArmiesCount(p.getArmiesCount() - unitsAdding);
     }
@@ -276,9 +276,14 @@ public class gui {
             // }
         }
         player.setArmiesCount(units + player.getArmiesCount());
+        
         System.out.println("You are getting " + units + " units this turn now");
+        log.updateLog("Player " + player.getId() + " received " + units + " units this turn");
+        
         System.out.println("You have " + player.getArmiesCount()
                 + " armies in total");
+        log.updateLog("Player " + player.getId() + " now has " + player.getArmiesCount() + " armies in total.");
+        
         System.out.println("Your territories:\n" + player.printableTerritories());
         System.out.println("Where would you like to put them?");
         // Scanner area = new Scanner(System.in);
@@ -307,7 +312,7 @@ public class gui {
     }
 
     /**
-     * this will hand out one card for every succesful attack
+     * this will hand out one card for every successful attack
      * 
      * @param player
      */
@@ -324,6 +329,7 @@ public class gui {
         String en = turn.nextLine();
         try {
             if (en == "y") {
+            	log.updateLog("Current player's turn has ended.");
                 end = true;
             }
             if (en == "n") {
@@ -349,6 +355,7 @@ public class gui {
             numberofplayers = askingForANumber(numofplayers);
             if (numberofplayers <= 6 && numberofplayers >= 2) {
                 Setup.SetupPLayers(numberofplayers);
+                log.updateLog("Game initiated with " + numofplayers + " players.");
                 playrange = true; // if number is in range then continue
             } else {
                 System.out.println("Number not in valid range. Please pick a number from 1 to 6");
@@ -361,8 +368,10 @@ public class gui {
 
         Collections.shuffle(players);
         System.out.println("The order of players is:");
+        log.updateLog("Player order is as follows: ");
         for (int i = 0; i < players.size(); i++) {
             System.out.println("Player " + players.get(i).getId()); // print player order
+            log.updateLog("Player " + players.get(i).getId());
         }
 
         handOutTerr(players);
@@ -379,6 +388,7 @@ public class gui {
 
             try {
                 if (tra.equals("y")) {
+                	log.updateLog("Player " + player.getId() + " has elected to trade in 3 cards.");
                     game.trade(player);
                 }
                 if (tra.equals("n")) {
@@ -468,6 +478,11 @@ public class gui {
                  
             }
             game.attack(attackfrom, defendingTerr, attackingUnits);
+            
+            log.updateLog("Player " + player.getId() + "'s territory, " + attackfrom.getName()
+            	+ ", attacked Player " +  "'s territory, " + defendingTerr.getcontinentName()
+            	+ ", with " + attackingUnits + " armies.");
+            
             System.out.println("Do you want to attack again? (y/n)");
             // Scanner attagain = new Scanner(System.in);
             key.nextLine();
@@ -497,16 +512,20 @@ public class gui {
     public void fortify(Player player) {
         System.out.println("Where are you moving the armys from\n" + player.printableTerritories());
         int answer = key.nextInt();
+        
         System.out.println("Where do you want to fortity\n"
                 + player.getTerritory(answer).getprintableListOfOwnedNeighboringTerritories(player.getId()));
         int num = key.nextInt();
-        System.out.println("How many units are you going to move.");
+        
+        System.out.println("How many units are you going to move?");
         System.out.println("You have " + (player.getTerritory(answer).getNumOfUnits() - 1));
         int unitsMoving = key.nextInt();
+        
         game.fortify(player.getTerritory(answer),
                 player.getTerritory(answer).getOwnedNeighboringTerritory(player.getId(), num), unitsMoving);
 
-        // }
+        log.updateLog("Player " + player.getId() + " has fortified " + player.getTerritory(num).getcontinentName()
+        	+ " with " + unitsMoving + " units.");
     }
 
     public boolean surrender(Player player) {
@@ -521,6 +540,7 @@ public class gui {
                 playerList.remove(player.getId() - 1);
                 if (playerList.size() <= 1) {
                     gameOver = true;
+                    log.updateLog("Player " + player.getId() + " has surrendered!");
                 }
             }
             if (surr.equals("n")) {

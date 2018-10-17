@@ -3,6 +3,7 @@
 */
 package mojo.risk;
 
+import mojo.notification.*;
 import java.util.*;
 
 /**
@@ -489,6 +490,12 @@ public class Player {
 	public void setAttackedAtLeastOnces(boolean answer){
 		this.attackedAtLeastOnces=answer;
 	}
-
-
+	/**
+	 * This method will send a notification to the player. The Notification Center uses this method to notify
+	 * a player.
+	 * @param n
+	 */
+	public void sendNotification(Notification n) {
+		n.getMessage();
+	}
 }
