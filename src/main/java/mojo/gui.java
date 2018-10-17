@@ -17,8 +17,7 @@ public class gui {
     boolean surrender = false;
     boolean endTurn = false;
     List<Player> playerList;
-    public GameLogger log = new GameLogger(); // Game logging
-	public NotificationCenter notificationCenter = new NotificationCenter();
+    GameLogger log = new GameLogger(); // Game logging
     //WebConnection link = new WebConnection();
 
     public void start() {

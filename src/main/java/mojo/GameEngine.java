@@ -12,6 +12,7 @@ public class GameEngine {
 	Setup s = Setup.getInstances();
 	private int cardSet = 0;
 	private List<Card> deck = s.getDeck();
+	NotificationCenter notificationCenter = new NotificationCenter();
 
 	private GameEngine() {
 
@@ -63,7 +64,8 @@ public class GameEngine {
 		
 		// Send Notification to Notification Center
 		// TODO create publicly accessible notification center
-		notificationCenter.sendNotification(notification);
+		notificationCenter.setNotification(notification);
+		notificationCenter.updatePlayer();
 
 		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
 		players.get(idOfDefPlayer - 1).rollDices(defendNumOfRolls);
