@@ -2,6 +2,15 @@ language: java
 jdk: oraclejdk8
 script:
   - mvn cobertura:cobertura
+deploy:
+  on:
+    branch: master
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  skip_cleanup: true
+  
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
