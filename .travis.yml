@@ -3,10 +3,8 @@ jdk: oraclejdk8
 script:
   - mvn cobertura:cobertura
 deploy:
-  provider: s3
-  aws_access_key_id:  $aws_access_key_id
-  aws_secret_access_key: $aws_secret_access_key
-  skip_cleanup: true
+  AWS_ACCESS_KEY_ID:  $AWS_ACCESS_KEY_ID
+  AWS_SECRET_KEY: $AWS_SECRET_KEY
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
