@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import mojo.Setup;
-import mojo.risk.*;
 
 public class ContinentTest {
 
