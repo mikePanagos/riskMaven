@@ -1,11 +1,9 @@
 package mojo;
 
-/* Never used - Oscar Tovar
- import java.lang.reflect.Array;
- */
-import mojo.*;
 import java.util.*;
 import mojo.risk.*;
+import mojo.twitter.*;
+import twitter4j.*;
 
 public class gui {
     GameEngine game = GameEngine.getInit();
@@ -19,9 +17,11 @@ public class gui {
     List<Player> playerList;
     GameLogger log = new GameLogger(); // Game logging
     //WebConnection link = new WebConnection();
+	TwitterClient twitterAccount = new TwitterClient();
 
     public void start() {
-
+        twitterAccount.setTweet("The game for conquest has started!");
+        System.out.println(twitterAccount.postTweet());
         playerList = setupGui();
         game.shuffleCards();
 
@@ -478,6 +478,8 @@ public class gui {
                  
             }
             game.attack(attackfrom, defendingTerr, attackingUnits);
+            
+            twitterAccount.setTweet("An attack on a player has started!");
             
             log.updateLog("Player " + player.getId() + "'s territory, " + attackfrom.getName()
             	+ ", attacked Player " +  "'s territory, " + defendingTerr.getcontinentName()
