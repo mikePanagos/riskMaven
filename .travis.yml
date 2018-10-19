@@ -2,20 +2,6 @@ language: java
 jdk: oraclejdk8
 script:
   - mvn cobertura:cobertura
-deploy:
-  provider: s3
-   access_key_id: $AWS_ACCESS_KEY_ID
-   esecret_access_key: $AWS_SECRET_ACCESS_KEY
-   twitter4j.debug: $twitter4j.debug
-   twitter4j.oauth.consumerKey: $twitter4j.oauth.consumerKey
-   twitter4j.oauth.consumerSecret: $twitter4j.oauth.consumerSecret
-   twitter4j.oauth.accessToken: $twitter4j.oauth.accessToken
-   twitter4j.oauth.accessTokenSecret: $twitter4j.oauth.accessTokenSecret
-
-  skip_cleanup: true
-
-
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
