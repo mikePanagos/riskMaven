@@ -17,7 +17,7 @@ public class NotificationCenter {
 	
 	/**
 	 * This method will add a player to the list of observers kept.
-	 * @param player
+	 * @param player The player that will be added to the observer list.
 	 */
 	public String add(Player player) {
 		try {
@@ -31,6 +31,7 @@ public class NotificationCenter {
 	/**
 	 * This method will set the notification to be sent.
 	 * @param notification The notification that was created by the game
+	 * @return boolean Returns whether setting the notification was successful or if it failed. True: successful. False: failed.
 	 */
 	public boolean setNotification(Notification notification) {
 		if ((this.notification = notification) != null) {
@@ -42,6 +43,7 @@ public class NotificationCenter {
 	
 	/**
 	 * This method will update the player who is supposed to receive the notification.
+	 * @return boolean Returns whether the update was successful or if it failed. True: successful. False: failed.
 	 */
 	public boolean updatePlayer() {
 		Player playerToNotify = null;

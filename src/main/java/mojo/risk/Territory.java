@@ -32,8 +32,8 @@ public class Territory {
 
     /**
     *
-    * @param Territory this is to make a deep copy for undoing purposes
-    * @return
+    * @param t this is the territory used to make a deep copy for undoing purposes
+    * 
     */
     public Territory(Territory t){
         this.name = t.getName();
@@ -48,9 +48,6 @@ public class Territory {
      * Default constructor used to instantiate an empty Territory. Used for
      * demo/beta purposes.
      * 
-     * @return empty instance of a territory
-     * Using this constructor to fix errors in gui. Strictly used for testing. -
-     * Oscar
      */
     public Territory() {
         this.name = "Territory";
@@ -59,8 +56,8 @@ public class Territory {
         return;
     }
     /**
-     * 
-     * @return continent name
+     * Getter for continent name
+     * @return String continent name
      */
     public String getContinentName(){
         return this.continentName;
@@ -90,7 +87,7 @@ public class Territory {
 
     /**
      * 
-     * @return a string of all territoier neighbors
+     * @return String a string of all the territory's neighbors
      */
     public String getStrNeighboringTerritories() {
         String terr = "";
@@ -103,8 +100,8 @@ public class Territory {
 
     /**
      * 
-     * @param id id of player
-     * @return list of neighbors that the player owns
+     * @param id id of player who you would like to select
+     * @return String list of neighbors that the player owns
      */
     public String getprintableListOfOwnedNeighboringTerritories(int id) {
         String terr = "";
@@ -120,9 +117,9 @@ public class Territory {
 
 
     /**
-     * checks whether the players with id owns all neighbor or if he can attacka  neighbor
+     * checks whether the players with id owns all neighbors or if he can attack a neighbor
      * @param id
-     * @return
+     * @return boolean true if all neighbors owned, false otherwise
      */
     public boolean checkNeighbors(int id) {
         int count = 0;
@@ -141,7 +138,7 @@ public class Territory {
     /**
      * 
      * @param id of player
-     * @return the territory
+     * @return Territory the territory that is neighboring
      */
     public Territory getOwnedNeighboringTerritory(int id, int index) {
         
@@ -160,10 +157,10 @@ public class Territory {
     }
 
     /**
-     * give list of attackable terrs
+     * give list of attackable territories
      * 
      * @param id
-     * @return
+     * @return String string containing the territories that can be attacked
      */
     public String printableListOfAttackableNeighboringTerritories(int id) {
         String terr = "";
@@ -197,7 +194,7 @@ public class Territory {
      * 
      * @param id
      * @param index
-     * @return
+     * @return Territory returns a territory that the current player can attack
      */
     public Territory getAttackableNeighboringTerritory(int id, int index) {
         int count = 0;

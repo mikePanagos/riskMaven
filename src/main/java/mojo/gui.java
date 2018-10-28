@@ -183,7 +183,7 @@ public class gui {
         return list;
     }
     /**
-     * @auther michael
+     * @author michael
      * @param players list of all players
      */
     public void handOutRestOfUnits(List<Player> players) {
@@ -247,7 +247,7 @@ public class gui {
     /**
      * 
      * @param player current PLayer
-     * @return
+     * @return the number of new units given
      */
     public int newunits(Player player) {
         List<Continent> continents;
@@ -314,7 +314,7 @@ public class gui {
     /**
      * this will hand out one card for every successful attack
      * 
-     * @param player
+     * @param player The player who owns the hand we will be checking
      */
     public void checkIfHandIsFull(Player player) {
         if (player.getCardCount() >= 5) {
@@ -405,9 +405,8 @@ public class gui {
     }
 
     /**
-     * 
+     * This method will be used by the game engine to attack another player.
      * @param player the current player who wishes to attack
-     * @return will return a string for testing void
      */
     public void attack(Player player) {
         boolean inRange=false;
@@ -509,7 +508,6 @@ public class gui {
     /**
      * 
      * @param player current Player
-     * @return
      */
     public void fortify(Player player) {
         System.out.println("Where are you moving the armys from\n" + player.printableTerritories());

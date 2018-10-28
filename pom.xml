@@ -3,11 +3,13 @@
     <groupId>mojo</groupId>
     <artifactId>risk</artifactId>
     <version>1.0.0</version>
+    
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -25,7 +27,13 @@
 			<artifactId>twitter4j-core</artifactId>
 			<version>[4.0,)</version>
 		</dependency>
+        <dependency>
+           	<groupId>org.telegram</groupId>
+           	<artifactId>telegrambots</artifactId>
+        	<version>4.1</version>
+        </dependency>
     </dependencies>
+    
     <build>
         <pluginManagement>
             <plugins>
@@ -53,12 +61,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
-
             <!-- You can run jacoco in the default profile with: mvn jacoco:prepare-agent test jacoco:report -->
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -67,22 +69,13 @@
             </plugin>
         </plugins>
     </build>
+    
     <reporting>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                </configuration>
+                <version>3.0.1</version>
             </plugin>
         </plugins>
     </reporting>

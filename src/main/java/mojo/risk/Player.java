@@ -39,7 +39,6 @@ public class Player {
 	 * @param id     The player id. I.E. Player 1, Player 2 etc.
 	 * @param armies Amount of armies to start the player off with.
 	 * @param cards  Amount of cards to pass to the player.
-	 * @return new instance of the Player class.
 	 */
 	public Player(int id, int armies, int cards) {
 		this.id = id;
@@ -64,9 +63,8 @@ public class Player {
 
 	/**
 	 * This constructor will initiate a Player class with the default values for all
-	 * members;
-	 * 
-	 * @return new instance of Player class with all members set to defaults
+	 * members.
+	 *
 	 */
 
 	public Player() {
@@ -97,10 +95,7 @@ public class Player {
 		this.tList=t;
 
 	}
-	/**
-	 * 
-	 * @return deep copy only
-	 */
+	
 	public List<Card> getCardList(){
 		List<Card> copy=new ArrayList<>();
 		for (int i = 0; i < cardList.size(); i++) {
@@ -113,7 +108,7 @@ public class Player {
 	/**
 	 * This is the getter for the id.
 	 * 
-	 * @return player id
+	 * @return int player id
 	 */
 	public int getId() {
 		return this.id;
@@ -122,7 +117,7 @@ public class Player {
 	/**
 	 * Sets the amount of armies/units that the player has.
 	 * 
-	 * @param n
+	 * @param n The amount of armies to give the player.
 	 */
 	public void setArmiesCount(int n) {
 		this.armiesCount = n;
@@ -149,7 +144,7 @@ public class Player {
 	/**
 	 * This is the getter for the card count.
 	 * 
-	 * @return current card count.
+	 * @return int current card count.
 	 */
 	public int getCardCount() {
 		return this.cardCount;
@@ -176,7 +171,7 @@ public class Player {
 	/**
 	 * The getter for the point count.
 	 * 
-	 * @return the current amount of points the player has.
+	 * @return int the current amount of points the player has.
 	 */
 	public int getPointCount() {
 		return this.pointCount;
@@ -203,7 +198,7 @@ public class Player {
 	/**
 	 * This is the getter for the territory count.
 	 * 
-	 * @return the current territory count for the player
+	 * @return int the current territory count for the player
 	 */
 	public int getTerritoryCount() {
 		return this.territoryCount;
@@ -230,7 +225,7 @@ public class Player {
 	/**
 	 * This is the getter for the continent count.
 	 * 
-	 * @return total amount of continents owned by player
+	 * @return int total amount of continents owned by player
 	 */
 	public int getContinentCount() {
 		return this.continentCount;
@@ -287,7 +282,7 @@ public class Player {
 	/**
 	 * michael added this
 	 * 
-	 * @return retruns lsit of terrs that can attack
+	 * @return String returns list of territories that can attack
 	 */
 	public String getPrintableListOfTerritoryThatCanAttack() {
 		String terr = "";
@@ -308,8 +303,8 @@ public class Player {
 
 	/**
 	 * 
-	 * @param index index of attacking terr
-	 * @return pointer to terr
+	 * @param index index of attacking territories
+	 * @return pointer to territories
 	 */
 	public Territory getTerritoryThatCanAttack(int index) {
 		int count = 0;
@@ -493,7 +488,7 @@ public class Player {
 	/**
 	 * This method will send a notification to the player. The Notification Center uses this method to notify
 	 * a player.
-	 * @param n
+	 * @param n the Notification to send the player
 	 */
 	public void sendNotification(Notification n) {
 		n.getMessage();
