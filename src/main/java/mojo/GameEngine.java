@@ -141,7 +141,7 @@ public class GameEngine {
 
 	/**
 	 *
-	 * @param player pass in the current player
+	 * @param p pass in the current player
 	 * @return A string saying how many more units they have and how much they have
 	 *         now
 	 */
@@ -187,10 +187,8 @@ public class GameEngine {
 
 	/**
 	 * This method will return a list of cards shuffled
-	 *
-	 * @param deck the card list to be shuffled
 	 */
-	public  void shuffleCards() {
+	public void shuffleCards() {
 		Collections.shuffle(deck);
 	}
 }

@@ -9,7 +9,6 @@ public class Card {
 	
 	/**
 	 * Default constructor for Card class.
-	 * @return instance of a Card object with an empty territory name and type.
 	 */
 	public Card ( ) {
 		this.setTerritoryName("");
@@ -25,7 +24,6 @@ public class Card {
 	 * Constructor that sets the territory name and type.
 	 * @param territoryName territory name that the card carries
 	 * @param type the picture type that the card carries
-	 * @return instance of a Card object with a set territory name and type.
 	 */
 	public Card ( String territoryName, String type ) {
 		this.setTerritoryName(territoryName);
