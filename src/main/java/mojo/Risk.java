@@ -2,6 +2,8 @@
  * 
  */
 package mojo;
+import mojo.*;
+import mojo.bot.RiskyBot;
 
 /**
  * @author TeamMojo
@@ -13,9 +15,10 @@ public class Risk {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		gui ui = new gui();
-		ui.start();
+		RiskyBot bot = new RiskyBot();
+		bot.getUpdates();
+//		gui ui = new gui();
+//		ui.start();
 	}
 
 }
