@@ -12,6 +12,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class RiskyBot {
     int gameID = 0;
+    String token = System.getenv("telegramToken");
 //    URL sendMessage = new URL("https://api.telegram.org/bot796705800:AAG4coiT3xqeHmbTfLbPRvMo5K6hEOzzipA/sendMessage?");
 
     public RiskyBot() {
@@ -20,7 +21,7 @@ public class RiskyBot {
 
     public void getUpdates() {
         try {
-            URL getUpdates = new URL("https://api.telegram.org/bot796705800:AAG4coiT3xqeHmbTfLbPRvMo5K6hEOzzipA/getupdates");
+            URL getUpdates = new URL("https://api.telegram.org/bot" + token + "/getupdates");
             HttpsURLConnection apiRequest = (HttpsURLConnection)getUpdates.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     apiRequest.getInputStream()
