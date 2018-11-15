@@ -43,6 +43,12 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.telegram/telegrambots-meta -->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-meta</artifactId>
+            <version>4.1</version>
+        </dependency>
     </dependencies>
     
     <build>
@@ -110,14 +116,6 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>org.json:json</include>
-                                    <include>org.telegram:telegrambots</include>
-                                </includes>
-                            </artifactSet>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

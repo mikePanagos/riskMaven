@@ -18,23 +18,23 @@ public class Risk {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RiskyBot bot = new RiskyBot();
-		bot.getUpdates();
-		bot.getInfo();
+//		RiskyBot bot = new RiskyBot();
+//		bot.getUpdates();
+//		bot.getInfo();
 //		gui ui = new gui();
 //		ui.start();
 
-//		ApiContextInitializer.init();
-//
-//		// Instantiate Telegram Bots API
-//		TelegramBotsApi botsApi = new TelegramBotsApi();
-//
-//		// Register our bot
-//		try {
-//			botsApi.registerBot(new RiskyBot());
-//		} catch (TelegramApiException e) {
-//			e.printStackTrace();
-//		}
+		ApiContextInitializer.init();
+
+		// Instantiate Telegram Bots API
+		TelegramBotsApi botsApi = new TelegramBotsApi();
+
+		// Register our bot
+		try {
+			botsApi.registerBot(new RiskyBot());
+		} catch (TelegramApiException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
