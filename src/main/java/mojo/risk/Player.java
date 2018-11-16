@@ -20,6 +20,7 @@ public class Player {
 	private int continentCount;
 	private int terrThatCanAttack;
 	private boolean attackedAtLeastOnces=false;
+	private boolean itsMyTurn;
 
 
 	private List<Dice> dice = new ArrayList<>();
@@ -40,6 +41,14 @@ public class Player {
 	 * @param armies Amount of armies to start the player off with.
 	 * @param cards  Amount of cards to pass to the player.
 	 */
+	public Player(int id) {
+		this.id = id;
+		setArmiesCount(0);
+		setCardCount(0);
+		setPointCount(0);
+		setTerritoryCount(0);
+		setContinentCount(0);
+	}
 	public Player(int id, int armies, int cards) {
 		this.id = id;
 		setArmiesCount(armies);
@@ -48,6 +57,7 @@ public class Player {
 		setTerritoryCount(0);
 		setContinentCount(0);
 	}
+
 	
 	public Player(Player p) {
 		this.id = p.getId();
@@ -493,4 +503,11 @@ public class Player {
 	public void sendNotification(Notification n) {
 		n.getMessage();
 	}
+	public boolean getItsMyTurn(){
+		return this.itsMyTurn;
+	}
+	public void setItsMyTurn(boolean set){
+		 this.itsMyTurn=set;
+	}
+
 }
