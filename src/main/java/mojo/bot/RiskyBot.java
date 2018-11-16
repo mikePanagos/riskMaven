@@ -1,6 +1,9 @@
 package mojo.bot;
 
 import java.util.*;
+
+import mojo.GameEngine;
+import mojo.Setup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.generics.LongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -48,7 +51,14 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 break;
                             }
                         }
-                        returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                        if (started) {
+                            GameEngine game = GameEngine.getInit();
+                            Setup s = Setup.getInstances();
+                            Setup.setupPlayerWithList(playersList);
+                            returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                        } else {
+                            returnMess = "We're waiting on other players to get ready";
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         returnMess = "Whoops an error occurred. Grab an adult...";
