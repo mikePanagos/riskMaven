@@ -1,6 +1,9 @@
 package mojo.bot;
 
 import java.util.*;
+
+import mojo.GameEngine;
+import mojo.Setup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.generics.LongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,12 +23,71 @@ public class RiskyBot extends TelegramLongPollingBot {
     String token = System.getenv("telegramToken");
     
     private String checkMessage(long id, String message) {
-        int count = 2;
+        int count = 3;
+        boolean started = false;
+        Player player = new Player();
+
+        for (int i = 0; i < playersList.size(); i++) {
+            if (playersList.get(i).getId() == id) {
+                player = playersList.get(i);
+            }
+        }
+
         String returnMess = "";
         if (ids.contains(id)) {
             if (ids.size() == count) {
-                // Do game logic
-                returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+
+                if (!started && message.equals("ready")) {
+//                    for (int i = 0; i < playersList.size(); i++) {
+//                        if (playersList.get(i).getId() == id) {
+//                            playersList.get(i).ready = true;
+//                        }
+//                    }
+                    try {
+                        player.ready = true;
+                        // Check if everyone is ready
+                        for (int i = 0; i < playersList.size(); i++) {
+                            if ((started = playersList.get(i).ready) == false) {
+                                break;
+                            }
+                        }
+                        if (started) {
+                            GameEngine game = GameEngine.getInit();
+                            Setup s = Setup.getInstances();
+                            Setup.setupPlayerWithList(playersList);
+                            returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                            for (int i = 0; i < playersList.size(); i++) {
+                                if (playersList.get(i).getId() == id)
+                                    continue;
+                                SendMessage confirmation = new SendMessage() // Create a message object object
+                                        .setChatId((long)playersList.get(i).getId()).setText(returnMess);
+                                try {
+                                    execute(confirmation); // Sending our message object to user
+                                } catch (TelegramApiException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+                            returnMess = "We're waiting on other players to get ready";
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        returnMess = "Whoops an error occurred. Grab an adult...";
+                    }
+                }
+                else if (started) {
+                    if (player.getItsMyTurn()) {
+
+                    } else {
+                        returnMess = "Hold your horses! It's not your turn yet.";
+                    }
+                }
+                else {
+                    returnMess = "We support the following commands.\n" +
+                            "attack\n" +
+                            "fortify\n" +
+                            "quit";
+                }
             } else if (ids.size() > count) {
                 returnMess = "Woah! There's too many players in here.";
             }
