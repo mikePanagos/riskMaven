@@ -692,6 +692,9 @@ public class Setup {
      * @param pl
      */
     public void makePlayerList(List<Player> pl){
+        int count=0;
+        boolean done=false;
+        List<Territory> territory = this.board;
         
         int numUnitsPerPlayer = numUnitAtStart(pl.size());
         for (int i = 0; i < pl.size(); i++) {
@@ -701,6 +704,23 @@ public class Setup {
         this.playersList=pl;
         Collections.shuffle(this.playersList);
         this.playersList.get(0).setItsMyTurn(true);
+        while (!done) {
+            for (int i = 0; i < this.playersList.size(); i++) {
+
+                this.playersList.get(i).addTerritory(territory.get(0));
+                territory.get(0).setNumOfUnits(territory.get(0).getNumOfUnits() + 1);
+                territory.get(0).setOwner(this.playersList.get(i).getId());
+                this.playersList.get(i).setArmiesCount(this.playersList.get(i).getArmiesCount() - 1);
+                territory.remove(0);
+                // s.removeTerritory(0);
+                count++;
+                if (count > 41) {
+                    done = true;
+                    break;
+                }
+            }
+
+        }
     }
 
     public List<Territory> getTerritories() {
