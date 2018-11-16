@@ -64,21 +64,21 @@ public class RiskyBot extends TelegramLongPollingBot {
             // Set variables
             String message_text = update.getMessage().getText();
             long chat_id = update.getMessage().getChatId();
-            String responce = "";
+            String response = "";
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
             if (message_text.equals("hello")) {
-                responce = "hello to enter a game you need to type that games id";
+                response = "hello to enter a game you need to type that games id";
             }else if(message_text.equals("players")){
                 for (int i = 0; i < playersList.size(); i++) {
-                    responce+=playersList.get(i).getId()+"\n";
+                    response+=playersList.get(i).getId()+"\n";
                 }
 
             } else {
-                responce = checkMessage(chat_id, message_text);
+                response = checkMessage(chat_id, message_text);
             }
             SendMessage message = new SendMessage() // Create a message object object
-                    .setChatId(chat_id).setText(responce);
+                    .setChatId(chat_id).setText(response);
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
