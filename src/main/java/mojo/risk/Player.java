@@ -19,7 +19,7 @@ public class Player {
 	private int prevTerritoryCount;
 	private int continentCount;
 	private int terrThatCanAttack;
-	private boolean attackedAtLeastOnces=false;
+	private boolean attackedAtLeastOnce=false;
 	private boolean itsMyTurn;
 
 
@@ -490,10 +490,10 @@ public class Player {
 	}
 
 	public boolean getAttackedAtLeastOnces(){
-		return this.attackedAtLeastOnces;
+		return this.attackedAtLeastOnce;
 	}
 	public void setAttackedAtLeastOnces(boolean answer){
-		this.attackedAtLeastOnces=answer;
+		this.attackedAtLeastOnce=answer;
 	}
 	/**
 	 * This method will send a notification to the player. The Notification Center uses this method to notify
