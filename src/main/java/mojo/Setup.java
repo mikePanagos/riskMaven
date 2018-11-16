@@ -700,6 +700,7 @@ public class Setup {
        
         this.playersList=pl;
         Collections.shuffle(this.playersList);
+        this.playersList.get(0).setItsMyTurn(true);
     }
 
     public List<Territory> getTerritories() {
