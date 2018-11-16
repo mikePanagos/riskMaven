@@ -20,36 +20,26 @@ public class RiskyBot extends TelegramLongPollingBot {
     String token = System.getenv("telegramToken");
     
     private String checkMessage(long id, String message) {
-        int count = 0;
+        int count = 2;
         String returnMess = "";
-        if (ids.size() >= 1) {
-            for (int i = 0; i < ids.size(); i++) {
-                if (ids.get(i) == id) {
-                    returnMess = "we found you returning player " + message;
-                    break;
-                } else {
-                    count++;
-
-                }
+        if (ids.contains(id)) {
+            if (ids.size() == count) {
+                // Do game logic
+                returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+            } else if (ids.size() > count) {
+                returnMess = "Woah! There's too many players in here.";
             }
-            if (count >= ids.size()) {
-                if (message.equals("1234")) {
-                    ids.add(id);
-                    playersList.add(new Player((int)id));
-                    System.out.println("added player " + id);
-                    returnMess = "your in";
-                } else {
-                    returnMess = "sorry if you want to enter a game you need to give me the games id";
-                }
+            else {
+                returnMess = "We're waiting on more players to join!";
             }
         } else {
             if (message.equals("1234")) {
                 ids.add(id);
                 playersList.add(new Player((int)id));
-                System.out.println("added player " + id);
-                returnMess = "your in";
+                System.out.println("Added player " + id);
+                returnMess = "You're in!";
             } else {
-                returnMess = "sorry if you want to enter a game you need to give me the games id";
+                returnMess = "Sorry, if you want to enter a game you need to give me the games id.";
             }
         }
 
@@ -63,13 +53,21 @@ public class RiskyBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
             String message_text = update.getMessage().getText();
+            message_text = message_text.toLowerCase();
             long chat_id = update.getMessage().getChatId();
             String response = "";
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
             if (message_text.equals("hello")) {
-                response = "hello to enter a game you need to type that games id";
-            }else if(message_text.equals("players")){
+                if (!ids.contains(chat_id)) {
+                    response = "Hello. To enter a game, type in the game id. Example: 1234";
+                } else if (ids.contains(chat_id) && ids.size() < 3) {
+                    response = "Sit tight. There are currently " + ids.size() + " players waiting in the lobby.";
+                } else {
+                    // Should never happen! Either they're in the game or they're not.
+                    response = "Oops! Something went wrong. We're sorry :(";
+                }
+            } else if (message_text.equals("players")){
                 for (int i = 0; i < playersList.size(); i++) {
                     response+=playersList.get(i).getId()+"\n";
                 }
@@ -77,6 +75,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             } else {
                 response = checkMessage(chat_id, message_text);
             }
+
             SendMessage message = new SendMessage() // Create a message object object
                     .setChatId(chat_id).setText(response);
             try {
