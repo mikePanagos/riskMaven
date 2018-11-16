@@ -34,12 +34,6 @@ public class RiskyBot extends TelegramLongPollingBot {
         if (ids.contains(id)) {
             if (ids.size() == count) {
 
-                // Check if everyone is ready
-                for (int i = 0; i < playersList.size(); i++) {
-                    if ((started = playersList.get(i).ready) == false) {
-                        break;
-                    }
-                }
                 if (!started && message.equals("ready")) {
 //                    for (int i = 0; i < playersList.size(); i++) {
 //                        if (playersList.get(i).getId() == id) {
@@ -48,6 +42,12 @@ public class RiskyBot extends TelegramLongPollingBot {
 //                    }
                     try {
                         player.ready = true;
+                        // Check if everyone is ready
+                        for (int i = 0; i < playersList.size(); i++) {
+                            if ((started = playersList.get(i).ready) == false) {
+                                break;
+                            }
+                        }
                         returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                     } catch (Exception e) {
                         e.printStackTrace();
