@@ -697,7 +697,9 @@ public class Setup {
         for (int i = 0; i < pl.size(); i++) {
             pl.get(i).setArmiesCount(numUnitsPerPlayer);
         }
+       
         this.playersList=pl;
+        Collections.shuffle(this.playersList);
     }
 
     public List<Territory> getTerritories() {
