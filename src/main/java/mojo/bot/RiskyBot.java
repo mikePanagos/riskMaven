@@ -21,11 +21,52 @@ public class RiskyBot extends TelegramLongPollingBot {
     
     private String checkMessage(long id, String message) {
         int count = 2;
+        boolean started = false;
+        Player player;
+
+        for (int i = 0; i < playersList.size(); i++) {
+            if (playersList.get(i).getId() == id) {
+                player = playersList.get(i);
+            }
+        }
+
         String returnMess = "";
         if (ids.contains(id)) {
             if (ids.size() == count) {
-                // Do game logic
-                returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+
+                // Check if everyone is ready
+                for (int i = 0; i < playersList.size(); i++) {
+                    if ((started = playersList.get(i).ready) == false) {
+                        break;
+                    }
+                }
+                if (!started && message.equals("ready")) {
+//                    for (int i = 0; i < playersList.size(); i++) {
+//                        if (playersList.get(i).getId() == id) {
+//                            playersList.get(i).ready = true;
+//                        }
+//                    }
+                    try {
+                        player.ready = true;
+                        returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        returnMess = "Whoops an error occurred. Grab an adult...";
+                    }
+                }
+                else if (started) {
+                    if (player.getItsMyTurn()) {
+
+                    } else {
+                        returnMess = "Hold your horses! It's not your turn yet.";
+                    }
+                }
+                else {
+                    returnMess = "We support the following commands.\n" +
+                            "attack\n" +
+                            "fortify\n" +
+                            "quit";
+                }
             } else if (ids.size() > count) {
                 returnMess = "Woah! There's too many players in here.";
             }

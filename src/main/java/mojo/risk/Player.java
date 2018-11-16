@@ -21,6 +21,7 @@ public class Player {
 	private int terrThatCanAttack;
 	private boolean attackedAtLeastOnce=false;
 	private boolean itsMyTurn;
+	public boolean ready = false;
 
 
 	private List<Dice> dice = new ArrayList<>();
