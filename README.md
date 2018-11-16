@@ -6,3 +6,16 @@
 * michael panagos
 * Oscar Tovar
 * Jarrad McMahan
+
+## Abilities
+* We're rolling out Telegram support.
+* Twitter will now show you the game status.
+* Pay 2 Win is supporte $$$
+
+## Setup
+1. git clone
+2. mvn package
+3. java -jar <risk jar>
+
+## Known Bugs
+* Game setup through Telegram not consistent. Will be fixed within next issue.
