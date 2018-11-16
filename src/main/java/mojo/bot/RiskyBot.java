@@ -23,7 +23,7 @@ public class RiskyBot extends TelegramLongPollingBot {
     String token = System.getenv("telegramToken");
     
     private String checkMessage(long id, String message) {
-        int count = 2;
+        int count = 3;
         boolean started = false;
         Player player = new Player();
 
@@ -57,10 +57,10 @@ public class RiskyBot extends TelegramLongPollingBot {
                             Setup.setupPlayerWithList(playersList);
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
-                                SendMessage message = new SendMessage() // Create a message object object
-                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
+                                SendMessage confirmation = new SendMessage() // Create a message object object
+                                        .setChatId((long)playersList.get(i).getId()).setText(returnMess);
                                 try {
-                                    execute(message); // Sending our message object to user
+                                    execute(confirmation); // Sending our message object to user
                                 } catch (TelegramApiException e) {
                                     e.printStackTrace();
                                 }
