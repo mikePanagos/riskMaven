@@ -22,7 +22,7 @@ public class RiskyBot extends TelegramLongPollingBot {
     private String checkMessage(long id, String message) {
         int count = 2;
         boolean started = false;
-        Player player;
+        Player player = new Player();
 
         for (int i = 0; i < playersList.size(); i++) {
             if (playersList.get(i).getId() == id) {
