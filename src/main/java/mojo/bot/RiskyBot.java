@@ -56,6 +56,15 @@ public class RiskyBot extends TelegramLongPollingBot {
                             Setup s = Setup.getInstances();
                             Setup.setupPlayerWithList(playersList);
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                            for (int i = 0; i < playersList.size(); i++) {
+                                SendMessage message = new SendMessage() // Create a message object object
+                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
+                                try {
+                                    execute(message); // Sending our message object to user
+                                } catch (TelegramApiException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         } else {
                             returnMess = "We're waiting on other players to get ready";
                         }
