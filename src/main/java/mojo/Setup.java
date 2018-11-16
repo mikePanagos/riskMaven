@@ -48,13 +48,19 @@ public class Setup {
         return init;
 
     }
-
+    /**
+     * 
+     * @param numOfPlayers
+     */
     public static void SetupPLayers(int numOfPlayers) {
 
         init.makePLayers(numOfPlayers);
 
     }
-
+    /**
+    * for bot
+    * @param playerList
+    */
     public static void setupPlayerWithList(List<Player> playerList) {
 
         init.makePlayerList(playerList);
