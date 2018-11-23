@@ -688,22 +688,26 @@ public class Setup {
 
     }
     /**
-     * for bot
-     * @param pl
+     * Make a player list that will be used by the bot.
+     * @param pl this is the playerlist that it will be given initially. It is instantiated with all the connected players.
      */
     public void makePlayerList(List<Player> pl){
         int count=0;
         boolean done=false;
         List<Territory> territory = this.board;
         
-        int numUnitsPerPlayer = numUnitAtStart(pl.size());
+        int numUnitsPerPlayer = numUnitAtStart(pl.size()); // numUnitsAtStart returns the amount of units given to each player
+
         for (int i = 0; i < pl.size(); i++) {
-            pl.get(i).setArmiesCount(numUnitsPerPlayer);
+            pl.get(i).setArmiesCount(numUnitsPerPlayer); // Assign the amount of armies that the player initially has to distribute
         }
        
-        this.playersList=pl;
-        Collections.shuffle(this.playersList);
-        this.playersList.get(0).setItsMyTurn(true);
+        this.playersList = pl; // Assign the passed in player list to the Setup objects playerList
+        Collections.shuffle(this.playersList); // Shuffle the playerList to simulate a random order every time
+        this.playersList.get(0).setItsMyTurn(true); // Initiate the first players turn.
+        /*
+            This part is very confusing. Needs to be rewritten most likely. The getters have a hardcoded index.
+         */
         while (!done) {
             for (int i = 0; i < this.playersList.size(); i++) {
 

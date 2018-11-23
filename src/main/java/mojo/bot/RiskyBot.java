@@ -21,22 +21,30 @@ public class RiskyBot extends TelegramLongPollingBot {
     List<Long> ids = new ArrayList<>();
     List<Player> playersList= new ArrayList<>();
     String token = System.getenv("telegramToken");
-    
-    private String checkMessage(long id, String message) {
-        int count = 3;
-        boolean started = false;
-        Player player = new Player();
 
-        for (int i = 0; i < playersList.size(); i++) {
-            if (playersList.get(i).getId() == id) {
-                player = playersList.get(i);
-            }
-        }
+    /**
+     * This function checks the message and determines the action to take. If the action is legitimate a.k.a.
+     * the player is allowed to make that move it will do so on the players behalf.
+     * @param id the players chat id
+     * @param message the message returned by the player
+     * @return the message to send back to the player
+     */
+    private String checkMessage(long id, String message) {
+        int count = 3; // Hard coded due to requirement
+        boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
+//        Player player = new Player(); // Create a player object to reference
+//
+//        for (int i = 0; i < playersList.size(); i++) {
+//            if (playersList.get(i).getId() == id) {
+//                player = playersList.get(i);
+//            }
+//        }
 
         String returnMess = "";
         if (ids.contains(id)) {
             if (ids.size() == count) {
-
+                // Log the total amount of players to the console. This helps to debug problems.
+                System.out.println("The total amount of players is: " + ids.size());
                 if (!started && message.equals("ready")) {
 //                    for (int i = 0; i < playersList.size(); i++) {
 //                        if (playersList.get(i).getId() == id) {
@@ -44,10 +52,16 @@ public class RiskyBot extends TelegramLongPollingBot {
 //                        }
 //                    }
                     try {
-                        player.ready = true;
+//                        player.ready = true;
+                        for (int i = 0; i < playersList.size(); i++) {
+                            if (playersList.get(i).getId() == id) {
+                                playersList.get(i).ready = true;
+                                break;
+                            }
+                        }
                         // Check if everyone is ready
                         for (int i = 0; i < playersList.size(); i++) {
-                            if ((started = playersList.get(i).ready) == false) {
+                            if (!(started = playersList.get(i).ready)) {
                                 break;
                             }
                         }
@@ -120,6 +134,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             String response = "";
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
+            // This part might need to be refactored.
             if (message_text.equals("hello")) {
                 if (!ids.contains(chat_id)) {
                     response = "Hello. To enter a game, type in the game id. Example: 1234";
@@ -130,6 +145,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     response = "Oops! Something went wrong. We're sorry :(";
                 }
             } else if (message_text.equals("players")){
+                response = "Current players are:\n";
                 for (int i = 0; i < playersList.size(); i++) {
                     response+=playersList.get(i).getId()+"\n";
                 }
