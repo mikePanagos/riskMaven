@@ -21,6 +21,11 @@ public class RiskyBot extends TelegramLongPollingBot {
     List<Long> ids = new ArrayList<>();
     List<Player> playersList= new ArrayList<>();
     String token = System.getenv("telegramToken");
+    boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
+
+    GameEngine game = GameEngine.getInit();
+    Setup setup = Setup.getInstances();
+
 
     /**
      * This function checks the message and determines the action to take. If the action is legitimate a.k.a.
@@ -31,16 +36,15 @@ public class RiskyBot extends TelegramLongPollingBot {
      */
     private String checkMessage(long id, String message) {
         int count = 3; // Hard coded due to requirement
-        boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
-//        Player player = new Player(); // Create a player object to reference
-//
-//        for (int i = 0; i < playersList.size(); i++) {
-//            if (playersList.get(i).getId() == id) {
-//                player = playersList.get(i);
-//            }
-//        }
+        Player player = null; // Create a player object to reference
 
-        String returnMess = "";
+        for (int i = 0; i < playersList.size(); i++) {
+            if (playersList.get(i).getId() == id) {
+                player = playersList.get(i);
+            }
+        }
+
+        String returnMess = null;
         if (ids.contains(id)) {
             if (ids.size() == count) {
                 // Log the total amount of players to the console. This helps to debug problems.
@@ -52,7 +56,7 @@ public class RiskyBot extends TelegramLongPollingBot {
 //                        }
 //                    }
                     try {
-//                        player.ready = true;
+                        player.ready = true;
                         for (int i = 0; i < playersList.size(); i++) {
                             if (playersList.get(i).getId() == id) {
                                 playersList.get(i).ready = true;
@@ -66,8 +70,17 @@ public class RiskyBot extends TelegramLongPollingBot {
                             }
                         }
                         if (started) {
-                            GameEngine game = GameEngine.getInit();
-                            Setup s = Setup.getInstances();
+                            /*
+                                We only want to initialize the game if the game hasn't been already.
+                                A scenario may include the following.
+                                1. We receive a message. The game has 'started' (the boolean is already set to true)
+                                2. We do not want to initialize the game every single time we receive message.
+                                3. To avoid this, we can check if the game has already been setup.
+                             */
+                            if ( game == null && setup == null) {
+                                game = GameEngine.getInit();
+                                setup = Setup.getInstances();
+                            }
                             Setup.setupPlayerWithList(playersList);
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
@@ -90,11 +103,11 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                 }
                 else if (started) {
-                    if (player.getItsMyTurn()) {
-
-                    } else {
-                        returnMess = "Hold your horses! It's not your turn yet.";
-                    }
+//                    if (player.getItsMyTurn()) {
+//
+//                    } else {
+//                        returnMess = "Hold your horses! It's not your turn yet.";
+//                    }
                 }
                 else {
                     returnMess = "We support the following commands.\n" +
