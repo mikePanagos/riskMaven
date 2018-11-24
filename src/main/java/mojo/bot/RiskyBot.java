@@ -256,7 +256,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess = "Trade";
                 break;
             case "end turn":
-                returnMess = "Your turn case ended";
+                returnMess = "Your turn ended";
                 player.setSelectedMove("menu");
                 player.setItsMyTurn(false);
                 notifyNextPlayer(player.getId()); // Notify the next player it's their turn
