@@ -35,7 +35,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      * @return the message to send back to the player
      */
     private String checkMessage(long id, String message) {
-        int count = 3; // Hard coded due to requirement
+        int count = 1; // Hard coded due to requirement
         Player player = null; // Create a player object to reference
 
         for (int i = 0; i < playersList.size(); i++) {
@@ -63,12 +63,12 @@ public class RiskyBot extends TelegramLongPollingBot {
 //                    }
                     try {
                         player.ready = true;
-                        for (int i = 0; i < playersList.size(); i++) {
-                            if (playersList.get(i).getId() == id) {
-                                playersList.get(i).ready = true;
-                                break;
-                            }
-                        }
+//                        for (int i = 0; i < playersList.size(); i++) {
+//                            if (playersList.get(i).getId() == id) {
+//                                playersList.get(i).ready = true;
+//                                break;
+//                            }
+//                        }
                         // Check if everyone is ready.
                         // If one person is not ready then stop checking if anyone else is not ready.
                         // We need to only know if one person is not ready to wait for them
@@ -88,7 +88,9 @@ public class RiskyBot extends TelegramLongPollingBot {
                              */
                             if ( game == null && setup == null ) {
                                 game = GameEngine.getInit();
+                                System.out.println("Game Engine Initiated!");
                                 setup = Setup.getInstances();
+                                System.out.println("Setup complete!");
                                 Setup.setupPlayerWithList(playersList);
                             }
 
@@ -123,9 +125,11 @@ public class RiskyBot extends TelegramLongPollingBot {
                         System.out.println("Setup was not initialized!");
 
                     if (player.getItsMyTurn()) {
-                        returnMess = "It's your turn. What would you like to do?";
+                        String move = player.getSelectedMove();
+
+                        returnMess = controller(move, player, message);
                     } else {
-                        returnMess = "Hold your horses! It's not your turn yet.";
+                        returnMess = "Hold your horses! It's not your turn yet. We'll let you know when you can get back into the action.";
                     }
                 }
                 else {
@@ -187,7 +191,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             } else if (message_text.equals("players")){
                 response = "Current players are:\n";
                 for (int i = 0; i < playersList.size(); i++) {
-                    response+=playersList.get(i).getId()+"\n";
+                    response += "Player #" + playersList.get(i).getId() + "\n";
                 }
 
             } else {
@@ -217,4 +221,99 @@ public class RiskyBot extends TelegramLongPollingBot {
         return token;
     }
 
+    /**
+     * The controller method will appropriately execute the actions within the game. It will be used to generate the appropriate
+     * response from the bot to the player.
+     * @param move The last indicated move by the player. It is essentially used to keep track of the player's state.
+     * @param player The player who is executing the move.
+     * @return the message that the bot will return to the player in response to the action taken
+     */
+    public String controller(String move, Player player, String command) {
+        String returnMess = null;
+        switch (move) {
+            case "menu":
+                returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
+                returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
+                returnMess += "1. Attack\n";
+                returnMess += "2. Fortify\n";
+                returnMess += "3. Trade\n";
+                returnMess += "4. End Turn\n";
+                returnMess += "5. Surrender\n";
+                returnMess += "6. Summary\n";
+                returnMess += "Or 'Menu' to view this menu again.\n";
+                break;
+            case "attack":
+                returnMess = "Here is the list of territories you can attack with:\n";
+                returnMess += player.getPrintableListOfTerritoryThatCanAttack() + "\n";
+                returnMess += "Which territory would you like to choose?";
+                break;
+            case "fortify":
+                returnMess = "Here is the list of territories you can fortify:\n";
+                returnMess += player.printableTerritories() + "\n";
+                returnMess += "Which territory would you like to choose?\n";
+                break;
+            case "trade":
+                returnMess = "Trade";
+                break;
+            case "end turn":
+                returnMess = "Your turn case ended";
+                player.setSelectedMove("menu");
+                player.setItsMyTurn(false);
+                notifyNextPlayer(player.getId()); // Notify the next player it's their turn
+                break;
+            case "surrender":
+                returnMess = "Defeat. Better luck next time!";
+                playersList.remove(player); // Remove player from the player list
+                notifyNextPlayer(player.getId());
+                break;
+            case "summary":
+                returnMess = "Here is a verbose breakdown of you currently owned territories:\n";
+                returnMess += player.printTerritoriesVerbose() + "\n";
+                returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
+                break;
+            default:
+                returnMess = "Selection invalid!";
+                break;
+        }
+        return returnMess;
+    }
+
+
+    /**
+     * This will send a message to a player's telegram chat.
+     * @param id the chat/player id to notify
+     * @param content the message content
+     */
+    // This method will reduce the amount of times that we have to write the code to notify a player.
+    public void notifyPlayer(long id, String content) {
+        SendMessage message = new SendMessage();
+        message.setChatId(id).setText(content);
+        try {
+            execute(message);
+            System.out.println("Player #" + id + " alerted with message:");
+            System.out.println(content);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void notifyNextPlayer(long currentId) {
+        Player nextPlayer = null;
+        for (int i = 0; i < playersList.size(); i++) {
+            if (playersList.get(i).getId() == currentId) {
+                // We need to find the next player
+                if (i == playersList.size() - 1) {
+                    nextPlayer = playersList.get(0); // If the last person in the queue went, start from the front again
+                    // We do this to prevent index out of bounds exceptions from being thrown
+                }
+                else {
+                    nextPlayer = playersList.get(i+1); // If not, get the next person up
+                }
+                break;
+            }
+        }
+        nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
+        nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
+        notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'ready' to view your options.");
+    }
 }
