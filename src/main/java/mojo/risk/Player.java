@@ -11,7 +11,7 @@ import java.util.*;
  *
  */
 public class Player {
-	private int id;
+	private long id;
 	private int armiesCount;
 	private int cardCount;
 	private int pointCount;
@@ -19,10 +19,10 @@ public class Player {
 	private int prevTerritoryCount;
 	private int continentCount;
 	private int terrThatCanAttack;
-	private boolean attackedAtLeastOnce=false;
-	private boolean itsMyTurn;
+	private boolean attackedAtLeastOnce = false;
+	private boolean itsMyTurn = false;
 	public boolean ready = false;
-
+	private String selectedMove = "menu";
 
 	private List<Dice> dice = new ArrayList<>();
 
@@ -31,18 +31,11 @@ public class Player {
 	private List<String> cList = new ArrayList<String>();
 	private List<Card> cardList = new ArrayList<>();
 
-	/**
-	 * This is the default constructor for the player class. It will set the army
-	 * and card count based off of the values provided. This allows the constructor
-	 * to be flexible. The main game engine should make sure to pass the correct
-	 * amount of units and cards to this constructor. All other values will be set
-	 * to zero.
-	 * 
-	 * @param id     The player id. I.E. Player 1, Player 2 etc.
-	 * @param armies Amount of armies to start the player off with.
-	 * @param cards  Amount of cards to pass to the player.
-	 */
-	public Player(int id) {
+    /**
+     * Creates a player with everything set to default
+     * @param id the Player ID to assign
+     */
+	public Player(long id) {
 		this.id = id;
 		setArmiesCount(0);
 		setCardCount(0);
@@ -50,7 +43,19 @@ public class Player {
 		setTerritoryCount(0);
 		setContinentCount(0);
 	}
-	public Player(int id, int armies, int cards) {
+
+    /**
+     * This is the default constructor for the player class. It will set the army
+     * and card count based off of the values provided. This allows the constructor
+     * to be flexible. The main game engine should make sure to pass the correct
+     * amount of units and cards to this constructor. All other values will be set
+     * to zero.
+     *
+     * @param id     The player id. I.E. Player 1, Player 2 etc.
+     * @param armies Amount of armies to start the player off with.
+     * @param cards  Amount of cards to pass to the player.
+     */
+	public Player(long id, int armies, int cards) {
 		this.id = id;
 		setArmiesCount(armies);
 		setCardCount(cards);
@@ -59,7 +64,11 @@ public class Player {
 		setContinentCount(0);
 	}
 
-	
+    /**
+     * Used to make a deep copy of a Player
+     * @param p the player to create a copy from
+     * @return deep copy only
+     */
 	public Player(Player p) {
 		this.id = p.getId();
 		this.armiesCount = p.getArmiesCount();
@@ -88,10 +97,7 @@ public class Player {
 		
 
 	}
-	/**
-	 * 
-	 * @return deep copy only
-	 */
+
 	public List<Territory> getTerritoryList(){
 		
 		List<Territory> copy=new ArrayList<>();
@@ -121,7 +127,7 @@ public class Player {
 	 * 
 	 * @return int player id
 	 */
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 
@@ -264,7 +270,6 @@ public class Player {
 		this.tList.remove(territory);
 		setTerritoryCount(getTerritoryCount() - 1);
 		// setPrevTerritoryCount(tList.size());
-		return;
 	}
 
 	public void removeTerritoryByName(String name) {
@@ -511,4 +516,34 @@ public class Player {
 		 this.itsMyTurn=set;
 	}
 
+	/**
+	 * Get the players current selection. This is to keep track of what the player last selected.
+	 * This could be for example to Attack, Fortify, etc
+	 * @return The players last option.
+	 */
+	public String getSelectedMove() {
+		return this.selectedMove;
+	}
+
+	/**
+	 * Set the players selected move.
+	 * @param selectedMove The move selected by the player
+	 */
+	public void setSelectedMove(String selectedMove) {
+		this.selectedMove = selectedMove;
+	}
+
+    /**
+     * This returns a more verbose breakdown of the players currently owned territories.
+     * @return verbose summary of the player's territories
+     */
+	public String printTerritoriesVerbose() {
+	    String summary = null;
+	    for (Territory t : tList) {
+	        summary += "Territory Name: " + t.getName() + "\n";
+	        summary += "Number of units allocated: " + t.getNumOfUnits() + "\n";
+        }
+
+        return summary;
+    }
 }

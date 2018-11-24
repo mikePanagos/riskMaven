@@ -40,8 +40,8 @@ public class PlayerTest {
         assertTrue("someLibraryMethod should return 'true'", (list.size()==0));
     }
     /**
- * this test shows that when a player trys to trade cards they have to be the same type or it wont work.
- * if there where all the same card type list size whould be 3
+ * this test shows that when a player tries to trade cards they have to be the same type or it wont work.
+ * if there where all the same card type list size would be 3
  */
     @Test public void playerCardTest2() {
         Player p = new Player(1, 40, 0);
