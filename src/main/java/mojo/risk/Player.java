@@ -11,7 +11,7 @@ import java.util.*;
  *
  */
 public class Player {
-	private int id;
+	private long id;
 	private int armiesCount;
 	private int cardCount;
 	private int pointCount;
@@ -42,7 +42,7 @@ public class Player {
 	 * @param armies Amount of armies to start the player off with.
 	 * @param cards  Amount of cards to pass to the player.
 	 */
-	public Player(int id) {
+	public Player(long id) {
 		this.id = id;
 		setArmiesCount(0);
 		setCardCount(0);
@@ -121,7 +121,7 @@ public class Player {
 	 * 
 	 * @return int player id
 	 */
-	public int getId() {
+	public long getId() {
 		return this.id;
 	}
 

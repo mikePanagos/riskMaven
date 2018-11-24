@@ -23,8 +23,8 @@ public class RiskyBot extends TelegramLongPollingBot {
     String token = System.getenv("telegramToken");
     boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
 
-    GameEngine game = GameEngine.getInit();
-    Setup setup = Setup.getInstances();
+    GameEngine game = null;
+    Setup setup = null;
 
 
     /**
@@ -41,11 +41,17 @@ public class RiskyBot extends TelegramLongPollingBot {
         for (int i = 0; i < playersList.size(); i++) {
             if (playersList.get(i).getId() == id) {
                 player = playersList.get(i);
+                break;
             }
+        }
+
+        if (player == null) {
+            System.out.println("The player id was not found in the player list.");
         }
 
         String returnMess = null;
         if (ids.contains(id)) {
+
             if (ids.size() == count) {
                 // Log the total amount of players to the console. This helps to debug problems.
                 System.out.println("The total amount of players is: " + ids.size());
@@ -63,12 +69,15 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 break;
                             }
                         }
-                        // Check if everyone is ready
+                        // Check if everyone is ready.
+                        // If one person is not ready then stop checking if anyone else is not ready.
+                        // We need to only know if one person is not ready to wait for them
                         for (int i = 0; i < playersList.size(); i++) {
                             if (!(started = playersList.get(i).ready)) {
                                 break;
                             }
                         }
+
                         if (started) {
                             /*
                                 We only want to initialize the game if the game hasn't been already.
@@ -77,24 +86,29 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 2. We do not want to initialize the game every single time we receive message.
                                 3. To avoid this, we can check if the game has already been setup.
                              */
-                            if ( game == null && setup == null) {
+                            if ( game == null && setup == null ) {
                                 game = GameEngine.getInit();
                                 setup = Setup.getInstances();
+                                Setup.setupPlayerWithList(playersList);
                             }
-                            Setup.setupPlayerWithList(playersList);
+
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
                                 if (playersList.get(i).getId() == id)
                                     continue;
                                 SendMessage confirmation = new SendMessage() // Create a message object object
-                                        .setChatId((long)playersList.get(i).getId()).setText(returnMess);
+                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
                                 try {
                                     execute(confirmation); // Sending our message object to user
                                 } catch (TelegramApiException e) {
                                     e.printStackTrace();
                                 }
                             }
-                        } else {
+                        }
+
+                        // If the game is not ready set the message reply to alert the player that we're still waiting on people
+                        // to confirm that they're ready.
+                        else {
                             returnMess = "We're waiting on other players to get ready";
                         }
                     } catch (Exception e) {
@@ -103,11 +117,16 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                 }
                 else if (started) {
-//                    if (player.getItsMyTurn()) {
-//
-//                    } else {
-//                        returnMess = "Hold your horses! It's not your turn yet.";
-//                    }
+                    if (game == null)
+                        System.out.println("Game was not initialized!");
+                    if (setup == null)
+                        System.out.println("Setup was not initialized!");
+
+                    if (player.getItsMyTurn()) {
+
+                    } else {
+                        returnMess = "Hold your horses! It's not your turn yet.";
+                    }
                 }
                 else {
                     returnMess = "We support the following commands.\n" +
@@ -115,19 +134,27 @@ public class RiskyBot extends TelegramLongPollingBot {
                             "fortify\n" +
                             "quit";
                 }
-            } else if (ids.size() > count) {
+            }
+
+            else if (ids.size() > count) {
                 returnMess = "Woah! There's too many players in here.";
             }
+
             else {
                 returnMess = "We're waiting on more players to join!";
             }
-        } else {
+        }
+
+        else {
+
             if (message.equals("1234")) {
                 ids.add(id);
-                playersList.add(new Player((int)id));
+                playersList.add(new Player(id));
                 System.out.println("Added player " + id);
                 returnMess = "You're in!";
-            } else {
+            }
+            else {
+                System.out.println("Player #" + id + " entered the wrong password.");
                 returnMess = "Sorry, if you want to enter a game you need to give me the games id.";
             }
         }
