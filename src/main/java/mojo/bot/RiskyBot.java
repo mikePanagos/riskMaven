@@ -56,19 +56,8 @@ public class RiskyBot extends TelegramLongPollingBot {
                 // Log the total amount of players to the console. This helps to debug problems.
                 System.out.println("The total amount of players is: " + ids.size());
                 if (!started && message.equals("ready")) {
-//                    for (int i = 0; i < playersList.size(); i++) {
-//                        if (playersList.get(i).getId() == id) {
-//                            playersList.get(i).ready = true;
-//                        }
-//                    }
                     try {
                         player.ready = true;
-//                        for (int i = 0; i < playersList.size(); i++) {
-//                            if (playersList.get(i).getId() == id) {
-//                                playersList.get(i).ready = true;
-//                                break;
-//                            }
-//                        }
                         // Check if everyone is ready.
                         // If one person is not ready then stop checking if anyone else is not ready.
                         // We need to only know if one person is not ready to wait for them
@@ -230,6 +219,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      */
     public String controller(String move, Player player, String command) {
         String returnMess = null;
+        String[] args = command.split("\\s+"); // Split command into arguments
         switch (move) {
             case "menu":
                 returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
@@ -243,9 +233,15 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "Or 'Menu' to view this menu again.\n";
                 break;
             case "attack":
-                returnMess = "Here is the list of territories you can attack with:\n";
-                returnMess += player.getPrintableListOfTerritoryThatCanAttack() + "\n";
-                returnMess += "Which territory would you like to choose?";
+                if (args.length < 3) { // TODO: Update the right amount to compare argCount with.
+                    returnMess = "Here is the list of territories you can attack with:\n";
+                    returnMess += player.getPrintableListOfTerritoryThatCanAttack() + "\n";
+                    returnMess += "Which territory would you like to choose?";
+                }
+                else {
+                    // TODO: Implement attack method here
+                    System.out.println("Player #" + player.getId() + "has chosen to attack!");
+                }
                 break;
             case "fortify":
                 returnMess = "Here is the list of territories you can fortify:\n";
