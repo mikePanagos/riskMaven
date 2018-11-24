@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Territory {
     private String name;
     private String continentName;
-    private int owner;
+    private long owner;
     private int numOfUnits;
     // private boolean canAttack;
     private List<Territory> neighboringTerritories = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Territory {
 
     }
 
-    public int getOwner() {
+    public long getOwner() {
         return this.owner;
     }
 
@@ -103,7 +103,7 @@ public class Territory {
      * @param id id of player who you would like to select
      * @return String list of neighbors that the player owns
      */
-    public String getprintableListOfOwnedNeighboringTerritories(int id) {
+    public String getprintableListOfOwnedNeighboringTerritories(long id) {
         String terr = "";
         int count = 0;
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
@@ -121,7 +121,7 @@ public class Territory {
      * @param id
      * @return boolean true if all neighbors owned, false otherwise
      */
-    public boolean checkNeighbors(int id) {
+    public boolean checkNeighbors(long id) {
         int count = 0;
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
             if (this.neighboringTerritories.get(i).getOwner() != id) {
@@ -138,9 +138,10 @@ public class Territory {
     /**
      * 
      * @param id of player
+     * @param index
      * @return Territory the territory that is neighboring
      */
-    public Territory getOwnedNeighboringTerritory(int id, int index) {
+    public Territory getOwnedNeighboringTerritory(long id, int index) {
         
         // String terr="";
         int count = 0;
@@ -162,7 +163,7 @@ public class Territory {
      * @param id
      * @return String string containing the territories that can be attacked
      */
-    public String printableListOfAttackableNeighboringTerritories(int id) {
+    public String printableListOfAttackableNeighboringTerritories(long id) {
         String terr = "";
         int count = 0;
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
@@ -196,7 +197,7 @@ public class Territory {
      * @param index
      * @return Territory returns a territory that the current player can attack
      */
-    public Territory getAttackableNeighboringTerritory(int id, int index) {
+    public Territory getAttackableNeighboringTerritory(long id, int index) {
         int count = 0;
         int found = 0;
         for (int i = 0; i < this.neighboringTerritories.size(); i++) {
@@ -228,7 +229,7 @@ public class Territory {
         }
         return count;
     }
-    public void setOwner(int owner) {
+    public void setOwner(long owner) {
         this.owner = owner;
     }
 

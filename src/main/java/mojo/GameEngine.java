@@ -30,6 +30,8 @@ public class GameEngine {
 
 	public void attack(Territory act, Territory def, int attackingUnits) {
 		// Scanner key = new Scanner(System.in);
+		Player attackingPlayer = null;
+		Player defendingPlayer = null;
 
 		int attUnits = attackingUnits;
 		int defUnits = def.getNumOfUnits();
@@ -53,9 +55,20 @@ public class GameEngine {
 		}
 
 		List<Player> players = s.getPlayers();
-		int idOfAttPlayer = act.getOwner();
+		long idOfAttPlayer = 0;
+		long idOfDefPlayer = 0;
+
+		for(Player player : players) {
+		    if (player.getId() == act.getOwner()) {
+                idOfAttPlayer = act.getOwner();
+            }
+            if (player.getId() == def.getOwner()) {
+                idOfDefPlayer = def.getOwner();
+            }
+        }
+//		long idOfAttPlayer = act.getOwner();
 		Player attPlayer = s.getPlayerById(idOfAttPlayer);
-		int idOfDefPlayer = def.getOwner();
+//		long idOfDefPlayer = def.getOwner();
 		Player defPlayer = s.getPlayerById(idOfDefPlayer);
 		
 		// Create Attack Notification
@@ -66,38 +79,44 @@ public class GameEngine {
 		notificationCenter.setNotification(notification);
 		notificationCenter.updatePlayer();
 
-		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
-		players.get(idOfDefPlayer - 1).rollDices(defendNumOfRolls);
-		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
-		List<Integer> defDices = players.get(idOfDefPlayer - 1).getDice();
+//		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
+//		players.get(idOfDefPlayer - 1).rollDices(defendNumOfRolls);
+//		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
+//		List<Integer> defDices = players.get(idOfDefPlayer - 1).getDice();
+
+        attPlayer.rollDices(attackNumOfRolls);
+        defPlayer.rollDices(defendNumOfRolls);
+
+        List<Integer> attDice = attPlayer.getDice();
+        List<Integer> defDice = defPlayer.getDice();
 
 		Collections.sort(attDice);
 		Collections.reverse(attDice);
 
-		Collections.sort(defDices);
-		Collections.reverse(defDices);
+		Collections.sort(defDice);
+		Collections.reverse(defDice);
 
 
 		int defLostUnits = 0;
 		int attLostUnits = 0;
 		int biggerSize = 0;
 
-		if (attDice.size() > defDices.size()) {
+		if (attDice.size() > defDice.size()) {
 			// System.out.println("more attacking dice");
-			biggerSize = defDices.size();
+			biggerSize = defDice.size();
 		} else {
 			biggerSize = attDice.size();
 		}
 		for (int i = 0; i < biggerSize; i++) {
-			System.out.println("Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDices.get(i));
+			System.out.println("Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDice.get(i));
 
-			if (attDice.get(i) > defDices.get(i)) {
+			if (attDice.get(i) > defDice.get(i)) {
 
 				System.out.println("Attacking won defense will lose one unit");
 				System.out.println(" ");
 				System.out.println(" ");
 				defLostUnits++;
-			} else if (attDice.get(i) < defDices.get(i)) {
+			} else if (attDice.get(i) < defDice.get(i)) {
 				System.out.println(" defense won attacking will lose one unit");
 				System.out.println(" ");
 				System.out.println(" ");

@@ -747,7 +747,7 @@ public class Setup {
         return deck;
     }
 
-    public Player getPlayerById(int id) {
+    public Player getPlayerById(long id) {
         int i = 0;
         for (i = 0; i < playersList.size(); i++) {
 

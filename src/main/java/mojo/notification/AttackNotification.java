@@ -3,8 +3,8 @@ package mojo.notification;
 public class AttackNotification implements Notification {
 	private String message;
 	private String territory;
-	private int attackingPlayer;
-	private int defendingPlayer;
+	private long attackingPlayer;
+	private long defendingPlayer;
 	
 	/**
 	 * This is the constructor for the attack notification. It will collect all the information needed
@@ -13,7 +13,7 @@ public class AttackNotification implements Notification {
 	 * @param defendingPlayer the id of the player whose territory is under attack
 	 * @param territoryUnderAttack the name of the territory under attack
 	 */
-	public AttackNotification(int attackingPlayer, int defendingPlayer, String territoryUnderAttack) {
+	public AttackNotification(long attackingPlayer, long defendingPlayer, String territoryUnderAttack) {
 		this.territory = territoryUnderAttack;
 		setSender(attackingPlayer);
 		setReceiver(defendingPlayer);
@@ -36,7 +36,7 @@ public class AttackNotification implements Notification {
 	 * can be routed to the appropriate player.
 	 */
 	@Override
-	public void setReceiver(int defendingPlayer) {
+	public void setReceiver(long defendingPlayer) {
 		// TODO Auto-generated method stub
 		this.defendingPlayer = defendingPlayer;
 		return;
@@ -47,7 +47,7 @@ public class AttackNotification implements Notification {
 	 * customizable.
 	 */
 	@Override
-	public void setSender(int attackingPlayer) {
+	public void setSender(long attackingPlayer) {
 		// TODO Auto-generated method stub
 		this.attackingPlayer = attackingPlayer;
 	}
@@ -56,7 +56,7 @@ public class AttackNotification implements Notification {
 	 * This will return the id of the player who is to receive the message.
 	 */
 	@Override
-	public int getReceiver() {
+	public long getReceiver() {
 		// TODO Auto-generated method stub
 		return this.defendingPlayer;
 	}
@@ -65,7 +65,7 @@ public class AttackNotification implements Notification {
 	 * This will return the id of the player who initiated this message.
 	 */
 	@Override
-	public int getSender() {
+	public long getSender() {
 		// TODO Auto-generated method stub
 		return this.attackingPlayer;
 	}

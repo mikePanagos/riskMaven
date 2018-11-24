@@ -22,6 +22,7 @@ public class Player {
 	private boolean attackedAtLeastOnce=false;
 	private boolean itsMyTurn;
 	public boolean ready = false;
+	private String selectedMove = null;
 
 
 	private List<Dice> dice = new ArrayList<>();
@@ -509,6 +510,23 @@ public class Player {
 	}
 	public void setItsMyTurn(boolean set){
 		 this.itsMyTurn=set;
+	}
+
+	/**
+	 * Get the players current selection. This is to keep track of what the player last selected.
+	 * This could be for example to Attack, Fortify, etc
+	 * @return The players last option.
+	 */
+	public String getSelectedMove() {
+		return this.selectedMove;
+	}
+
+	/**
+	 * Set the players current selected move.
+	 * @param selectedMove The move selected by the player
+	 */
+	public void setSelectedMove(String selectedMove) {
+		this.selectedMove = selectedMove;
 	}
 
 }

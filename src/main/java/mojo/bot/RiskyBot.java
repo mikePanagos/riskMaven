@@ -123,7 +123,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                         System.out.println("Setup was not initialized!");
 
                     if (player.getItsMyTurn()) {
-
+                        returnMess = "It's your turn. What would you like to do?";
                     } else {
                         returnMess = "Hold your horses! It's not your turn yet.";
                     }
