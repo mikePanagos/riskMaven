@@ -218,11 +218,54 @@ public class GameEngine {
      * @param command the complete command given by the player
      * @return true if the command is valid; false if the command is invalid
      */
-	public static boolean verifyCommand(String move, String[] command) {
+	public static boolean verifyCommand(String move, String[] command, Player player) {
+	    boolean isValid = false;
+
 	    switch (move) {
             case "attack":
+                // Check if the owner has access to the attacking territory
+                // We will create a null Territory reference. If still null after going through all the territories
+                // that means the territory was invalid.
+                Territory attackingTerritory = null;
+                Territory defendingTerritory = null;
 
-                //return true;
+                for (Territory t : player.getTerritoryList()) {
+                    // Check to see if the territory can attack
+                    if (t.getName().toLowerCase().equals(command[1]) && t.getNumOfUnits() > 2) {
+                        attackingTerritory = t;
+                    }
+                }
+
+                // If the reference is still null that means we weren't able to find a territory with that name owned by
+                // the current player. Automatically returns false
+                if (attackingTerritory == null) {
+                    isValid = false;
+                    break;
+                }
+
+                // Check to see the defending Territory is valid for the chosen attacking territory.
+                for (Territory t : attackingTerritory.getSurroundingEnemies()) {
+                    if (t.getName().toLowerCase().equals(command[2])) {
+                        defendingTerritory = t;
+                    }
+                }
+
+                // If the defending territory reference is still null then the target selection was not valid
+                // Returns false
+                if (defendingTerritory == null) {
+                    isValid = false;
+                    break;
+                }
+
+                // If the attacking territory has less units than the ones described by the player
+                // then this move was invalid.
+                if (attackingTerritory.getNumOfUnits() < Integer.parseInt(command[3])) {
+                    isValid = false;
+                    break;
+                }
+
+                System.out.println("The attack command submitted was found to be valid.");
+                isValid = true;
                 break;
             case "fortify":
 
@@ -236,6 +279,6 @@ public class GameEngine {
                 //return false;
                 break;
         }
-        return false;
+        return isValid;
     }
 }

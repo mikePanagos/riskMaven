@@ -272,4 +272,20 @@ public class Territory {
         and the other with enemy territories.
      */
 
+    /**
+     * Finds what the current surrounding enemy territories are.
+     * @return an ArrayList containing all the surrounding enemy territories
+     */
+    public List<Territory> getSurroundingEnemies() {
+        List<Territory> enemies = new ArrayList<Territory>();
+
+        for (Territory t : neighboringTerritories) {
+            if (t.getOwner() != owner) {
+                enemies.add(t);
+            }
+        }
+
+        return enemies;
+    }
+
 }

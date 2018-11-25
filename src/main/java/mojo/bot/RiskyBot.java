@@ -250,9 +250,14 @@ public class RiskyBot extends TelegramLongPollingBot {
                 }
                 else {
                     // TODO: Implement attack method here
-
                     System.out.println("Player #" + player.getId() + "has chosen to attack!");
-                    returnMess = "Results:\n";
+                    if (GameEngine.verifyCommand(move, args, player)) {
+
+                        returnMess = "Results:\n";
+                    }
+                    else {
+                        returnMess = "Your command could not be executed.\n";
+                    }
                 }
                 break;
             case "fortify":
