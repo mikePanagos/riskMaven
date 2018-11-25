@@ -236,13 +236,13 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "4. End Turn\n";
                 returnMess += "5. Surrender\n";
                 returnMess += "6. Summary\n";
-                returnMess += "Or 'Menu' to view this menu again.\n";
+                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
                 break;
             case "attack":
                 if (args.length < 4) { // TODO: Update the right amount to compare argCount with.
                     returnMess = "Here is the list of territories you can attack with:\n";
                     returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
-                    returnMess += "Which territory would you like to choose?\n";
+                    returnMess += "How would you like to proceed?\n";
                     returnMess += "Format: Attack yourTerritory targetTerritory unitCount\n";
                     returnMess += "youTerritory - The territory you want to attack with.\n";
                     returnMess += "targetTerritory - The territory you would like to target.\n";
@@ -297,7 +297,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "4. End Turn\n";
                 returnMess += "5. Surrender\n";
                 returnMess += "6. Summary\n";
-                returnMess += "Or 'Menu' to view this menu again.\n";
+                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
                 break;
         }
         return returnMess;
