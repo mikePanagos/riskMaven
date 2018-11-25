@@ -298,7 +298,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 else {
                     if (GameEngine.verifyCommand(move, args, player)) {
                         Territory terrA = null, terrB = null;
-                        long units = Integer.parseInt(args[3]);
+                        Integer units = Integer.parseInt(args[3]);
                         // Used to reference the two territories needed for the fortify process
                         // We use the for each loop below to find the given territories
                         for (Territory t : player.getTerritoryList()) {
