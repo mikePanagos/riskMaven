@@ -546,4 +546,16 @@ public class Player {
 
         return summary;
     }
+
+    public String printOffensiveTerritoriesVerbose() {
+	    String summary = null;
+	    for (Territory t : tList) {
+	        summary += "Territory Name: " + t.getName() + "\n";
+	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
+	        summary += "Enemy Territories:\n";
+	        summary += t.printEnemyTerritories();
+        }
+
+        return summary;
+    }
 }

@@ -210,4 +210,32 @@ public class GameEngine {
 	public void shuffleCards() {
 		Collections.shuffle(deck);
 	}
+
+    /**
+     * This method verifies if the move selected by the Player was a legitimate move. It will check if they have
+     * the necessary resources/ownership to perform the move.
+     * @param move the action that the player is intending to do
+     * @param command the complete command given by the player
+     * @return true if the command is valid; false if the command is invalid
+     */
+	public static boolean verifyCommand(String move, String[] command) {
+	    switch (move) {
+            case "attack":
+
+                //return true;
+                break;
+            case "fortify":
+
+                //return true;
+                break;
+            case "trade":
+
+                //return true;
+                break;
+            default:
+                //return false;
+                break;
+        }
+        return false;
+    }
 }

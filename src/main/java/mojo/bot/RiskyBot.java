@@ -115,6 +115,8 @@ public class RiskyBot extends TelegramLongPollingBot {
 
                     if (player.getItsMyTurn()) {
                         String move = player.getSelectedMove();
+                        String[] command = move.split("\\s+");
+                        move = command[0];
 
                         returnMess = controller(move, player, message);
                     } else {
@@ -140,11 +142,15 @@ public class RiskyBot extends TelegramLongPollingBot {
 
         else {
 
-            if (message.equals("1234")) {
+            if (message.equals("1234") && !started) {
                 ids.add(id);
                 playersList.add(new Player(id));
                 System.out.println("Added player " + id);
                 returnMess = "You're in!";
+            }
+            else if (message.equals("1234") && started) {
+                System.out.println("Player #" + id + " tried to enter the game, but it's already in progress.");
+                returnMess += "Sorry, this game is already in progress.";
             }
             else {
                 System.out.println("Player #" + id + " entered the wrong password.");
@@ -233,20 +239,33 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "Or 'Menu' to view this menu again.\n";
                 break;
             case "attack":
-                if (args.length < 3) { // TODO: Update the right amount to compare argCount with.
+                if (args.length < 4) { // TODO: Update the right amount to compare argCount with.
                     returnMess = "Here is the list of territories you can attack with:\n";
-                    returnMess += player.getPrintableListOfTerritoryThatCanAttack() + "\n";
-                    returnMess += "Which territory would you like to choose?";
+                    returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
+                    returnMess += "Which territory would you like to choose?\n";
+                    returnMess += "Format: Attack yourTerritory targetTerritory unitCount\n";
+                    returnMess += "youTerritory - The territory you want to attack with.\n";
+                    returnMess += "targetTerritory - The territory you would like to target.\n";
+                    returnMess += "unitCount - The amount of armies you would like to attack with.\n";
                 }
                 else {
                     // TODO: Implement attack method here
+
                     System.out.println("Player #" + player.getId() + "has chosen to attack!");
+                    returnMess = "Results:\n";
                 }
                 break;
             case "fortify":
-                returnMess = "Here is the list of territories you can fortify:\n";
-                returnMess += player.printableTerritories() + "\n";
-                returnMess += "Which territory would you like to choose?\n";
+                if (args.length < 4) {
+                    returnMess = "Here is the list of territories you can fortify:\n";
+                    returnMess += player.printableTerritories() + "\n";
+                    returnMess += "Which territory would you like to choose?\n";
+                }
+                else {
+                    returnMess = "We have fortified the territory selected.";
+                    returnMess += "Here is the new summary of the territories you own.\n";
+                    returnMess += player.printTerritoriesVerbose() + "\n";
+                }
                 break;
             case "trade":
                 returnMess = "Trade";
@@ -258,7 +277,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 notifyNextPlayer(player.getId()); // Notify the next player it's their turn
                 break;
             case "surrender":
-                returnMess = "Defeat. Better luck next time!";
+                returnMess = "Sorry to see you go. Better luck next time!";
                 playersList.remove(player); // Remove player from the player list
                 notifyNextPlayer(player.getId());
                 break;
@@ -266,9 +285,19 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess = "Here is a verbose breakdown of you currently owned territories:\n";
                 returnMess += player.printTerritoriesVerbose() + "\n";
                 returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
+                returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
                 break;
             default:
-                returnMess = "Selection invalid!";
+                returnMess = "Invalid Option!";
+                returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
+                returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
+                returnMess += "1. Attack\n";
+                returnMess += "2. Fortify\n";
+                returnMess += "3. Trade\n";
+                returnMess += "4. End Turn\n";
+                returnMess += "5. Surrender\n";
+                returnMess += "6. Summary\n";
+                returnMess += "Or 'Menu' to view this menu again.\n";
                 break;
         }
         return returnMess;
