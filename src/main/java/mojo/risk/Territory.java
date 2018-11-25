@@ -288,4 +288,20 @@ public class Territory {
         return enemies;
     }
 
+    /**
+     * Finds what the current surrounding ally territories are.
+     * @return an ArrayList containing all the surrounding ally territories.
+     */
+    public List<Territory> getSurroundingAllies() {
+        List<Territory> allies = new ArrayList<Territory>();
+
+        for (Territory t : neighboringTerritories) {
+            if (t.getOwner() == owner) {
+                allies.add(t);
+            }
+        }
+
+        return allies;
+    }
+
 }

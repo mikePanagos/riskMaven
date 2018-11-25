@@ -268,15 +268,52 @@ public class GameEngine {
                 isValid = true;
                 break;
             case "fortify":
+                /*
+                    Format of command: fortify TerrA TerrB Units
+                    Units - The amount of units to fortify with.
+                    We're going to try and fortify a territory in the following fashion.
+                    TerrA -> sends units -> TerrB
+                    1. TerrA and TerrB must not be the same
+                    2. TerrA and TerrB must both be owned by the player
+                    3. TerrA must have more than one army before AND after the fortification
+                 */
+                Territory terrA = null;
+                Territory terrB = null;
 
-                //return true;
+                if (command[1].equals(command[2])) {
+                    isValid = false;
+                    break;
+                }
+
+                for (Territory t : player.getTerritoryList()) {
+                    if (t.getName().toLowerCase().equals(command[1])) {
+                        terrA = t;
+                    }
+                    if (t.getName().toLowerCase().equals(command[2])) {
+                        terrB = t;
+                    }
+                }
+
+                if (terrA == null || terrB == null) {
+                    isValid = false;
+                    break;
+                }
+
+                if (terrA.getNumOfUnits() <= 1 || (terrA.getNumOfUnits() - Integer.parseInt(command[3])) < 1) {
+                    isValid = false;
+                    break;
+                }
+
+                System.out.println("The trade command was found to be valid.");
+                isValid = true;
                 break;
             case "trade":
 
-                //return true;
+                // This will currently always return true but game logic needs to be added here as well.
+                isValid = true;
                 break;
             default:
-                //return false;
+                isValid = true;
                 break;
         }
 
