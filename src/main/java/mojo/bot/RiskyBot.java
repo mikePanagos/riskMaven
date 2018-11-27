@@ -115,6 +115,8 @@ public class RiskyBot extends TelegramLongPollingBot {
 
                     if (player.getItsMyTurn()) {
                         String move = player.getSelectedMove();
+                        String[] command = move.split("\\s+");
+                        move = command[0];
 
                         returnMess = controller(move, player, message);
                     } else {
@@ -140,11 +142,15 @@ public class RiskyBot extends TelegramLongPollingBot {
 
         else {
 
-            if (message.equals("1234")) {
+            if (message.equals("1234") && !started) {
                 ids.add(id);
                 playersList.add(new Player(id));
                 System.out.println("Added player " + id);
                 returnMess = "You're in!";
+            }
+            else if (message.equals("1234") && started) {
+                System.out.println("Player #" + id + " tried to enter the game, but it's already in progress.");
+                returnMess += "Sorry, this game is already in progress.";
             }
             else {
                 System.out.println("Player #" + id + " entered the wrong password.");
@@ -227,48 +233,125 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "1. Attack\n";
                 returnMess += "2. Fortify\n";
                 returnMess += "3. Trade\n";
-                returnMess += "4. End Turn\n";
+                returnMess += "4. End\n";
                 returnMess += "5. Surrender\n";
                 returnMess += "6. Summary\n";
-                returnMess += "Or 'Menu' to view this menu again.\n";
+                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
                 break;
             case "attack":
-                if (args.length < 3) { // TODO: Update the right amount to compare argCount with.
+                if (args.length < 4) { // TODO: Update the right amount to compare argCount with.
                     returnMess = "Here is the list of territories you can attack with:\n";
-                    returnMess += player.getPrintableListOfTerritoryThatCanAttack() + "\n";
-                    returnMess += "Which territory would you like to choose?";
+                    returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
+                    returnMess += "How would you like to proceed?\n";
+                    returnMess += "Format: Attack yourTerritory targetTerritory unitCount\n";
+                    returnMess += "youTerritory - The territory you want to attack with.\n";
+                    returnMess += "targetTerritory - The territory you would like to target.\n";
+                    returnMess += "unitCount - The amount of armies you would like to attack with.\n";
                 }
                 else {
-                    // TODO: Implement attack method here
                     System.out.println("Player #" + player.getId() + "has chosen to attack!");
+
+                    if (GameEngine.verifyCommand(move, args, player)) {
+                        Territory attackingTerr = null, defendingTerr = null;
+                        int units = Integer.parseInt(args[3]);
+
+                        for (Territory t : player.getTerritoryList()) {
+                            if (t.getName().toLowerCase().equals(args[1])) {
+                                attackingTerr = t;
+                                break;
+                            }
+                        }
+
+                        for (Territory t : attackingTerr.getSurroundingEnemies()) {
+                            if (t.getName().toLowerCase().equals(args[2])) {
+                                defendingTerr = t;
+                                break;
+                            }
+                        }
+
+                        // Execute attack
+                        game.attack(attackingTerr, defendingTerr, units);
+
+                        // Send a summary of the players territories after the attack
+                        returnMess = "Results\n";
+                        returnMess += "-----------------------------\n";
+                        returnMess += "Attacking Territory\n";
+                        returnMess += "Name: " + attackingTerr.getName() + "\n";
+                        returnMess += "Units: " + attackingTerr.getNumOfUnits() + "\n";
+                        returnMess += "Defending Territory\n";
+                        returnMess += "Name: " + defendingTerr.getName() + "\n";
+                        returnMess += "Units: " + defendingTerr.getNumOfUnits() + "\n";
+                    }
+                    else {
+                        returnMess = "Your command could not be executed.\n";
+                    }
                 }
                 break;
             case "fortify":
-                returnMess = "Here is the list of territories you can fortify:\n";
-                returnMess += player.printableTerritories() + "\n";
-                returnMess += "Which territory would you like to choose?\n";
+                if (args.length < 4) {
+                    returnMess = "Here is the list of territories you own. Fortification has the following requirements:\n";
+                    returnMess += "1. The helping territory must have more than one unit before AND after fortification.\n";
+                    returnMess += "2. The helping territory must be adjacent to the territory you wish to fortify.\n";
+                    returnMess += player.printFortifyTerritories() + "\n";
+                    returnMess += "How would you like to proceed?\n";
+                }
+                else {
+                    if (GameEngine.verifyCommand(move, args, player)) {
+                        Territory terrA = null, terrB = null;
+                        Integer units = Integer.parseInt(args[3]);
+                        // Used to reference the two territories needed for the fortify process
+                        // We use the for each loop below to find the given territories
+                        for (Territory t : player.getTerritoryList()) {
+                            if (t.getName().toLowerCase().equals(args[1])) {
+                                terrA = t;
+                            }
+                            if (t.getName().toLowerCase().equals(args[2])) {
+                                terrB = t;
+                            }
+                        }
+                        // Execute fortify command.
+                        game.fortify(terrA, terrB, units);
+
+                        returnMess = "We have fortified the territory selected.";
+                        returnMess += "Here is the new summary of the territories you own.\n";
+                        returnMess += player.printTerritoriesVerbose() + "\n";
+                    }
+                    else {
+                        returnMess = "Your command could not be executed.\n";
+                    }
+                }
                 break;
             case "trade":
-                returnMess = "Trade";
+                returnMess = "Trade Test Message";
                 break;
-            case "end turn":
-                returnMess = "Your turn ended";
+            case "end":
+                returnMess = "You have ended your turn.";
                 player.setSelectedMove("menu");
                 player.setItsMyTurn(false);
                 notifyNextPlayer(player.getId()); // Notify the next player it's their turn
                 break;
             case "surrender":
-                returnMess = "Defeat. Better luck next time!";
+                returnMess = "Sorry to see you go. Better luck next time!";
                 playersList.remove(player); // Remove player from the player list
                 notifyNextPlayer(player.getId());
                 break;
             case "summary":
-                returnMess = "Here is a verbose breakdown of you currently owned territories:\n";
+                returnMess = "Here is a breakdown of you currently owned territories:\n";
                 returnMess += player.printTerritoriesVerbose() + "\n";
                 returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
+                returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
                 break;
             default:
-                returnMess = "Selection invalid!";
+                returnMess = "Invalid Option!";
+                returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
+                returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
+                returnMess += "1. Attack\n";
+                returnMess += "2. Fortify\n";
+                returnMess += "3. Trade\n";
+                returnMess += "4. End\n";
+                returnMess += "5. Surrender\n";
+                returnMess += "6. Summary\n";
+                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
                 break;
         }
         return returnMess;
@@ -295,6 +378,7 @@ public class RiskyBot extends TelegramLongPollingBot {
 
     public void notifyNextPlayer(long currentId) {
         Player nextPlayer = null;
+        // 'i' is the index for the player list
         for (int i = 0; i < playersList.size(); i++) {
             if (playersList.get(i).getId() == currentId) {
                 // We need to find the next player

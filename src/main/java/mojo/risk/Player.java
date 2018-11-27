@@ -546,4 +546,41 @@ public class Player {
 
         return summary;
     }
+
+    public String printOffensiveTerritoriesVerbose() {
+	    String summary = null;
+	    for (Territory t : tList) {
+	        summary += "Territory Name: " + t.getName() + "\n";
+	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
+	        summary += "Enemy Territories:\n";
+	        summary += t.printEnemyTerritories();
+        }
+
+        return summary;
+    }
+
+    public String printFortifyTerritories() {
+	    String summary = null;
+	    for (Territory t : tList) {
+	        if (t.getNumOfUnits() > 1) {
+	            summary += "Territory Name: " + t.getName() + "\n";
+	            summary += "Units: " + t.getNumOfUnits() + "\n";
+	            summary += "--------------------------------------\n";
+	            summary += "Can fortify the following territories:\n";
+                summary += "--------------------------------------\n";
+
+                if (t.getSurroundingAllies().size() == 0) {
+                    summary += "None \n";
+                }
+                else {
+                    for (Territory ally : t.getSurroundingAllies()) {
+                        summary += "Territory Name: " + ally.getName() + "\n";
+                        summary += "Units: " + ally.getNumOfUnits() + "\n";
+                    }
+                }
+            }
+        }
+
+        return summary;
+    }
 }

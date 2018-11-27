@@ -240,4 +240,68 @@ public class Territory {
         // }
     }
 
+    /**
+     * This method will return all the options which this territory can attack.
+     * @return the formatted string containing all the options from which this
+     */
+    public String printEnemyTerritories() {
+        // Create a new ArrayList to store all valid options for this territory to attack.
+        List<Territory> options = new ArrayList<Territory>();
+        // String to return with the summary
+        String summary = null;
+
+        // Add in only the territories that are not owned by the same owner.
+        for (Territory t : neighboringTerritories) {
+            if (t.getOwner() != getOwner()) {
+                options.add(t);
+            }
+        }
+
+        // Format the output so that it's human readable.
+        for (Territory t : options) {
+            summary += "Target Territory Name: " + t.getName() + "\n";
+            summary += "Armies Count: " + t.getNumOfUnits() + "\n";
+            summary += "Owned by: " + t.getOwner() + "\n";
+        }
+
+        return summary;
+    }
+
+    /*
+        We may consider splitting the neighboring territories list into two lists. One with ally territories,
+        and the other with enemy territories.
+     */
+
+    /**
+     * Finds what the current surrounding enemy territories are.
+     * @return an ArrayList containing all the surrounding enemy territories
+     */
+    public List<Territory> getSurroundingEnemies() {
+        List<Territory> enemies = new ArrayList<Territory>();
+
+        for (Territory t : neighboringTerritories) {
+            if (t.getOwner() != owner) {
+                enemies.add(t);
+            }
+        }
+
+        return enemies;
+    }
+
+    /**
+     * Finds what the current surrounding ally territories are.
+     * @return an ArrayList containing all the surrounding ally territories.
+     */
+    public List<Territory> getSurroundingAllies() {
+        List<Territory> allies = new ArrayList<Territory>();
+
+        for (Territory t : neighboringTerritories) {
+            if (t.getOwner() == owner) {
+                allies.add(t);
+            }
+        }
+
+        return allies;
+    }
+
 }
