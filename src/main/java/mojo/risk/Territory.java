@@ -128,7 +128,7 @@ public class Territory {
                 count++;
             }
         }
-        if(count<=0){
+        if(count<0){
         return false;
         }else{
             return true;

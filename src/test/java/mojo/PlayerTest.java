@@ -277,7 +277,7 @@ public class PlayerTest {
 
 @Test public void getAttackedAtLeastOncesTest(){
     Player p=new Player(1111111,23,3);
-    p.setPrevTerritoryCount(5);
+    p.setAttackedAtLeastOnces(false);
     
 
     assertTrue("getAttackedAtLeastOncesTest", p.getAttackedAtLeastOnces()==false);
