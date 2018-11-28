@@ -29,6 +29,15 @@ public class NotificationCenterTest {
 				notificationCenter.setNotification(n) == true);
 		System.out.println("The test was successful!\n");
 	}
+
+	public void getSenderTest() {
+		Notification n = new AttackNotification(111111111, 222222222, "Testing");
+		System.out.println("Running Notification Center getSender() Method Test");
+		System.out.println("Attempting to set a notification...");
+		assertTrue("An exception occured while setting the notification!",
+				n.getSender()==222222222);
+		System.out.println("The test was successful!\n");
+	}
 	
 	@Test
 	public void updatePlayerTest() {
