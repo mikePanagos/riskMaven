@@ -34,13 +34,9 @@ public class RiskyBot extends TelegramLongPollingBot {
      * @param message the message returned by the player
      * @return the message to send back to the player
      */
-<<<<<<< HEAD
+
     private String checkMessage(long id, String message) {
         int count = 3; // Hard coded due to requirement
-=======
-    public String checkMessage(long id, String message) {
-        int count = 1; // Hard coded due to requirement
->>>>>>> 9b22c3730f62639a401769524e1bef611fe5242b
         Player player = null; // Create a player object to reference
 
         for (int i = 0; i < playersList.size(); i++) {
