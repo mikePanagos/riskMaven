@@ -272,12 +272,16 @@ public class Player {
 		// setPrevTerritoryCount(tList.size());
 	}
 
-	public void removeTerritoryByName(String name) {
+	public int removeTerritoryByName(String name) {
+		int result=0;
 		for (int i = 0; i < this.tList.size(); i++) {
 			if (name.equals(this.tList.get(i).getName())) {
 				this.tList.remove(i);
+				result=1;
+
 			}
 		}
+		return result;
 	}
 
 	/**

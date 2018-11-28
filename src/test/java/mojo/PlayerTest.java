@@ -3,6 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.*;
 import mojo.risk.*;
+import mojo.*;
 
 public class PlayerTest {
    
@@ -128,4 +129,43 @@ public class PlayerTest {
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
         assertTrue("someLibraryMethod should return 'true'", (playerList.get(2).printableTerritories().equals("0. Alberta army on 0. ")));
     }
+
+    @Test public void setPointCountTest() {
+        Setup s= Setup.getInstances(2);
+        Setup.SetupPLayers(6);
+        List<Player> playerList =s.getPlayers();
+        playerList.get(2).setPointCount(10000);
+   
+        assertTrue("someLibraryMethod should return 'true'", playerList.get(2).getPointCount()==10000);
+       
+    }
+    @Test public void removeTerritoryByNameTest(){
+        Setup s= Setup.getInstances(2);
+        List<Player> playerList =new ArrayList<>();
+        playerList.add(new Player(1111111,23,3));
+        playerList.add(new Player(444,3,3));
+        s.makePlayerList(playerList);
+        
+        //1 means it was successful
+        assertTrue("someLibraryMethod should return 'true'", playerList.get(0).removeTerritoryByName("Alaska")==1);
+    }
+
+
+    @Test public void getPrintableListOfTerritoryThatCanAttackTest(){
+        // Setup s= Setup.getInstances(2);
+        // List<Player> playerList =new ArrayList<>();
+       
+        // playerList.add(new Player(1111111,23,3));
+        // playerList.add(new Player(444,3,3));
+        // s.makePlayerList(playerList);
+        // List<Territory> ter=s.getTerritories();
+        // System.out.println("\n\n\n\n\n\n\n\n");
+        // System.out.println(ter);
+        // System.out.println("\n\n\n\n\n\n\n\n"); System.out.println("\n\n\n\n\n\n\n\n"); System.out.println("\n\n\n\n\n\n\n\n");
+        // ter.get(0).setNumOfUnits(4);
+        // assertTrue("",true);
+        // assertTrue("someLibraryMethod should return 'true'", playerList.get(2).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
+    }
+
+
 }

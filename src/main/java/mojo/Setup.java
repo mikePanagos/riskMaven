@@ -706,7 +706,7 @@ public class Setup {
         Collections.shuffle(this.playersList); // Shuffle the playerList to simulate a random order every time
         this.playersList.get(0).setItsMyTurn(true); // Initiate the first players turn.
         /*
-            This part is very confusing. Needs to be rewritten most likely. The getters have a hardcoded index.
+            this assigns the first territory to a player i then removes it then sets number of units to 1 then repeats until empty  
          */
         while (!done) {
             for (int i = 0; i < this.playersList.size(); i++) {
