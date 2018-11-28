@@ -550,6 +550,7 @@ public class Player {
     public String printOffensiveTerritoriesVerbose() {
 	    String summary = null;
 	    for (Territory t : tList) {
+	    	summary += "\n"; // Used to format if the preceding value is null;
 	        summary += "Territory Name: " + t.getName() + "\n";
 	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
 	        summary += "Enemy Territories:\n";
