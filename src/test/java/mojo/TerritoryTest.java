@@ -92,6 +92,20 @@ public class TerritoryTest {
         assertTrue("checkNeighborsTest should return 'true'",japan.checkNeighbors(1111111)==true );
 
     }
+    @Test public void checkNeighborsTestCase2() {
+        Territory japan = new Territory("japan", "Asia",  1111111, 0); 
+        Territory mongola = new Territory("mongola", "Asia", 333, 0); 
+        Territory kamchatka = new Territory("kamchatka", "Asia", 33, 0); 
+        // test case for Territory it test adding a Territory then added Neighboring
+        // Territory to make sure it still points to the right thing
+        List<Territory> neighboringTerritories = new ArrayList<>();
+        neighboringTerritories.add(mongola);
+        neighboringTerritories.add(kamchatka);
+        japan.setNeighboringTerritories(neighboringTerritories);
+
+        assertTrue("checkNeighborsTest should return 'true'",japan.checkNeighbors(1111111)==true );
+
+    }
 
     // getOwnedNeighboringTerritory
     @Test public void getOwnedNeighboringTerritoryTest() {
