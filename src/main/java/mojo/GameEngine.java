@@ -173,7 +173,7 @@ public class GameEngine {
 		{
 			System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
 			deck.add(pCards.get(i));
-			p.remvoeCard(pCards.get(i));
+			p.removeCard(pCards.get(i));
 		}
 
 

@@ -14,7 +14,7 @@ public class PlayerTest {
         Player p = new Player(1, 40, 0);
         p.addContinent("Africa");
         
-        assertTrue("someLibraryMethod should return 'true'", (p.getContinentCount()==1));
+        assertTrue("playerTest1 should return 'true'", (p.getContinentCount()==1));
     }
 /**
  * this test shows that when a player trys to trade cards they have to be the same type or it wont work.
@@ -38,7 +38,7 @@ public class PlayerTest {
             System.out.println(list.get(i).getTerritoryName()+" "+list.get(i).getType());
             
         }
-        assertTrue("someLibraryMethod should return 'true'", (list.size()==0));
+        assertTrue("playerTest2 should return 'true'", (list.size()==0));
     }
     /**
  * this test shows that when a player tries to trade cards they have to be the same type or it wont work.
@@ -63,7 +63,7 @@ public class PlayerTest {
             System.out.println(list.get(i).getTerritoryName()+" "+list.get(i).getType());
             
         }
-        assertTrue("someLibraryMethod should return 'true'", (list.size()!=0));
+        assertTrue("playerCardTest2 should return 'true'", (list.size()!=0));
     }
     // /**
     //  * test that when you added a armies to a player 
@@ -72,7 +72,7 @@ public class PlayerTest {
         Player p = new Player(1, 40, 0);
         p.addContinent("Africa");
         
-        assertTrue("someLibraryMethod should return 'true'", (p.getArmiesCount()==40));
+        assertTrue("playerTest should return 'true'", (p.getArmiesCount()==40));
     }
     /**
      * test that when you added a armies to a player 
@@ -80,7 +80,7 @@ public class PlayerTest {
     @Test public void playerTest3() {
         Player p = new Player(1, 40, 0);
         p.setArmiesCount(p.getArmiesCount()-6);        
-        assertTrue("someLibraryMethod should return 'true'", (p.getArmiesCount()==34));
+        assertTrue("playerTest3 should return 'true'", (p.getArmiesCount()==34));
     }
      /**
      * test that when you add a territory to a player 
@@ -94,7 +94,7 @@ public class PlayerTest {
         System.out.println(" ");
 
    System.out.println("test 3 "+playerList.get(1).printableTerritories());
-        assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("playerTest4 should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
     }
    
      /**
@@ -112,8 +112,8 @@ public class PlayerTest {
         System.out.println("test 4 "+playerList.get(1).printableTerritories());
         playerList.get(2).addTerritory(ter.get(1));
    
-        assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
-        assertTrue("someLibraryMethod should return 'true'", (playerList.get(2).printableTerritories().equals("0. Alberta army on 0. ")));
+        assertTrue("playerTest5 should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("playerTest5 should return 'true'", (playerList.get(2).printableTerritories().equals("0. Alberta army on 0. ")));
     }
      /**
      *  testing when you add territroys to multiple players
@@ -126,8 +126,8 @@ public class PlayerTest {
         playerList.get(1).addTerritory(ter.get(0));
         playerList.get(2).addTerritory(ter.get(1));//0. Alberta army on 0.
    
-        assertTrue("someLibraryMethod should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
-        assertTrue("someLibraryMethod should return 'true'", (playerList.get(2).printableTerritories().equals("0. Alberta army on 0. ")));
+        assertTrue("playerTest6 should return 'true'", (playerList.get(1).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("playerTest6 should return 'true'", (playerList.get(2).printableTerritories().equals("0. Alberta army on 0. ")));
     }
 
     @Test public void setPointCountTest() {
@@ -136,7 +136,17 @@ public class PlayerTest {
         List<Player> playerList =s.getPlayers();
         playerList.get(2).setPointCount(10000);
    
-        assertTrue("someLibraryMethod should return 'true'", playerList.get(2).getPointCount()==10000);
+        assertTrue("setPointCountTest should return 'true'", playerList.get(2).getPointCount()==10000);
+       
+    }
+
+    @Test public void setPointCountTotalTest() {
+        Setup s= Setup.getInstances(2);
+        Setup.SetupPLayers(6);
+        List<Player> playerList =s.getPlayers();
+        playerList.get(2).setPointCount();
+   
+        assertTrue("setPointCountTotalTest", playerList.get(2).getPointCount()==0);
        
     }
     @Test public void removeTerritoryByNameTest(){
@@ -147,7 +157,19 @@ public class PlayerTest {
         s.makePlayerList(playerList);
         
         //1 means it was successful
-        assertTrue("someLibraryMethod should return 'true'", playerList.get(0).removeTerritoryByName("Alaska")==1);
+        assertTrue("removeTerritoryByNameTest ", playerList.get(0).removeTerritoryByName("Alaska")==1);
+    }
+
+    @Test public void setTerritoryCountTest(){
+        Setup s= Setup.getInstances(2);
+        List<Player> playerList =new ArrayList<>();
+        playerList.add(new Player(1111111,23,3));
+        playerList.add(new Player(444,3,3));
+        s.makePlayerList(playerList);
+        playerList.get(0).setTerritoryCount();
+        
+        //1 means it was successful
+        assertTrue("setTerritoryCountTest ", playerList.get(0).getTerritoryCount()==21);
     }
 
 
@@ -163,8 +185,57 @@ public class PlayerTest {
         playerList.get(0).getTerritory(0).setNumOfUnits(5);
         System.out.println("\n\n\n\n\n\n\n\n");
     
-        assertTrue("someLibraryMethod should return 'true'", playerList.get(0).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
+        assertTrue("getPrintableListOfTerritoryThatCanAttackTest ", playerList.get(0).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
     }
 
 
+    @Test public void getTerritoryThatCanAttackTest(){
+        Setup s= Setup.getInstances(2);
+        List<Player> playerList =new ArrayList<>();
+       
+        playerList.add(new Player(1111111,23,3));
+        playerList.add(new Player(444,3,3));
+        s.makePlayerList(playerList);
+        List<Territory> ter=s.getTerritories();
+        System.out.println("\n\n\n\n\n\n\n\n");
+        playerList.get(0).getTerritory(0).setNumOfUnits(5);
+        System.out.println("\n\n\n\n\n\n\n\n");
+    
+        assertTrue("getTerritoryThatCanAttackTest", playerList.get(0).getTerritoryThatCanAttack(0).getName().equals("Alaska"));
+    }
+
+    @Test public void removeContinentTest(){
+        Player p=new Player(1111111,23,3);
+        p.addContinent("north");
+        p.getContinents();
+        p.removeContinent("north");
+        
+        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n");
+    
+        assertTrue("removeContinentTest", p.getContinentCount()==0);
+    }
+
+    @Test public void removeCardTest(){
+        Player p=new Player(1111111,23,3);
+        Card c=new Card("Cav","Alaska");
+        p.addCard(c);
+        p.removeCard(c);
+        
+        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n");
+    
+        assertTrue("removeContinentTest", p.getContinentCount()==0);
+    }
+// rollDices
+@Test public void rollDicesTest(){
+    Player p=new Player(1111111,23,3);
+    Card c=new Card("Cav","Alaska");
+    p.rollDices(2);
+    
+    System.out.println("\n\n\n\n\n\n\n\n");
+    System.out.println("\n\n\n\n\n\n\n\n");
+
+    assertTrue("rollDicesTest", p.getDice().get(0)==1||p.getDice().get(0)==2||p.getDice().get(0)==3||p.getDice().get(0)==4||p.getDice().get(0)==5||p.getDice().get(0)==6);
+}
 }

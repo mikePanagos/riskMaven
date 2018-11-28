@@ -29,4 +29,19 @@ public class CardTest{
 
        assertTrue(" ",newC.getTerritoryName().equals("Alaska"));
     }
+
+
+    @Test public void PrintCardTest(){
+        Card c= new Card();
+        c.setTerritoryName("Alaska");
+        c.setType("Cavalry");
+        Card newC=new Card(c);
+        //test for constructor with a Card passed in
+
+
+       assertTrue("print card test",newC.printCard().equals("Cavalry Alaska"));
+    }
+
+
+   
 }
