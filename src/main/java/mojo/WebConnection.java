@@ -50,7 +50,7 @@ public class WebConnection {
 		// }
 		AWSCredentials credentials = null;
         try {
-            credentials = new ProfileCredentialsProvider("risky").getCredentials();
+            credentials = new ProfileCredentialsProvider("default").getCredentials();
             // credentials = new ProfileCredentialsProvider("risky").EnvironmentVariableCredentialsProvider();
         } catch (Exception e) {
             throw new AmazonClientException(
