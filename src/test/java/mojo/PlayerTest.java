@@ -65,6 +65,20 @@ public class PlayerTest {
         }
         assertTrue("playerCardTest2 should return 'true'", (list.size()!=0));
     }
+    @Test public void printCardsTest() {
+        Player p = new Player(1, 40, 0);
+        Card card1=new Card("Alaska", "Infantry");
+        Card card2=new Card("Greenland", "Infantry");
+        Card card3=new Card("Ontario", "Infantry");
+        p.addCard(card1);
+        p.addCard(card2);
+        p.addCard(card3);
+
+        List<Card> list=p.getCards();
+        System.out.println(" ");
+
+        assertTrue("printCardsTest should return 'true'", (p.printCards().equals("[Alaska Infantry]\n[Greenland Infantry]\n[Ontario Infantry]\n")));
+    }
     // /**
     //  * test that when you added a armies to a player 
     //  */
@@ -181,9 +195,9 @@ public class PlayerTest {
         playerList.add(new Player(444,3,3));
         s.makePlayerList(playerList);
         List<Territory> ter=s.getTerritories();
-        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n");
         playerList.get(0).getTerritory(0).setNumOfUnits(5);
-        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n");
     
         assertTrue("getPrintableListOfTerritoryThatCanAttackTest ", playerList.get(0).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
     }
@@ -197,11 +211,25 @@ public class PlayerTest {
         playerList.add(new Player(444,3,3));
         s.makePlayerList(playerList);
         List<Territory> ter=s.getTerritories();
-        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n");
         playerList.get(0).getTerritory(0).setNumOfUnits(5);
-        System.out.println("\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n");
     
         assertTrue("getTerritoryThatCanAttackTest", playerList.get(0).getTerritoryThatCanAttack(0).getName().equals("Alaska"));
+    }
+    @Test public void getAttackableTerritoryCountTest(){
+        Setup s= Setup.getInstances(2);
+        List<Player> playerList =new ArrayList<>();
+       
+        playerList.add(new Player(1111111,23,3));
+        playerList.add(new Player(444,3,3));
+        s.makePlayerList(playerList);
+        List<Territory> ter=s.getTerritories();
+        System.out.println("\n\n");
+        playerList.get(0).getTerritory(0).setNumOfUnits(5);
+        System.out.println("\n\n");
+    
+        assertTrue("getAttackableTerritoryCountTest", playerList.get(0).getAttackableTerritoryCount()==1);
     }
 
     @Test public void removeContinentTest(){
@@ -209,9 +237,7 @@ public class PlayerTest {
         p.addContinent("north");
         p.getContinents();
         p.removeContinent("north");
-        
-        System.out.println("\n\n\n\n\n\n\n\n");
-        System.out.println("\n\n\n\n\n\n\n\n");
+  
     
         assertTrue("removeContinentTest", p.getContinentCount()==0);
     }
@@ -221,9 +247,7 @@ public class PlayerTest {
         Card c=new Card("Cav","Alaska");
         p.addCard(c);
         p.removeCard(c);
-        
-        System.out.println("\n\n\n\n\n\n\n\n");
-        System.out.println("\n\n\n\n\n\n\n\n");
+      
     
         assertTrue("removeContinentTest", p.getContinentCount()==0);
     }
@@ -232,10 +256,94 @@ public class PlayerTest {
     Player p=new Player(1111111,23,3);
     Card c=new Card("Cav","Alaska");
     p.rollDices(2);
-    
-    System.out.println("\n\n\n\n\n\n\n\n");
-    System.out.println("\n\n\n\n\n\n\n\n");
+    p.rollDices(2);
+  
 
     assertTrue("rollDicesTest", p.getDice().get(0)==1||p.getDice().get(0)==2||p.getDice().get(0)==3||p.getDice().get(0)==4||p.getDice().get(0)==5||p.getDice().get(0)==6);
+    
+}
+
+
+// setPrevTerritoryCount
+
+@Test public void setPrevTerritoryCountTest(){
+    Player p=new Player(1111111,23,3);
+    p.setPrevTerritoryCount(5);
+    
+
+    assertTrue("setPrevTerritoryCountTest", p.getPrevTerritoryCount()==5);
+    
+}
+
+@Test public void getAttackedAtLeastOncesTest(){
+    Player p=new Player(1111111,23,3);
+    p.setPrevTerritoryCount(5);
+    
+
+    assertTrue("getAttackedAtLeastOncesTest", p.getAttackedAtLeastOnces()==false);
+    
+}
+
+// getItsMyTurn
+@Test public void getItsMyTurnTest(){
+    Player p=new Player(1111111,23,3);
+    assertTrue("getItsMyTurnTest", p.getItsMyTurn()==false);
+    
+}
+@Test public void setSelectedMoveTest(){
+    Player p=new Player(1111111,23,3);
+    p.setSelectedMove("attack");
+    assertTrue("setSelectedMoveTest", p.getSelectedMove().equals("attack"));
+    
+}
+
+// printTerritoriesVerbose
+@Test public void printTerritoriesVerboseTest(){
+    Player p=new Player(1111111,23,3);
+  
+    Territory japan = new Territory("japan", "Asia", 1111111, 0);
+    Territory mongola = new Territory("mongola", "Asia",  1111111, 0); 
+    p.addTerritory(japan);
+    p.addTerritory(mongola);
+    assertTrue("printTerritoriesVerboseTest", p.printTerritoriesVerbose().equals("Territory Name: japan\n"+"Number of units allocated: 0\nTerritory Name: mongola\n"+"Number of units allocated: 0\n"));
+    
+}
+
+// printFortifyTerritories
+@Test public void printFortifyTerritoriesTest(){
+    Player p=new Player(1111111,23,3);
+  
+    Territory japan = new Territory("japan", "Asia", 1111111, 6);
+    Territory mongola = new Territory("mongola", "Asia",  1111111, 0); 
+    p.addTerritory(japan);
+    p.addTerritory(mongola);
+    System.out.println(p.printFortifyTerritories());
+    System.out.println("");
+    System.out.println("Territory Name: japan\nUnits: 6\n--------------------------------------\nCan fortify the following territories:\n--------------------------------------\nNone \n");
+    assertTrue("",true);
+    assertTrue("printFortifyTerritoriesTest", p.printFortifyTerritories().equals("Territory Name: japan\nUnits: 6\n--------------------------------------\nCan fortify the following territories:\n--------------------------------------\nNone \n"));
+    
+}
+
+@Test public void printFortifyTerritoriesTest2(){
+    Player p=new Player(1111111,23,3);
+  
+    Territory japan = new Territory("japan", "Asia", 1111111, 6);
+    Territory mongola = new Territory("mongola", "Asia",  1111111, 0); 
+    List<Territory> t=new ArrayList<>();
+    t.add(mongola);
+    japan.setNeighboringTerritories(t);
+    List<Territory> t2=new ArrayList<>();
+    t2.add(japan);
+    mongola.setNeighboringTerritories(t2);
+    p.addTerritory(japan);
+    p.addTerritory(mongola);
+    System.out.println("\n\n"+mongola.getSurroundingAllies().size()+"===number");
+    System.out.println(p.printFortifyTerritories());
+    System.out.println("");
+    String shouldBe="Territory Name: japan\nUnits: 6\n--------------------------------------\nCan fortify the following territories:\n--------------------------------------\nTerritory Name: mongola\nUnits: 0\n";
+
+    assertTrue("printFortifyTerritoriesTest", p.printFortifyTerritories().equals(shouldBe));
+    
 }
 }

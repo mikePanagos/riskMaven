@@ -542,7 +542,7 @@ public class Player {
      * @return verbose summary of the player's territories
      */
 	public String printTerritoriesVerbose() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	        summary += "Territory Name: " + t.getName() + "\n";
 	        summary += "Number of units allocated: " + t.getNumOfUnits() + "\n";
@@ -552,7 +552,7 @@ public class Player {
     }
 
     public String printOffensiveTerritoriesVerbose() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	        summary += "Territory Name: " + t.getName() + "\n";
 	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
@@ -564,7 +564,7 @@ public class Player {
     }
 
     public String printFortifyTerritories() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	        if (t.getNumOfUnits() > 1) {
 	            summary += "Territory Name: " + t.getName() + "\n";
