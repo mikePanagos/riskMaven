@@ -35,7 +35,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      * @return the message to send back to the player
      */
     private String checkMessage(long id, String message) {
-        int count = 1; // Hard coded due to requirement
+        int count = 3; // Hard coded due to requirement
         Player player = null; // Create a player object to reference
 
         for (int i = 0; i < playersList.size(); i++) {
@@ -226,6 +226,7 @@ public class RiskyBot extends TelegramLongPollingBot {
     public String controller(String move, Player player, String command) {
         String returnMess = null;
         String[] args = command.split("\\s+"); // Split command into arguments
+        move = args[0];
         switch (move) {
             case "menu":
                 returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
