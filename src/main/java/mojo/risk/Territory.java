@@ -18,7 +18,7 @@ public class Territory {
 
 
     // basic constructor
-    public Territory(String name, String continentName, int owner, int numOfUnits) {
+    public Territory(String name, String continentName, long owner, int numOfUnits) {
         this.name = name;
         this.continentName = continentName;
         this.owner = owner;
