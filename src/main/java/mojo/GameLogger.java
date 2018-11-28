@@ -32,15 +32,25 @@ public class GameLogger {
 	};
 	
 	public String getLog() {
-		File file = new File("log.txt");
+		ClassLoader cl = getClass().getClassLoader();
+
+		File file = new File("./log.txt");
+		System.out.println(file.getPath());
+		System.out.println(file.getAbsolutePath());
 		String str = "";
+		String tok="";
 		
 		try {
 			BufferedReader logfile = new BufferedReader(new FileReader(file));
 			// Read in log file and append it to a string;
 			do {
-				str = logfile.readLine();
-			} while (str != null);
+				
+				tok= logfile.readLine();
+				if(tok!=null)
+				{
+					str +=tok;
+				}
+			} while (tok!=null);
 			
 			logfile.close();
 		} catch (Exception e) {
