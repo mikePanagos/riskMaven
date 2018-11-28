@@ -66,7 +66,7 @@ public class TerritoryTest {
     @Test public void getprintableListOfOwnedNeighboringTerritoriesTest() {
         Territory japan = new Territory("japan", "Asia",  1111111, 0); 
         Territory mongola = new Territory("mongola", "Asia", 1111111, 0); 
-        Territory kamchatka = new Territory("kamchatka", "Asia", 1111111, 0); 
+        Territory kamchatka = new Territory("kamchatka", "Asia", 5555, 0); 
         // test case for Territory it test adding a Territory then added Neighboring
         // Territory to make sure it still points to the right thing
         List<Territory> neighboringTerritories = new ArrayList<>();
@@ -74,7 +74,7 @@ public class TerritoryTest {
         neighboringTerritories.add(kamchatka);
         japan.setNeighboringTerritories(neighboringTerritories);
 
-        assertTrue("getprintableListOfOwnedNeighboringTerritoriesTest should return 'true'",japan.getprintableListOfOwnedNeighboringTerritories(1111111).equals("0. mongola 1. kamchatka ") );
+        assertTrue("getprintableListOfOwnedNeighboringTerritoriesTest should return 'true'",japan.getprintableListOfOwnedNeighboringTerritories(1111111).equals("0. mongola ") );
 
     }
 
