@@ -694,7 +694,11 @@ public class Setup {
     public void makePlayerList(List<Player> pl){
         int count=0;
         boolean done=false;
-        List<Territory> territory = this.board;
+        List<Territory> territory = new ArrayList<>();
+        for (Territory var : board) {
+            territory.add(var);
+            
+        }
         
         int numUnitsPerPlayer = numUnitAtStart(pl.size()); // numUnitsAtStart returns the amount of units given to each player
 

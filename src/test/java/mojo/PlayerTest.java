@@ -152,19 +152,18 @@ public class PlayerTest {
 
 
     @Test public void getPrintableListOfTerritoryThatCanAttackTest(){
-        // Setup s= Setup.getInstances(2);
-        // List<Player> playerList =new ArrayList<>();
+        Setup s= Setup.getInstances(2);
+        List<Player> playerList =new ArrayList<>();
        
-        // playerList.add(new Player(1111111,23,3));
-        // playerList.add(new Player(444,3,3));
-        // s.makePlayerList(playerList);
-        // List<Territory> ter=s.getTerritories();
-        // System.out.println("\n\n\n\n\n\n\n\n");
-        // System.out.println(ter);
-        // System.out.println("\n\n\n\n\n\n\n\n"); System.out.println("\n\n\n\n\n\n\n\n"); System.out.println("\n\n\n\n\n\n\n\n");
-        // ter.get(0).setNumOfUnits(4);
-        // assertTrue("",true);
-        // assertTrue("someLibraryMethod should return 'true'", playerList.get(2).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
+        playerList.add(new Player(1111111,23,3));
+        playerList.add(new Player(444,3,3));
+        s.makePlayerList(playerList);
+        List<Territory> ter=s.getTerritories();
+        System.out.println("\n\n\n\n\n\n\n\n");
+        playerList.get(0).getTerritory(0).setNumOfUnits(5);
+        System.out.println("\n\n\n\n\n\n\n\n");
+    
+        assertTrue("someLibraryMethod should return 'true'", playerList.get(0).getPrintableListOfTerritoryThatCanAttack().equals("0. Alaska "));
     }
 
 
