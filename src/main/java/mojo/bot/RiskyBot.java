@@ -27,6 +27,21 @@ public class RiskyBot extends TelegramLongPollingBot {
     Setup setup = null;
 
 
+    Timer time = new Timer();
+    boolean done;
+    public  void startTimer(int seconds) {
+        done = false;
+        time.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                System.out.println("Time's up!");
+                done = true;
+                time.cancel(); //Terminate the timer thread
+            }
+        }, seconds*1000);
+    }
+
+
     /**
      * This function checks the message and determines the action to take. If the action is legitimate a.k.a.
      * the player is allowed to make that move it will do so on the players behalf.
