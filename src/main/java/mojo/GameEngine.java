@@ -1,18 +1,18 @@
 package mojo;
 
-import mojo.bot.RiskyBot;
 import mojo.notification.*;
 import java.util.*;
 import mojo.risk.*;
+import mojo.twitter.TwitterClient;
 
 public class GameEngine {
-	// Territory territory;
-	// Player player;
 	private static GameEngine init = new GameEngine();
 	Setup s = Setup.getInstances();
 	private int cardSet = 0;
 	private List<Card> deck = s.getDeck();
-	NotificationCenter notificationCenter = new NotificationCenter();
+	private NotificationCenter notificationCenter = new NotificationCenter();
+	private TwitterClient twitterClient = new TwitterClient();
+	private GameLogger log = new GameLogger();
 
 	private GameEngine() {
 
@@ -115,21 +115,29 @@ public class GameEngine {
 			biggerSize = attDice.size();
 		}
 		for (int i = 0; i < biggerSize; i++) {
-			System.out.println("got here\n");
-			messageReturnable+="Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDice.get(i)+"\n";
+            // Formatting the string to be more descriptive.
+            // It will now have both players ids.
+            messageReturnable += "Player #" + act.getOwner() + " attacked and rolled a " + attDice.get(i) + "\n";
+            messageReturnable += "Player #" + def.getOwner() + " fought back and rolled a " + defDice.get(i) + "\n";
+
+//			messageReturnable+="Attacker rolled a " + attDice.get(i)+".        the defense rolled a " + defDice.get(i)+"\n";
 
 			if (attDice.get(i) > defDice.get(i)) {
-
-				messageReturnable+="Attacking won defense will lose one unit\n\n";
+                messageReturnable += "Attacking Player #" + act.getOwner() + " won!\n";
+                messageReturnable += "Defending Player #" + def.getOwner() + " lost and will lose a unit.\n";
+//				messageReturnable+="Attacker won defense will lose one unit\n\n";
 
 				defLostUnits++;
 			} else if (attDice.get(i) < defDice.get(i)) {
-				messageReturnable+=" defense won attacking will lose one unit\n\n";
+			    messageReturnable += "Defending Player #" + def.getOwner() + " won!\n";
+			    messageReturnable += "Attacking Player #" + act.getOwner() + " lost and will lose a unit.\n";
+//				messageReturnable+=" Defense won attacking will lose one unit\n\n";
 
 
 				attLostUnits++;
 			} else {
-				messageReturnable+=" tie so attacking will lose one unit\n\n";
+			    messageReturnable += "Tie. Attacking Player #" + act.getOwner() + " will lose a unit.\n";
+//				messageReturnable+=" tie so Attacker will lose one unit\n\n";
 
 
 				attLostUnits++;
@@ -137,7 +145,8 @@ public class GameEngine {
 		}
 
 		if (def.getNumOfUnits() - defLostUnits <= 0) {
-			messageReturnable+="PLAYER " + def.getOwner() + " lost " + def.getName() + ".\n It now belongs to player "
+			messageReturnable+="Player # " + def.getOwner() + " lost " + def.getName() + ".\n ";
+			messageReturnable += "It now belongs to Player #"
 					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it\n\n";
 
 
@@ -160,6 +169,10 @@ public class GameEngine {
 			act.setNumOfUnits(act.getNumOfUnits() - attLostUnits);
 		}
 
+		log.updateLog(messageReturnable);
+
+		twitterClient.setTweet(messageReturnable);
+		twitterClient.postTweet();
 		return messageReturnable;
 	}
 
@@ -191,7 +204,9 @@ public class GameEngine {
 		if (cardSet != 12) {
 			cardSet++;
 		}
-
+        log.updateLog(returnable);
+		twitterClient.setTweet(returnable);
+		twitterClient.postTweet();
 		return returnable;
 	}
 
@@ -199,7 +214,12 @@ public class GameEngine {
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);
 		to.setNumOfUnits(to.getNumOfUnits()+numUnits);
-		return "Now "+to.getName()+" has "+to.getNumOfUnits()+" and "+from.getName()+" has "+from.getNumOfUnits();
+		String message = "Fortifying Action:\n";
+		message += "Now "+to.getName()+" has "+to.getNumOfUnits()+" and "+from.getName()+" has "+from.getNumOfUnits();
+		log.updateLog(message);
+		twitterClient.setTweet(message);
+		twitterClient.postTweet();
+		return message;
 	}
 
 
@@ -207,6 +227,9 @@ public class GameEngine {
 		String returnable="Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType();
 		p.addCard(deck.get(0));
 		deck.remove(0);
+		log.updateLog(returnable);
+        twitterClient.setTweet(returnable);
+        twitterClient.postTweet();
 		return returnable;
 	}
 
@@ -214,6 +237,8 @@ public class GameEngine {
 	 * This method will return a list of cards shuffled
 	 */
 	public void shuffleCards() {
+	    log.updateLog("Cards have been shuffled.");
+	    // No need to tweet this.
 		Collections.shuffle(deck);
 	}
 
@@ -226,7 +251,7 @@ public class GameEngine {
      */
 	public static boolean verifyCommand(String move, String[] command, Player player) {
 		boolean isValid;
-		System.out.println("move is "+move);
+//		System.out.println("move is "+move);
 		// System.out.println("commands are"+command[0]++++);
 
 	    switch (move) {
@@ -347,6 +372,7 @@ public class GameEngine {
                 // If the territory reference is not null then it was valid
                 // returns true
                 if (territory != null) {
+                    System.out.println("The distribute command was found to be valid");
                     isValid = true;
                     break;
                 }
@@ -359,6 +385,12 @@ public class GameEngine {
     }
 
     public void surrender(Player player) throws Exception {
+	    // Update log and Twitter
+	    String update = "Player #" + player.getId() + " has quit the game.";
+	    log.updateLog(update);
+	    twitterClient.setTweet(update);
+	    twitterClient.postTweet();
+
 		for (Territory t : player.getTerritoryList()) {
 			t.setOwner(0); // Reset the territory to the default: 0
 			t.setNumOfUnits(0); // Reset the unit count back to 0
@@ -409,6 +441,10 @@ public class GameEngine {
             // not carry over each turn.
             player.setAttackedAtLeastOnces(false);
         }
+        String update = "Player #" + player.getId() + " has ended their turn.";
+        log.updateLog(update);
+        twitterClient.setTweet(update);
+        twitterClient.postTweet();
         // Need to check if the player owns a continent here.
     }
 
@@ -451,6 +487,10 @@ public class GameEngine {
         }
 
 	    // Distribute units.
+        String update = "Player #" + player.getId() + "received " + units + " units at turn start.";
+        log.updateLog(update);
+        twitterClient.setTweet(update);
+        twitterClient.postTweet();
         player.setArmiesCount(units);
     }
 
@@ -466,6 +506,11 @@ public class GameEngine {
                 break;
             }
         }
+
+        String update = "Player #" + player.getId() + "allocated " + units + " to " + territory + ".";
+	    twitterClient.setTweet(update);
+	    twitterClient.postTweet();
+        log.updateLog(update);
     }
 
     /*
