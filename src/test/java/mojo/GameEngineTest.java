@@ -47,7 +47,7 @@ public class GameEngineTest{
        Territory t=new Territory("ale","N",1111,5);
        Territory t2=new Territory("al","H",1111,5);
 
-        assertTrue(" fortifyTest ",ge.fortify(t,t2,4).equals("Now al has 9 and ale has 1" ));
+        assertTrue(" fortifyTest ",ge.fortify(t,t2,4).equals("Fortifying Action:\nNow al has 9 and ale has 1" ));
     }
     
     @Test public void handOutCardTest(){

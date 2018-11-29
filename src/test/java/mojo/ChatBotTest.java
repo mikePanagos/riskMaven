@@ -53,14 +53,14 @@ public class ChatBotTest {
         messages += "Target Territory Name: " + "Alberta" + "\n";
         messages += "Armies Count: " + "4" + "\n";
         messages += "Owned by: " + "11111" + "\n";
-        messages+="\n";
+        messages += "\n";
         messages += "How would you like to proceed?\n";
         messages += "Format: Attack yourTerritory targetTerritory unitCount\n";
         messages += "youTerritory - The territory you want to attack with.\n";
         messages += "targetTerritory - The territory you would like to target.\n";
         messages += "unitCount - The amount of armies you would like to attack with.\n";
      
-        assertTrue("testing chabot controller ",!r.controller("attack",p,"").equals(null));
+        assertTrue("testing Chat Bot Controller ",!r.controller("attack",p,"").equals(null));
         // assertTrue("testing chabot",true);
     }
 
