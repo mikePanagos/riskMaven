@@ -297,6 +297,12 @@ public class GameEngineTest{
         
         Player p=new Player(11111,3,0);
         p.receivedUnits=false;
+        p.addContinent("Asia");
+        p.addContinent("North America");
+        p.addContinent("Europe");
+        p.addContinent("Africa");
+        p.addContinent("South America");
+        p.addContinent("Australia");
         p.addTerritory(new Territory("aaa","a",11111,4));
        
 
@@ -309,12 +315,7 @@ public class GameEngineTest{
         Player p=new Player(11111,0,0);
         p.receivedUnits=true;
         p.setAttackedAtLeastOnces(true);
-        p.addContinent("Asia");
-        p.addContinent("North America");
-        p.addContinent("Europe");
-        p.addContinent("Africa");
-        p.addContinent("South America");
-        p.addContinent("Australia");
+       
 
         p.addTerritory(new Territory("aaa","a",11111,4));
        
