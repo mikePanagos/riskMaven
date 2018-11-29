@@ -380,7 +380,7 @@ public class GameEngine {
 //                // Notify the player with the breakdown of attacks.
 //                RiskyBot.notifyPlayer(player.getId(), returnMess);
 //            }
-            return false;
+            return true;
         }
         // Give the player new units
         if (player.receivedUnits == false) {

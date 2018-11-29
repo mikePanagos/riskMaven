@@ -257,135 +257,169 @@ public class RiskyBot extends TelegramLongPollingBot {
         String returnMess = null;
         String[] args = command.split("\\s+"); // Split command into arguments
         move = args[0];
-        switch (move) {
-            case "menu":
-                returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
-                returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
-                returnMess += "1. Attack\n";
-                returnMess += "2. Fortify\n";
-                returnMess += "3. Trade\n";
-                returnMess += "4. End\n";
-                returnMess += "5. Surrender\n";
-                returnMess += "6. Summary\n";
-                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
-                break;
-            case "attack":
-                if (args.length < 4) {
-                    returnMess = "Here is the list of territories you can attack with:\n";
-                    returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
-                    returnMess += "How would you like to proceed?\n";
-                    returnMess += "Format: Attack yourTerritory targetTerritory unitCount\n";
-                    returnMess += "youTerritory - The territory you want to attack with.\n";
-                    returnMess += "targetTerritory - The territory you would like to target.\n";
-                    returnMess += "unitCount - The amount of armies you would like to attack with.\n";
+        if (game.initialPhase(player)) {
+            if (player.getTerritoryList().size() > 0) {
+                // Read notifications one by one to the player.
+                String notifications = "Here is the breakdown of what happened outside of your turn.\n";
+                for (int i = 0; i < player.getNotifications().size(); i++) {
+                    notifications += "Notification " + (i + 1) + ":\n";
+                    notifications += player.getNotifications().get(i).getMessage() + "\n";
                 }
-                else {
-                    System.out.println("Player #" + player.getId() + "has chosen to attack!");
-
-                    if (GameEngine.verifyCommand(move, args, player)) {
-                        Territory attackingTerr = null, defendingTerr = null;
-                        int units = Integer.parseInt(args[3]);
-
-                        for (Territory t : player.getTerritoryList()) {
-                            if (t.getName().toLowerCase().equals(args[1])) {
-                                attackingTerr = t;
-                                break;
-                            }
-                        }
-
-                        for (Territory t : attackingTerr.getSurroundingEnemies()) {
-                            if (t.getName().toLowerCase().equals(args[2])) {
-                                defendingTerr = t;
-                                break;
-                            }
-                        }
-
-                        // Execute attack
-                        game.attack(attackingTerr, defendingTerr, units);
-
-                        // Send a summary of the players territories after the attack
-                        returnMess = "Results\n";
-                        returnMess += "-----------------------------\n";
-                        returnMess += "Attacking Territory\n";
-                        returnMess += "Name: " + attackingTerr.getName() + "\n";
-                        returnMess += "Units: " + attackingTerr.getNumOfUnits() + "\n";
-                        returnMess += "Defending Territory\n";
-                        returnMess += "Name: " + defendingTerr.getName() + "\n";
-                        returnMess += "Units: " + defendingTerr.getNumOfUnits() + "\n";
-                    }
-                    else {
-                        returnMess = "Your command could not be executed.\n";
-                    }
-                }
-                break;
-            case "fortify":
-                if (args.length < 4) {
-                    returnMess = "Here is the list of territories you own. Fortification has the following requirements:\n";
-                    returnMess += "1. The helping territory must have more than one unit before AND after fortification.\n";
-                    returnMess += "2. The helping territory must be adjacent to the territory you wish to fortify.\n";
-                    returnMess += player.printFortifyTerritories() + "\n";
-                    returnMess += "How would you like to proceed?\n";
-                }
-                else {
-                    if (GameEngine.verifyCommand(move, args, player)) {
-                        Territory terrA = null, terrB = null;
-                        Integer units = Integer.parseInt(args[3]);
-                        // Used to reference the two territories needed for the fortify process
-                        // We use the for each loop below to find the given territories
-                        for (Territory t : player.getTerritoryList()) {
-                            if (t.getName().toLowerCase().equals(args[1])) {
-                                terrA = t;
-                            }
-                            if (t.getName().toLowerCase().equals(args[2])) {
-                                terrB = t;
-                            }
-                        }
-                        // Execute fortify command.
-                        game.fortify(terrA, terrB, units);
-
-                        returnMess = "We have fortified the territory selected.";
-                        returnMess += "Here is the new summary of the territories you own.\n";
-                        returnMess += player.printTerritoriesVerbose() + "\n";
-                    }
-                    else {
-                        returnMess = "Your command could not be executed.\n";
-                    }
-                }
-                break;
-            case "trade":
-                returnMess = "Trade Test Message";
-                break;
-            case "end":
-                returnMess = "You have ended your turn.";
-                player.setSelectedMove("menu");
-                player.setItsMyTurn(false);
-                notifyNextPlayer(player.getId()); // Notify the next player it's their turn
-                break;
-            case "surrender":
-                // TODO: Currently throws exception since it removes the player's id before sending response
-                returnMess = "Sorry to see you go. Better luck next time!";
-                notifyPlayer(player.getId(), returnMess);
-//                playersList.remove(player); // Remove player from the player list
-                notifyNextPlayer(player.getId());
-                break;
-            case "summary":
-                returnMess = "Here is a breakdown of you currently owned territories:\n";
+                player.getNotifications().clear(); // Clear all notifications once they have been read to the player
+                notifications += "-------------------\n";
+                // Notify the player with the breakdown of attacks.
+                notifyPlayer(player.getId(), notifications);
+            }
+            if (player.getArmiesCount() > 0 && !move.equals("distribute")){
+                returnMess = "You must allocate your new units. How would you like to do?\n";
+                returnMess += "Example: distribute <units> <territory>\n";
+                returnMess += "<units - amount of units you would like to place\n";
+                returnMess += "<territory> - the name of the territory destination\n";
+                returnMess += "Here is a list of your territories:\n";
                 returnMess += player.printTerritoriesVerbose() + "\n";
-                returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
-                returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
-                break;
-            default:
-                returnMess = "Invalid Option!\n";
-                returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
-                returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
-                returnMess += "1. Attack\n";
-                returnMess += "2. Fortify\n";
-                returnMess += "3. Trade\n";
-                returnMess += "4. End\n";
-                returnMess += "5. Surrender\n";
-                returnMess += "6. Summary\n";
-                returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
-                break;
+            }
+            else if (player.getArmiesCount() > 0 && move.equals("distribute") && args.length > 2) {
+                if (GameEngine.verifyCommand(move, args, player)) {
+                    game.allocateUnits(args, player);
+                    returnMess = "We have allocated your units! :)\n";
+                    returnMess += "Here is a list of your territories:\n";
+                    returnMess += player.printTerritoriesVerbose() + "\n";
+                }
+                else {
+                    returnMess = "We had an issue allocating your units.\n";
+                }
+            }
+            else {
+                returnMess = "An error occurred allocating your armies sorry :(\n";
+            }
+        }
+        else {
+            switch (move) {
+                case "menu":
+                    returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
+                    returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
+                    returnMess += "1. Attack\n";
+                    returnMess += "2. Fortify\n";
+                    returnMess += "3. Trade\n";
+                    returnMess += "4. End\n";
+                    returnMess += "5. Surrender\n";
+                    returnMess += "6. Summary\n";
+                    returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
+                    break;
+                case "attack":
+                    if (args.length < 4) {
+                        returnMess = "Here is the list of territories you can attack with:\n";
+                        returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
+                        returnMess += "How would you like to proceed?\n";
+                        returnMess += "Format: Attack yourTerritory targetTerritory unitCount\n";
+                        returnMess += "youTerritory - The territory you want to attack with.\n";
+                        returnMess += "targetTerritory - The territory you would like to target.\n";
+                        returnMess += "unitCount - The amount of armies you would like to attack with.\n";
+                    } else {
+                        System.out.println("Player #" + player.getId() + "has chosen to attack!");
+
+                        if (GameEngine.verifyCommand(move, args, player)) {
+                            Territory attackingTerr = null, defendingTerr = null;
+                            int units = Integer.parseInt(args[3]);
+
+                            for (Territory t : player.getTerritoryList()) {
+                                if (t.getName().toLowerCase().equals(args[1])) {
+                                    attackingTerr = t;
+                                    break;
+                                }
+                            }
+
+                            for (Territory t : attackingTerr.getSurroundingEnemies()) {
+                                if (t.getName().toLowerCase().equals(args[2])) {
+                                    defendingTerr = t;
+                                    break;
+                                }
+                            }
+
+                            // Execute attack
+                            game.attack(attackingTerr, defendingTerr, units);
+
+                            // Send a summary of the players territories after the attack
+                            returnMess = "Results\n";
+                            returnMess += "-----------------------------\n";
+                            returnMess += "Attacking Territory\n";
+                            returnMess += "Name: " + attackingTerr.getName() + "\n";
+                            returnMess += "Units: " + attackingTerr.getNumOfUnits() + "\n";
+                            returnMess += "Defending Territory\n";
+                            returnMess += "Name: " + defendingTerr.getName() + "\n";
+                            returnMess += "Units: " + defendingTerr.getNumOfUnits() + "\n";
+                        } else {
+                            returnMess = "Your command could not be executed.\n";
+                        }
+                    }
+                    break;
+                case "fortify":
+                    if (args.length < 4) {
+                        returnMess = "Here is the list of territories you own. Fortification has the following requirements:\n";
+                        returnMess += "1. The helping territory must have more than one unit before AND after fortification.\n";
+                        returnMess += "2. The helping territory must be adjacent to the territory you wish to fortify.\n";
+                        returnMess += player.printFortifyTerritories() + "\n";
+                        returnMess += "How would you like to proceed?\n";
+                    } else {
+                        if (GameEngine.verifyCommand(move, args, player)) {
+                            Territory terrA = null, terrB = null;
+                            Integer units = Integer.parseInt(args[3]);
+                            // Used to reference the two territories needed for the fortify process
+                            // We use the for each loop below to find the given territories
+                            for (Territory t : player.getTerritoryList()) {
+                                if (t.getName().toLowerCase().equals(args[1])) {
+                                    terrA = t;
+                                }
+                                if (t.getName().toLowerCase().equals(args[2])) {
+                                    terrB = t;
+                                }
+                            }
+                            // Execute fortify command.
+                            game.fortify(terrA, terrB, units);
+
+                            returnMess = "We have fortified the territory selected.";
+                            returnMess += "Here is the new summary of the territories you own.\n";
+                            returnMess += player.printTerritoriesVerbose() + "\n";
+                        } else {
+                            returnMess = "Your command could not be executed.\n";
+                        }
+                    }
+                    break;
+                case "trade":
+                    returnMess = "Trade Test Message";
+                    break;
+                case "end":
+                    returnMess = "You have ended your turn.";
+                    player.setSelectedMove("menu");
+                    player.setItsMyTurn(false);
+                    notifyNextPlayer(player.getId()); // Notify the next player it's their turn
+                    break;
+                case "surrender":
+                    // TODO: Currently throws exception since it removes the player's id before sending response
+                    returnMess = "Sorry to see you go. Better luck next time!";
+                    notifyPlayer(player.getId(), returnMess);
+//                playersList.remove(player); // Remove player from the player list
+                    notifyNextPlayer(player.getId());
+                    break;
+                case "summary":
+                    returnMess = "Here is a breakdown of you currently owned territories:\n";
+                    returnMess += player.printTerritoriesVerbose() + "\n";
+                    returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
+                    returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
+                    break;
+                default:
+                    returnMess = "Invalid Option!\n";
+                    returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
+                    returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
+                    returnMess += "1. Attack\n";
+                    returnMess += "2. Fortify\n";
+                    returnMess += "3. Trade\n";
+                    returnMess += "4. End\n";
+                    returnMess += "5. Surrender\n";
+                    returnMess += "6. Summary\n";
+                    returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
+                    break;
+            }
         }
         return returnMess;
     }
