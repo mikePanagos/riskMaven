@@ -1,5 +1,6 @@
 package mojo;
 
+import mojo.bot.RiskyBot;
 import mojo.notification.*;
 import java.util.*;
 import mojo.risk.*;
@@ -321,6 +322,34 @@ public class GameEngine {
                 // This will currently always return true but game logic needs to be added here as well.
                 isValid = true;
                 break;
+            case "distribute":
+                /*
+                    1. We need to check to see if the player has enough units to move there.
+                    2. We need to check to see if the player owns the territory. Prevents bugs later :)
+                 */
+
+                int unitsRequested = Integer.parseInt(command[1]); // Store the units the player requested to place
+                Territory territory = null; //Store the territory reference if found here.
+
+                // Check to see if this number is greater than the armies they have on hand.
+                if (unitsRequested > player.getArmiesCount()) {
+                    isValid = false;
+                    break;
+                }
+
+                // Search for the territory in the players territory list.
+                for (Territory t : player.getTerritoryList()) {
+                    if (t.getName().toLowerCase().equals(command[2])) { // All commands lowercase must lowercase name too.
+                        territory = t;
+                    }
+                }
+
+                // If the territory reference is not null then it was valid
+                // returns true
+                if (territory != null) {
+                    isValid = true;
+                    break;
+                }
             default:
                 isValid = true;
                 break;
@@ -338,6 +367,21 @@ public class GameEngine {
 	}
 
 	public boolean initialPhase(Player player) {
+	    if (player.getNotifications().size() > 0) {
+//            if (player.getNotifications().size() > 0) {
+//                // Read notifications one by one to the player.
+//                String returnMess = "Here is the breakdown of what happened outside of your turn.\n";
+//                for (int i = 0; i < player.getNotifications().size(); i++) {
+//                    returnMess += "Notification " + (i + 1) + ":\n";
+//                    returnMess += player.getNotifications().get(i).getMessage() + "\n";
+//                }
+//                player.getNotifications().clear(); // Clear all notifications once they have been read to the player
+//                returnMess += "-------------------\n";
+//                // Notify the player with the breakdown of attacks.
+//                RiskyBot.notifyPlayer(player.getId(), returnMess);
+//            }
+            return false;
+        }
         // Give the player new units
         if (player.receivedUnits == false) {
             unitDistribution(player);
@@ -365,6 +409,7 @@ public class GameEngine {
             // not carry over each turn.
             player.setAttackedAtLeastOnces(false);
         }
+        // Need to check if the player owns a continent here.
     }
 
     public void unitDistribution(Player player) {
@@ -408,4 +453,22 @@ public class GameEngine {
 	    // Distribute units.
         player.setArmiesCount(units);
     }
+
+    public void allocateUnits(String[] command, Player player) {
+
+	    String territory = command[2];
+	    Integer units = Integer.parseInt(command[1]);
+
+	    for (Territory t : player.getTerritoryList()) {
+	        if (t.getName().toLowerCase().equals(territory)) {
+	            t.setNumOfUnits(t.getNumOfUnits() + units); // Add units to this territory
+	            player.setArmiesCount(player.getArmiesCount() - units); // Remove them from player
+                break;
+            }
+        }
+    }
+
+    /*
+    TODO: implement a method checking if player owns entire continent
+     */
 }
