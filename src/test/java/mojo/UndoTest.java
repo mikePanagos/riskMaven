@@ -13,7 +13,7 @@ public class UndoTest {
     public void territorytesting() {
         Setup s= Setup.getInstances(4);
         Setup.SetupPLayers(2);
-        Undo u = new Undo();
+        Undo u = Undo.init();
         List<Territory> t=s.getTerritories();
         List<Player> p=s.getPlayers();
 
@@ -37,7 +37,7 @@ public class UndoTest {
 
         Setup s= Setup.getInstances(4);
         Setup.SetupPLayers(2);
-        Undo u = new Undo();
+        Undo u = Undo.init();
         List<Territory> t=s.getTerritories();
         List<Player> p=s.getPlayers();
 

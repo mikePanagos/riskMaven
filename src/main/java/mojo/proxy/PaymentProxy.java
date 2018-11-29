@@ -1,10 +1,13 @@
 package mojo.proxy;
+import mojo.Setup;
 import mojo.risk.*;
+import mojo.undo.Undo;
 
 public class PaymentProxy implements PaymentInterface {
     // 1. Create a "wrapper" for a remote,
     // or expensive, or sensitive target
     private int [][] price ={{5,1},{10,2},{25,5},{75,7},{100,10},{1000,100}};//credits ,price
+  
 
 
     public PaymentProxy(int[][]val){
@@ -48,5 +51,12 @@ public class PaymentProxy implements PaymentInterface {
         // }
         
         return units;
+    }
+
+    public boolean  buyUndo(int undo){
+        Setup s=Setup.getInstances();
+        Undo u=Undo.init();
+        return u.undo(s.getPlayers(),undo);
+
     }
 }
