@@ -10,5 +10,5 @@ public interface Notification {
 	void setSender(long playerId);
 	long getReceiver();
 	long getSender();
-	void getMessage();
+	String getMessage();
 }

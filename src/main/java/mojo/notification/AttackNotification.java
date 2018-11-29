@@ -5,7 +5,11 @@ public class AttackNotification implements Notification {
 	private String territory;
 	private long attackingPlayer;
 	private long defendingPlayer;
-	
+
+	public AttackNotification() {
+
+    }
+
 	/**
 	 * This is the constructor for the attack notification. It will collect all the information needed
 	 * so that the information will reach the necessary player.
@@ -26,7 +30,7 @@ public class AttackNotification implements Notification {
 	@Override
 	public void setContent() {
 		// TODO Auto-generated method stub
-		message = "Player " + attackingPlayer + " is attacking your territory "
+		message = "Player " + attackingPlayer + " attacked your territory "
 				+ territory + "!";
 		return;
 	}
@@ -74,8 +78,8 @@ public class AttackNotification implements Notification {
 	 * This will print out the message of the attack notification.
 	 */
 	@Override
-	public void getMessage() {
+	public String getMessage() {
 		// TODO Auto-generated method stub
-		System.out.println(message);
+        return this.message;
 	}
 }
