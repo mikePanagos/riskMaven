@@ -26,6 +26,7 @@ public class AttackTest{
     player.get(1).addTerritory(new Territory("aaaaa","a",2,1));
     ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 2);
     System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 3));
+    System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 1));
 
     System.out.println();
     System.out.println("\n\n\n");
