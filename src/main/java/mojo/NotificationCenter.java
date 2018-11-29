@@ -12,7 +12,29 @@ public class NotificationCenter {
 	 * Constructor used to initiate the notification center.
 	 */
 	NotificationCenter() {
-		observers = new ArrayList<Player>();
+		observers=new ArrayList<Player>();
+		Setup s=Setup.getInstances();
+
+		/**
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * this needs to be talked about this wasnt here i added it bc observers was never getteing filled i dont know where it gets filled -michael
+		 */
+		for (int i = 0; i < s.getPlayers().size(); i++) {
+			add(s.getPlayers().get(i));
+		}
+		 
 	}
 	
 	/**
@@ -46,9 +68,11 @@ public class NotificationCenter {
 	 * @return boolean Returns whether the update was successful or if it failed. True: successful. False: failed.
 	 */
 	public boolean updatePlayer() {
+		System.out.println("got here");
 		Player playerToNotify = null;
 		for (int i = 0; i < observers.size(); i++) {
 			if (observers.get(i).getId() == notification.getReceiver()) {
+				System.out.println("found");
 				playerToNotify = observers.get(i);
 				break;
 			}
