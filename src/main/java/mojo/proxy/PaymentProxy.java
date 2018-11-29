@@ -60,7 +60,7 @@ public class PaymentProxy implements PaymentInterface {
         if(cost>p.getCredit()){
             System.out.println("insufficient funds");
         }else{
-        p.setMoney(p.getMoney()-cost);
+        p.setCredit(p.getCredit()-cost);
         p.setCredit(p.getCredit()+units);
         }
         
