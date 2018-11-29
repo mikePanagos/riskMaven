@@ -196,6 +196,7 @@ public class GameEngineTest{
         tlist.add(nextToT);
         t.setNeighboringTerritories(tlist);
         p.addTerritory(t);
+        
         p.setItsMyTurn(true);
         String commands[]={" ","awww","aa","3"};
         assertTrue(" verifyCommandAttackTest ",!GameEngine.verifyCommand("attack",commands, p));
