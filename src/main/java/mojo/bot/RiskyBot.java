@@ -86,15 +86,21 @@ public class RiskyBot extends TelegramLongPollingBot {
 
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
-                                if (playersList.get(i).getId() == id)
-                                    continue;
-                                SendMessage confirmation = new SendMessage() // Create a message object object
-                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
-                                try {
-                                    execute(confirmation); // Sending our message object to user
-                                } catch (TelegramApiException e) {
-                                    e.printStackTrace();
+                                // Send the starting player a message stating that they're first in queue
+                                if (playersList.get(i).getId() == id) {
+                                    notifyPlayer(playersList.get(i).getId(), "You've been selected to be first."
+                                            + " Submit 'menu' when the game starts to view your options.");
                                 }
+                                else {
+                                    notifyPlayer(playersList.get(i).getId(), returnMess);
+                                }
+//                                SendMessage confirmation = new SendMessage() // Create a message object object
+//                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
+//                                try {
+//                                    execute(confirmation); // Sending our message object to user
+//                                } catch (TelegramApiException e) {
+//                                    e.printStackTrace();
+//                                }
                             }
                         }
 
@@ -406,6 +412,6 @@ public class RiskyBot extends TelegramLongPollingBot {
         }
         nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
-        notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'ready' to view your options.");
+        notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'menu' to view your options.");
     }
 }
