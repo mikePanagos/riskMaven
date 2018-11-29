@@ -14,6 +14,11 @@ public class PaymentProxy implements PaymentInterface {
         setPriceForCredits(val);
     }
 
+
+
+    /**
+     *  @return a string of prices 
+     */
     public String getPriceForCredits(){
         String str="";
 
@@ -23,12 +28,21 @@ public class PaymentProxy implements PaymentInterface {
 
         return str;
     }
+
+    /**
+     * 
+     * @param val sets val to price its a array of price and amount
+     */
     private void setPriceForCredits(int [][]val){
         this.price=val;
     }
 
-
-    
+    /**
+     * 
+     *  @param option is the option you want to buy
+     * @param p is the player that will buy
+     * @return units player get  
+     */
     public int  buyCredits(int option,Player p){
         int cost=0;
         int units=0;
@@ -52,7 +66,12 @@ public class PaymentProxy implements PaymentInterface {
         
         return units;
     }
-//  add transfer from player to player
+
+    /**
+     * 
+     * @param undo the turen number that we are going to undo to 
+     * @return true or false based on if it passed or failed
+     */
     public boolean  buyUndo(int undo){
         Setup s=Setup.getInstances();
         Undo u=Undo.init();
@@ -60,7 +79,13 @@ public class PaymentProxy implements PaymentInterface {
 
     }
 
-    /
+    /**
+     * 
+     * @param give the player that is giving credits 
+     * @param get the player that will get the credits
+     * @param amount the amount  give will give
+     * @return
+     */
     public boolean giveCreditsTo(Player give,Player get,int amount){
         if((give.getCredit()-amount)>0){
             return false;

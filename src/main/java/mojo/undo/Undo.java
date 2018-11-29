@@ -32,6 +32,7 @@ public class Undo {
      * 
      * @param p list of players to save there state this will make an obj that
      *          stores the turn number and list of players at current time
+     * 
      */
     public void saveState(List<Player> p) {
         List<Player> save = new ArrayList<>();
@@ -47,7 +48,7 @@ public class Undo {
      * 
      * @param pl   player list that need to be reverted
      * @param turn turn to revert to
-     * @return
+     * @return true or false baside on success of function
      */
     public boolean undo(List<Player> pl, int turn) {
         System.out.println(turn + " turn ");
