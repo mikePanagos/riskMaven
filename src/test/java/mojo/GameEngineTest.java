@@ -71,7 +71,7 @@ public class GameEngineTest{
         ge.handOutCard(p);
         ge.handOutCard(p);
         ge.handOutCard(p);
-        assertTrue(" shuffleCardsTest ",(firstTerName!=p.getCards().get(0).getTerritoryName()&&secondTerName!=p.getCards().get(1).getTerritoryName()));
+        assertTrue(" shuffleCardsTest ",(firstTerName!=p.getCards().get(0).getTerritoryName()&&secondTerName!=p.getCards().get(1).getTerritoryName()||(firstTerName!=p.getCards().get(0).getTerritoryName()||secondTerName!=p.getCards().get(1).getTerritoryName())));
 
     }
     @Test public void verifyCommandAttackTest(){
@@ -264,6 +264,46 @@ public class GameEngineTest{
         String commands[]={" ","awww","aa","43"};
         assertTrue(" verifyCommandAttackTestfalse3 ",!GameEngine.verifyCommand("attack",commands, p));
     }
+    @Test public void surrenderTest(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        
+        Player p=new Player(11111,3,4);
+
+        p.addTerritory(new Territory("aaa","a",11111,4));
+        int num=p.getTerritoryCount();
+        try{
+        ge.surrender(p);}
+        catch(Exception e){
+            System.err.println(e);
+        }
+        p.getTerritoryList().get(0).setOwner(0);
+        System.out.println(num+" hello "+p.getTerritoryList().get(0).getOwner()+"          "+p.getTerritoryList().get(0).getNumOfUnits()+"\n\n\n\n\n");
+        assertTrue(" surrenderTest ",p.getTerritoryList().get(0).getNumOfUnits()==0);
+    }
+    @Test public void initialPhaseTest(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        
+        Player p=new Player(11111,3,0);
+        p.addTerritory(new Territory("aaa","a",11111,4));
+       
+
+        assertTrue(" initialPhaseTest ",ge.initialPhase(p));
+    }
+
+    // @Test public void fail(){
+    //     Setup s=Setup.getInstances(2);
+    //     GameEngine ge=GameEngine.getInit();
+        
+    //     Player p=new Player(11111,3,0);
+    //     p.addTerritory(new Territory("aaa","a",11111,4));
+       
+
+    //     assertTrue(" fail ",false);
+    // }
+
+
   
    
 }

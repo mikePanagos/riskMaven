@@ -328,8 +328,10 @@ public class GameEngine {
     public void surrender(Player player) throws Exception {
 		for (Territory t : player.getTerritoryList()) {
 			t.setOwner(0); // Reset the territory to the default: 0
-            t.setNumOfUnits(0); // Reset the unit count back to 0
+			t.setNumOfUnits(0); // Reset the unit count back to 0
+			System.out.println("got here");
 		}
+
 	}
 
 	public boolean initialPhase(Player player) {

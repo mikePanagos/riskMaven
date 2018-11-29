@@ -8,7 +8,7 @@ import mojo.risk.*;
 public class TerritoryTest {
 
     @Test
-    public void territorytesting() {
+    public void getStrNeighboringTerritoriesTest() {
         Territory japan = new Territory("japan", "Asia", 0, 0);
         Territory mongola = new Territory("mongola", "Asia",  0, 0); 
         Territory kamchatka = new Territory("kamchatka", "Asia",  0, 0); 
@@ -194,4 +194,18 @@ public class TerritoryTest {
 
     }
 
+    @Test public void setAndGetNumTest() {
+        Territory japan = new Territory("japan", "Asia",  1111111, 0); 
+        Territory mongola = new Territory("mongola", "Asia", 1111111, 4); 
+        Territory kamchatka = new Territory("kamchatka", "Asia", 555, 1); 
+        // test case for Territory it test adding a Territory then added Neighboring
+        // Territory to make sure it still points to the right thing
+        List<Territory> neighboringTerritories = new ArrayList<>();
+        neighboringTerritories.add(mongola);
+        neighboringTerritories.add(kamchatka);
+        japan.setNeighboringTerritories(neighboringTerritories);
+       japan.setOwner(00);
+        assertTrue("setAndGetNumTest ",japan.getOwner()==00 );
+
+    }
 }

@@ -71,7 +71,7 @@ public class Undo {
      */
     private List<Territory> resetTerList(Player p) {
         List<Territory> newList = new ArrayList<>();
-        List<Territory> changing = p.getTerritoryList();
+        List<Territory> changing = p.getTerritoryListCopy();
         for (int i = 0; i < changing.size(); i++) {
             newList.add(findTerritory(changing.get(i).getName()));
             newList.get(i).setNumOfUnits(changing.get(i).getNumOfUnits());

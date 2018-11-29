@@ -18,13 +18,14 @@ public class UndoTest {
         List<Player> p=s.getPlayers();
 
         p.get(0).addTerritory(t.get(0));
+        System.out.println("undo test 1: "+p.get(0).printableTerritories());
         u.saveState(p);
         p.get(0).removeTerritory(t.get(0));
+        System.out.println("undo test 1: "+p.get(0).printableTerritories());
 
         u.undo(p,1);
         System.out.println("undo test 1: "+p.get(0).printableTerritories());
-        assertTrue("someLibraryMethod should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
-        assertTrue("condition",true);
+        assertTrue("territorytesting should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
 
 
     }
@@ -52,8 +53,7 @@ public class UndoTest {
         System.out.println("undo test 2: "+p.get(0).printableTerritories());
         System.out.println("undo test 2: "+p.get(1).printableTerritories());
 
-        assertTrue("someLibraryMethod should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
-        assertTrue("condition",true);
+        assertTrue("territorytesting2 should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
 
 
     }

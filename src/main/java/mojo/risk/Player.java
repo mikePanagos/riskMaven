@@ -78,7 +78,7 @@ public class Player {
 		this.prevTerritoryCount = p.getPrevTerritoryCount();
 		this.continentCount = p.getContinentCount();
 		this.territoryCount = p.getTerritoryCount();
-		this.tList=p.getTerritoryList();
+		this.tList=p.getTerritoryListCopy();
 		this.cardList=p.getCardList();
 	}
 
@@ -98,8 +98,12 @@ public class Player {
 		
 
 	}
-
 	public List<Territory> getTerritoryList(){
+	
+		return tList;
+	}
+
+	public List<Territory> getTerritoryListCopy(){
 		
 		List<Territory> copy=new ArrayList<>();
 		for (int i = 0; i < tList.size(); i++) {
