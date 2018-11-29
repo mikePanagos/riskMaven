@@ -118,7 +118,7 @@ public class Territory {
 
     /**
      * checks whether the players with id owns all neighbors or if he can attack a neighbor
-     * @param id
+     * @param id the id of the current territory owner
      * @return boolean true if all neighbors owned, false otherwise
      */
     public boolean checkNeighbors(long id) {
@@ -138,7 +138,7 @@ public class Territory {
     /**
      * 
      * @param id of player
-     * @param index
+     * @param index index of the current territory
      * @return Territory the territory that is neighboring
      */
     public Territory getOwnedNeighboringTerritory(long id, int index) {
@@ -158,9 +158,9 @@ public class Territory {
     }
 
     /**
-     * give list of attackable territories
+     * Gives a string of valid target territories
      * 
-     * @param id
+     * @param id the id of the player who is querying
      * @return String string containing the territories that can be attacked
      */
     public String printableListOfAttackableNeighboringTerritories(long id) {
@@ -193,8 +193,8 @@ public class Territory {
     /**
      * get Neighboring Territory that player wants to attack
      * 
-     * @param id
-     * @param index
+     * @param id the id of the player who is querying
+     * @param index the index of the territory we are looking for
      * @return Territory returns a territory that the current player can attack
      */
     public Territory getAttackableNeighboringTerritory(long id, int index) {

@@ -71,7 +71,6 @@ public class Player {
     /**
      * Used to make a deep copy of a Player
      * @param p the player to create a copy from
-     * @return deep copy only
      */
 	public Player(Player p) {
 		this.id = p.getId();
@@ -166,7 +165,7 @@ public class Player {
 	/**
 	 * Sets the amount of armies/units that the player has.
 	 * 
-	 * @param n
+	 * @param n the amount of cards
 	 */
 	public void setCardCount(int n) {
 		this.cardCount = n;
@@ -299,13 +298,10 @@ public class Player {
 		return result;
 	}
 
-	/**
-	 * This will print a list of the territories owned by the player.
-	 *
-	 * michael is editing this to make a string for printing
-	 * 
-	 * todo: edit test so that it accepts formatted output
-	 */
+    /**
+     *
+     * @return String with territory names
+     */
 	public String printableTerritories() {
 		String terr = "";
 		for (int i = 0; i < this.tList.size(); i++) {

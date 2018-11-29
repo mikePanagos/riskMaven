@@ -40,8 +40,9 @@ public class Setup {
 
     /**
      * this is for testing reasons only
+     * @return returns a singleton instance
      */
-    public static Setup getInstances(int num) {
+    public static Setup getInstances() {
         // this is for testing reasons only
 
         init = new Setup();
@@ -49,8 +50,8 @@ public class Setup {
 
     }
     /**
-     * 
-     * @param numOfPlayers
+     * This sets up the players list
+     * @param numOfPlayers the amount of players in game
      */
     public static void SetupPLayers(int numOfPlayers) {
 
@@ -59,7 +60,7 @@ public class Setup {
     }
     /**
     * for bot
-    * @param playerList
+    * @param playerList the player list used to start the game
     */
     public static void setupPlayerWithList(List<Player> playerList) {
 
@@ -659,7 +660,7 @@ public class Setup {
     }
     /**
      * for command line
-     * @param numPlayers
+     * @param numPlayers the number of players to create for the game
      */
     public void makePLayers(int numPlayers) {
 
