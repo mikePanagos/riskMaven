@@ -23,7 +23,7 @@ public class AttackTest{
     System.out.println("TEST "+player.get(0).getId());
     player.get(0).addTerritory(new Territory("aaa","a",1,4));
     player.get(1).addTerritory(new Territory("aaaa","a",2,5));
-    player.get(1).addTerritory(new Territory("aaaaa","a",2,1));
+    player.get(1).addTerritory(new Territory("aaaaa","a",1,1));
     ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 2);
     System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 3));
     System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 1));
