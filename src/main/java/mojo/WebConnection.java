@@ -47,6 +47,7 @@ public class WebConnection {
         // }
         AWSCredentials credentials = null;
         try {
+            
             // credentials = new ProfileCredentialsProvider("default").getCredentials();
             DefaultAWSCredentialsProviderChain chain=new DefaultAWSCredentialsProviderChain ();
             credentials = chain.getCredentials();
