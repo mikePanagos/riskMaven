@@ -45,7 +45,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      */
 
     public String checkMessage(long id, String message) {
-        int count = 1; // Hard coded due to requirement
+        int count = 3; // Hard coded due to requirement
         Player player = null; // Create a player object to reference
 
         for (int i = 0; i < playersList.size(); i++) {
@@ -274,7 +274,8 @@ public class RiskyBot extends TelegramLongPollingBot {
                 notifyPlayer(player.getId(), notifications);
             }
             if (player.getArmiesCount() > 0 && !move.equals("distribute")){
-                returnMess = "You must allocate your new units. How would you like to do?\n";
+                returnMess = "You must allocate your new units. You have a total of : " + player.getArmiesCount() + "\n";
+                returnMess += "How would you like to distribute them?\n";
                 returnMess += "Example: distribute <units> <territory>\n";
                 returnMess += "<units - amount of units you would like to place\n";
                 returnMess += "<territory> - the name of the territory destination\n";
