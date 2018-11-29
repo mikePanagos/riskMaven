@@ -436,34 +436,9 @@ public class Player {
 
 	public List<Card> getCards(){
 		List<Card> trading=new ArrayList<>();
-		int count=0;
 
-		for (int i = 0; i < this.cardList.size(); i++) {
+		for (int i = 0; i < 3; i++) {
 			trading.add(this.cardList.get(i));
-			count++;
-
-			for (int j = 1; j < this.cardList.size(); j++) {
-
-				if( this.cardList.get(i).getType().equals( this.cardList.get(j).getType() ) )
-				{
-					this.cardList.get(j);
-					count++;
-					if(count==3){
-						break;
-
-					}
-				}
-			
-				
-			}
-			if(count==3){
-				break;
-
-			}
-			else{
-				count=0;
-				trading.clear();
-			}
 			
 		}
 

@@ -171,7 +171,7 @@ public class GameEngine {
 
 		for(int i = 0; i<pCards.size();i++)
 		{
-			System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
+			// System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
 			deck.add(pCards.get(i));
 			p.removeCard(pCards.get(i));
 		}
@@ -200,7 +200,6 @@ public class GameEngine {
 
 	public String handOutCard(Player p){
 		String returnable="Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType();
-		System.out.println();
 		p.addCard(deck.get(0));
 		deck.remove(0);
 		return returnable;

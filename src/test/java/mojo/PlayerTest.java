@@ -38,7 +38,7 @@ public class PlayerTest {
             System.out.println(list.get(i).getTerritoryName()+" "+list.get(i).getType());
             
         }
-        assertTrue("playerTest2 should return 'true'", (list.size()==0));
+        assertTrue("playerTest2 should return 'true'", (list.size()!=0));
     }
     /**
  * this test shows that when a player tries to trade cards they have to be the same type or it wont work.
