@@ -291,7 +291,29 @@ public class GameEngineTest{
 
         assertTrue(" initialPhaseTest ",ge.initialPhase(p));
     }
+    @Test public void initialPhaseTest2(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        
+        Player p=new Player(11111,3,0);
+        p.receivedUnits=false;
+        p.addTerritory(new Territory("aaa","a",11111,4));
+       
 
+        assertTrue(" initialPhaseTest ",ge.initialPhase(p));
+    }
+    @Test public void initialPhaseTest3(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        
+        Player p=new Player(11111,3,6);
+        p.receivedUnits=false;
+        p.addTerritory(new Territory("aaa","a",11111,4));
+       
+
+        assertTrue(" initialPhaseTest ",ge.initialPhase(p));
+        ge.endingPhase(p);
+    }
     // @Test public void fail(){
     //     Setup s=Setup.getInstances(2);
     //     GameEngine ge=GameEngine.getInit();
