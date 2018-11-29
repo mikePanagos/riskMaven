@@ -138,4 +138,80 @@ public class GameEngineTest{
         assertTrue(" verifyCommandFortifyTest ",GameEngine.verifyCommand("fortify",commands, p));
 
     }
+    @Test public void verifyCommandFortifyTestFalse(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",11111,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.addTerritory(nextToT);
+
+        p.setItsMyTurn(true);
+        String commands[]={" ","a","ffff","3"};
+        assertTrue(" verifyCommandFortifyTest ",!GameEngine.verifyCommand("fortify",commands, p));
+
+    }
+    @Test public void verifyCommandSurrenderTestFalse(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",11111,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.addTerritory(nextToT);
+
+        p.setItsMyTurn(true);
+        String commands[]={"","a","gggg","3"};
+        assertTrue(" verifyCommandFortifyTest ",!GameEngine.verifyCommand("fortify",commands, p));
+
+    }
+    @Test public void verifyCommandAttackTestFalse1(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",444,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.setItsMyTurn(true);
+        String commands[]={" ","a","awwwa","3"};
+        assertTrue(" verifyCommandAttackTest ",!GameEngine.verifyCommand("attack",commands, p));
+    }
+    @Test public void verifyCommandAttackTestfalse2(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",444,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.setItsMyTurn(true);
+        String commands[]={" ","awww","aa","3"};
+        assertTrue(" verifyCommandAttackTest ",!GameEngine.verifyCommand("attack",commands, p));
+    }
+    @Test public void verifyCommandAttackTestfalse3(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",444,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.setItsMyTurn(true);
+        String commands[]={" ","awww","aa","43"};
+        assertTrue(" verifyCommandAttackTest ",!GameEngine.verifyCommand("attack",commands, p));
+    }
 }
