@@ -95,19 +95,20 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 game = GameEngine.getInit();
                                 System.out.println("Game Engine Initiated!");
                                 setup = Setup.getInstances();
-                                System.out.println("Setup complete!");
-                                Setup.setupPlayerWithList(playersList);
+                                System.out.println("Setup Initiated!");
                             }
+                            Setup.setupPlayerWithList(playersList);
 
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
                                 // Send the starting player a message stating that they're first in queue
-                                if (playersList.get(i).getId() == id) {
+                                if (playersList.get(i).getItsMyTurn()) {
                                     notifyPlayer(playersList.get(i).getId(), "You've been selected to be first."
                                             + " Submit 'menu' when the game starts to view your options.");
                                 }
                                 else {
-                                    notifyPlayer(playersList.get(i).getId(), returnMess);
+                                    if (playersList.get(i).getId() != id)
+                                        notifyPlayer(playersList.get(i).getId(), returnMess);
                                 }
 //                                SendMessage confirmation = new SendMessage() // Create a message object object
 //                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
