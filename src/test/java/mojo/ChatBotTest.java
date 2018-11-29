@@ -43,7 +43,7 @@ public class ChatBotTest {
         nTl.add(alberta);
         t.setNeighboringTerritories(nTl);
         p.addTerritory(t);
-        
+        p.receivedUnits = true;
 
         String messages="";
         messages = "Here is the list of territories you can attack with:\n";
