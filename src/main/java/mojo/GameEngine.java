@@ -136,7 +136,6 @@ public class GameEngine {
 		}
 
 		if (def.getNumOfUnits() - defLostUnits <= 0) {
-			System.out.println("got here\n");
 			messageReturnable+="PLAYER " + def.getOwner() + " lost " + def.getName() + ".\n It now belongs to player "
 					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it\n\n";
 
