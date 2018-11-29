@@ -2,13 +2,27 @@ package mojo.twitter;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.conf.*;
 
 public class TwitterClient {
-	private Twitter twitter = TwitterFactory.getSingleton();
 	private String tweet;
+	private Twitter twitter;
 	
 	public TwitterClient() {
-		
+        String consumerKey = System.getenv("twitterConsumerKey");
+        String consumerSecret = System.getenv("twitterConsumerSecret");
+        String accessToken = System.getenv("twitterAccessToken");
+        String accessTokenSecret = System.getenv("twitterAccessTokenSecret");
+
+        // Store the API credentials for twitter here using env variables.
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setDebugEnabled(true)
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret);
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        twitter = tf.getSingleton();
 	}
 	
 	/*

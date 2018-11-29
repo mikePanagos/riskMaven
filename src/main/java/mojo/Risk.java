@@ -7,6 +7,9 @@ import mojo.bot.RiskyBot;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * @author TeamMojo
@@ -18,11 +21,6 @@ public class Risk {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		RiskyBot bot = new RiskyBot();
-//		bot.getUpdates();
-//		bot.getInfo();
-//		gui ui = new gui();
-//		ui.start();
 
 		ApiContextInitializer.init();
 
