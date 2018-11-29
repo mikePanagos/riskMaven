@@ -23,8 +23,8 @@ public class RiskyBot extends TelegramLongPollingBot {
     String token = System.getenv("telegramToken");
     boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
 
-    GameEngine game = null;
-    Setup setup = null;
+    GameEngine game = GameEngine.getInit();
+    Setup setup = Setup.getInstances();
 
 
     Timer time = new Timer();
