@@ -28,8 +28,6 @@ public class AttackTest{
     System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 3));
     System.out.println(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(0), 1));
 
-    System.out.println();
-    System.out.println("\n\n\n");
-    assertTrue(" attackTest ",!(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(1), 3).equals(null)));
+    assertTrue(" attackTest ",!(ge.attack(player.get(0).getTerritoryThatCanAttack(0), player.get(1).getTerritoryThatCanAttack(1), 1).equals(null)));
 }
 }
