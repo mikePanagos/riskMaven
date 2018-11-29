@@ -12,11 +12,11 @@ public class AmazonS3Test{
 
 
     @Test public void sendFileTest(){
-//        WebConnection wc = new WebConnection();
+       WebConnection wc = new WebConnection();
 //
-//        System.out.println("\n\n\nTESTING S3\n\n\n");
-//        assertTrue(" ",wc.updateS3().equals("successfully added log.txt to s3 bucket"));
-//        System.out.println("\n\n\nTESTING S3 PASSED WITH FLYING COLORS\n\n\n");
+       System.out.println("\n\n\nTESTING S3\n\n\n");
+       assertTrue(" ",wc.updateS3().equals("successfully added log.txt to s3 bucket"));
+       System.out.println("\n\n\nTESTING S3 PASSED WITH FLYING COLORS\n\n\n");
 
     }
 }
