@@ -25,6 +25,7 @@ public class Player {
 	public boolean receivedUnits = true;
 	private String selectedMove = "menu";
 
+    private List<Notification> notifications = new ArrayList<Notification>(); // Holds the notifications for the player
 	private List<Dice> dice = new ArrayList<>();
 
 	// change type to Territory and for the getters and setters
@@ -571,5 +572,9 @@ public class Player {
         }
 
         return summary;
+    }
+
+    public List<Notification> getNotifications() {
+	    return this.notifications;
     }
 }
