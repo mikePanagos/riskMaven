@@ -24,6 +24,7 @@ public class NotificationCenter {
 	/**
 	 * This method will add a player to the list of observers kept.
 	 * @param player The player that will be added to the observer list.
+     * @return Returns Success if the player was added correctly, otherwise returns the exception.
 	 */
 	public String add(Player player) {
 		try {

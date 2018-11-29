@@ -18,7 +18,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class Risk {
 
 	/**
-	 * @param args
+	 * @param args Risk arguments
 	 */
 	public static void main(String[] args) {
 

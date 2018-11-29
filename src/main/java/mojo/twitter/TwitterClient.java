@@ -43,6 +43,7 @@ public class TwitterClient {
 
 	/**
 	 * This will set the message that will be sent in the tweet.
+     * @param tweet This is the message that will be tweeted
 	 */
 	public void setTweet(String tweet) {
 		this.tweet = tweet;

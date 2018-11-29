@@ -251,6 +251,7 @@ public class GameEngine {
      * the necessary resources/ownership to perform the move.
      * @param move the action that the player is intending to do
      * @param command the complete command given by the player
+     * @param player the player who is issuing the command
      * @return true if the command is valid; false if the command is invalid
      */
 	public static boolean verifyCommand(String move, String[] command, Player player) {
