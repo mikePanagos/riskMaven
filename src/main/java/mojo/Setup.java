@@ -40,9 +40,10 @@ public class Setup {
 
     /**
      * this is for testing reasons only
+     * @param num a dummy variable
      * @return returns a singleton instance
      */
-    public static Setup getInstances() {
+    public static Setup getInstances(int num) {
         // this is for testing reasons only
 
         init = new Setup();
