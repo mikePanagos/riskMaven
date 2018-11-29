@@ -23,9 +23,9 @@ public class UndoTest {
         p.get(0).removeTerritory(t.get(0));
         System.out.println("undo test 1: "+p.get(0).printableTerritories());
 
-        u.undo(p,1);
+        
         System.out.println("undo test 1: "+p.get(0).printableTerritories());
-        assertTrue("territorytesting should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("territorytesting should return 'true'", u.undo(p, 1));
 
 
     }

@@ -25,6 +25,7 @@ public class Player {
 	public boolean receivedUnits = true;
 	private String selectedMove = "menu";
 	public boolean quit = false;
+	private int credit;
 
     private List<Notification> notifications = new ArrayList<Notification>(); // Holds the notifications for the player
 	private List<Dice> dice = new ArrayList<>();
@@ -98,6 +99,13 @@ public class Player {
 		this.territoryCount = 0;
 		this.continentCount = 0;
 		
+
+	}
+	public int getCredit(){
+		return this.credit;
+	}
+	public void setCredit(int newCredit){
+		this.credit=newCredit;
 
 	}
 	public List<Territory> getTerritoryList(){

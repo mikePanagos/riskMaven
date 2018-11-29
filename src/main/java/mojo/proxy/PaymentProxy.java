@@ -43,20 +43,33 @@ public class PaymentProxy implements PaymentInterface {
 
 
 
-        // if(cost>p.getCredit()){
-        //     System.out.println("insufficient funds");
-        // }else{
-        // p.setMoney(p.getMoney()-cost);
-        // p.setCredit(p.getCredit()+units);
-        // }
+        if(cost>p.getCredit()){
+            System.out.println("insufficient funds");
+        }else{
+        p.setMoney(p.getMoney()-cost);
+        p.setCredit(p.getCredit()+units);
+        }
         
         return units;
     }
-
+//  add transfer from player to player
     public boolean  buyUndo(int undo){
         Setup s=Setup.getInstances();
         Undo u=Undo.init();
         return u.undo(s.getPlayers(),undo);
 
+    }
+
+    /
+    public boolean giveCreditsTo(Player give,Player get,int amount){
+        if((give.getCredit()-amount)>0){
+            return false;
+        }else{
+
+            give.setCredit(give.getCredit()-amount);
+            get.setCredit(amount+get.getCredit());
+            return true;
+
+        }
     }
 }
