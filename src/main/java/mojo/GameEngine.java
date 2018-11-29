@@ -187,7 +187,7 @@ public class GameEngine {
 		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
 		p.setArmiesCount(temp + cardgroup[cardSet]);
 		String returnable = "You got " + cardgroup[cardSet] + " more units. You now have " + p.getArmiesCount()
-				+ " in total.";
+				+ " in total.\n";
 		if (cardSet != 12) {
 			cardSet++;
 		}
@@ -367,21 +367,21 @@ public class GameEngine {
 	}
 
 	public boolean initialPhase(Player player) {
-	    if (player.getNotifications().size() > 0) {
-//            if (player.getNotifications().size() > 0) {
-//                // Read notifications one by one to the player.
-//                String returnMess = "Here is the breakdown of what happened outside of your turn.\n";
-//                for (int i = 0; i < player.getNotifications().size(); i++) {
-//                    returnMess += "Notification " + (i + 1) + ":\n";
-//                    returnMess += player.getNotifications().get(i).getMessage() + "\n";
-//                }
-//                player.getNotifications().clear(); // Clear all notifications once they have been read to the player
-//                returnMess += "-------------------\n";
-//                // Notify the player with the breakdown of attacks.
-//                RiskyBot.notifyPlayer(player.getId(), returnMess);
-//            }
-            return true;
-        }
+//	    if (player.getNotifications().size() > 0) {
+////            if (player.getNotifications().size() > 0) {
+////                // Read notifications one by one to the player.
+////                String returnMess = "Here is the breakdown of what happened outside of your turn.\n";
+////                for (int i = 0; i < player.getNotifications().size(); i++) {
+////                    returnMess += "Notification " + (i + 1) + ":\n";
+////                    returnMess += player.getNotifications().get(i).getMessage() + "\n";
+////                }
+////                player.getNotifications().clear(); // Clear all notifications once they have been read to the player
+////                returnMess += "-------------------\n";
+////                // Notify the player with the breakdown of attacks.
+////                RiskyBot.notifyPlayer(player.getId(), returnMess);
+////            }
+//            return true;
+//        }
         // Give the player new units
         if (player.receivedUnits == false) {
             unitDistribution(player);
