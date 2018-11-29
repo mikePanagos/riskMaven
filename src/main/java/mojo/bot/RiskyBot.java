@@ -223,6 +223,12 @@ public class RiskyBot extends TelegramLongPollingBot {
             // REFACTORING: Created this method to make it easier to reuse the
             // reply functionality. Replaces code below it.
             notifyPlayer(chat_id, response);
+            // Remove all players who have quit
+            for (Player p : playersList) {
+                if (p.quit) {
+                    playersList.remove(p);
+                }
+            }
 //            SendMessage message = new SendMessage() // Create a message object object
 //                    .setChatId(chat_id).setText(response);
 //            try {
@@ -300,7 +306,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
                     returnMess += "1. Attack\n";
                     returnMess += "2. Fortify\n";
-                    returnMess += "3. Trade\n";
+                    returnMess += "3. Trade - Turn your cards into armies >:)\n";
                     returnMess += "4. End\n";
                     returnMess += "5. Surrender\n";
                     returnMess += "6. Summary\n";
@@ -386,7 +392,18 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                     break;
                 case "trade":
-                    returnMess = "Trade Test Message";
+                    /*
+                        So we need to keep track of which set this is that is being traded in. At this time it just checks
+                        to make sure that you have three cards. This is also supposed to happen at the beginning of the
+                        player's turn but we will leave it here for now.
+                     */
+                    if (player.getCardCount() < 3) {
+                        returnMess = "Sorry you don't have enough cards to perform this action.\n";
+                    }
+                    else {
+                        // Perform trade
+                        returnMess += game.trade(player); // Trade the cards
+                    }
                     break;
                 case "end":
                     returnMess = "You have ended your turn.";
@@ -413,7 +430,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
                     returnMess += "1. Attack\n";
                     returnMess += "2. Fortify\n";
-                    returnMess += "3. Trade\n";
+                    returnMess += "3. Trade - Turn your cards into armies >:)\n";
                     returnMess += "4. End\n";
                     returnMess += "5. Surrender\n";
                     returnMess += "6. Summary\n";
