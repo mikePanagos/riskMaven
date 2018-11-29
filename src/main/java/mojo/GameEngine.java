@@ -28,7 +28,8 @@ public class GameEngine {
 		return terr.getNumOfUnits();
 	}
 
-	public void attack(Territory act, Territory def, int attackingUnits) {
+	public String attack(Territory act, Territory def, int attackingUnits) {
+		String messageReturnable="";
 		// Scanner key = new Scanner(System.in);
 		Player attackingPlayer = null;
 		Player defendingPlayer = null;
@@ -57,19 +58,23 @@ public class GameEngine {
 		List<Player> players = s.getPlayers();
 		long idOfAttPlayer = 0;
 		long idOfDefPlayer = 0;
-
+		
 		for(Player player : players) {
+
 		    if (player.getId() == act.getOwner()) {
+
                 idOfAttPlayer = act.getOwner();
             }
             if (player.getId() == def.getOwner()) {
                 idOfDefPlayer = def.getOwner();
             }
-        }
+		}
 //		long idOfAttPlayer = act.getOwner();
 		Player attPlayer = s.getPlayerById(idOfAttPlayer);
+
 //		long idOfDefPlayer = def.getOwner();
 		Player defPlayer = s.getPlayerById(idOfDefPlayer);
+
 		
 		// Create Attack Notification
 		Notification notification = new AttackNotification(idOfAttPlayer, idOfDefPlayer, def.getName());
@@ -77,13 +82,14 @@ public class GameEngine {
 		// Send Notification to Notification Center
 		// TODO create publicly accessible notification center
 		notificationCenter.setNotification(notification);
+		
+
 		notificationCenter.updatePlayer();
 
 //		players.get(idOfAttPlayer - 1).rollDices(attackNumOfRolls);
 //		players.get(idOfDefPlayer - 1).rollDices(defendNumOfRolls);
 //		List<Integer> attDice = players.get(idOfAttPlayer - 1).getDice();
 //		List<Integer> defDices = players.get(idOfDefPlayer - 1).getDice();
-
         attPlayer.rollDices(attackNumOfRolls);
         defPlayer.rollDices(defendNumOfRolls);
 
@@ -102,30 +108,27 @@ public class GameEngine {
 		int biggerSize = 0;
 
 		if (attDice.size() > defDice.size()) {
-			// System.out.println("more attacking dice");
+			// messageReturnable+="more attacking dice");
 			biggerSize = defDice.size();
 		} else {
 			biggerSize = attDice.size();
 		}
 		for (int i = 0; i < biggerSize; i++) {
-			System.out.println("Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDice.get(i));
+			System.out.println("got here\n");
+			messageReturnable+="Attack rolled a " + attDice.get(i)+".        the defense rolled a " + defDice.get(i)+"\n";
 
 			if (attDice.get(i) > defDice.get(i)) {
 
-				System.out.println("Attacking won defense will lose one unit");
-				System.out.println(" ");
-				System.out.println(" ");
+				messageReturnable+="Attacking won defense will lose one unit\n\n";
+
 				defLostUnits++;
 			} else if (attDice.get(i) < defDice.get(i)) {
-				System.out.println(" defense won attacking will lose one unit");
-				System.out.println(" ");
-				System.out.println(" ");
+				messageReturnable+=" defense won attacking will lose one unit\n\n";
+
 
 				attLostUnits++;
 			} else {
-				System.out.println(" tie so attacking will lose one unit");
-				System.out.println(" ");
-				System.out.println(" ");
+				messageReturnable+=" tie so attacking will lose one unit\n\n";
 
 
 				attLostUnits++;
@@ -133,10 +136,10 @@ public class GameEngine {
 		}
 
 		if (def.getNumOfUnits() - defLostUnits <= 0) {
-			System.out.println("PLAYER " + def.getOwner() + " lost " + def.getName() + ".\n It now belongs to player "
-					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it");
-				System.out.println(" ");
-				System.out.println(" ");
+			System.out.println("got here\n");
+			messageReturnable+="PLAYER " + def.getOwner() + " lost " + def.getName() + ".\n It now belongs to player "
+					+ act.getOwner() + " and has " + (attackingUnits - attLostUnits) + " units on it\n\n";
+
 
 			//remove territory from previous owner
 			defPlayer.removeTerritory(def);
@@ -156,6 +159,8 @@ public class GameEngine {
 			def.setNumOfUnits(def.getNumOfUnits() - defLostUnits);
 			act.setNumOfUnits(act.getNumOfUnits() - attLostUnits);
 		}
+
+		return messageReturnable;
 	}
 
 	/**
@@ -171,7 +176,7 @@ public class GameEngine {
 
 		for(int i = 0; i<pCards.size();i++)
 		{
-			// System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
+			// messageReturnable+=pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
 			deck.add(pCards.get(i));
 			p.removeCard(pCards.get(i));
 		}
@@ -329,7 +334,6 @@ public class GameEngine {
 		for (Territory t : player.getTerritoryList()) {
 			t.setOwner(0); // Reset the territory to the default: 0
 			t.setNumOfUnits(0); // Reset the unit count back to 0
-			System.out.println("got here");
 		}
 
 	}

@@ -756,6 +756,7 @@ public class Setup {
         for (i = 0; i < playersList.size(); i++) {
 
             if (playersList.get(i).getId() == id) {
+
                 break;
             }
 
