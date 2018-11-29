@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import mojo.risk.*;
+import mojo.twitter.TwitterClient;
 
 
 /*
@@ -17,17 +18,21 @@ import mojo.risk.*;
  * commands and execute them in game.
  */
 public class RiskyBot extends TelegramLongPollingBot {
-    int gameID = 0;
     List<Long> ids = new ArrayList<>();
     List<Player> playersList= new ArrayList<>();
     String token = System.getenv("telegramToken");
     boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
 
+    // Risk Core
     GameEngine game = GameEngine.getInit();
     Setup setup = Setup.getInstances();
 
-
+    // Timer used for timing out a players actions.
     Timer time = new Timer();
+
+    // TwitterClient used to signal start of the game
+    TwitterClient twitterClient = new TwitterClient();
+
     boolean done;
     public  void startTimer(int seconds) {
         done = false;
@@ -100,6 +105,8 @@ public class RiskyBot extends TelegramLongPollingBot {
                             Setup.setupPlayerWithList(playersList);
 
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                            twitterClient.setTweet(returnMess);
+                            twitterClient.postTweet();
                             for (int i = 0; i < playersList.size(); i++) {
                                 // Send the starting player a message stating that they're first in queue
                                 if (playersList.get(i).getItsMyTurn()) {
@@ -323,7 +330,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                         returnMess += "targetTerritory - The territory you would like to target.\n";
                         returnMess += "unitCount - The amount of armies you would like to attack with.\n";
                     } else {
-                        System.out.println("Player #" + player.getId() + "has chosen to attack!");
+                        System.out.println("Player #" + player.getId() + " has chosen to attack!");
 
                         if (GameEngine.verifyCommand(move, args, player)) {
                             Territory attackingTerr = null, defendingTerr = null;
@@ -422,7 +429,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     returnMess = "Here is a breakdown of you currently owned territories:\n";
                     returnMess += player.printTerritoriesVerbose() + "\n";
                     returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
-                    returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
+                    returnMess += "You currently have: " + player.getCardCount() + " Cards.\n";
                     break;
                 default:
                     returnMess = "Invalid Option!\n";
@@ -478,6 +485,9 @@ public class RiskyBot extends TelegramLongPollingBot {
         }
         nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
+        // Update Twitter
+        twitterClient.setTweet("It is now Player #" + currentId + "'s turn.");
+        twitterClient.postTweet();
         notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'menu' to view your options.");
     }
 }
