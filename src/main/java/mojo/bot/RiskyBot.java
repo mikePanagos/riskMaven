@@ -34,6 +34,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      * @param message the message returned by the player
      * @return the message to send back to the player
      */
+
     public String checkMessage(long id, String message) {
         int count = 1; // Hard coded due to requirement
         Player player = null; // Create a player object to reference
@@ -85,15 +86,21 @@ public class RiskyBot extends TelegramLongPollingBot {
 
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
                             for (int i = 0; i < playersList.size(); i++) {
-                                if (playersList.get(i).getId() == id)
-                                    continue;
-                                SendMessage confirmation = new SendMessage() // Create a message object object
-                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
-                                try {
-                                    execute(confirmation); // Sending our message object to user
-                                } catch (TelegramApiException e) {
-                                    e.printStackTrace();
+                                // Send the starting player a message stating that they're first in queue
+                                if (playersList.get(i).getId() == id) {
+                                    notifyPlayer(playersList.get(i).getId(), "You've been selected to be first."
+                                            + " Submit 'menu' when the game starts to view your options.");
                                 }
+                                else {
+                                    notifyPlayer(playersList.get(i).getId(), returnMess);
+                                }
+//                                SendMessage confirmation = new SendMessage() // Create a message object object
+//                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
+//                                try {
+//                                    execute(confirmation); // Sending our message object to user
+//                                } catch (TelegramApiException e) {
+//                                    e.printStackTrace();
+//                                }
                             }
                         }
 
@@ -116,6 +123,10 @@ public class RiskyBot extends TelegramLongPollingBot {
                     if (player.getItsMyTurn()) {
                         String move = player.getSelectedMove();
                         String[] command = move.split("\\s+");
+                        System.out.println("Player " + id + "'s command:");
+                        for(String s : command) {
+                            System.out.println(s);
+                        }
                         move = command[0];
 
                         returnMess = controller(move, player, message);
@@ -124,6 +135,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                 }
                 else {
+                    // TODO: Rewrite this portion since it only returns for player's who are in but not ready.
                     returnMess = "We support the following commands.\n" +
                             "attack\n" +
                             "fortify\n" +
@@ -193,13 +205,16 @@ public class RiskyBot extends TelegramLongPollingBot {
                 response = checkMessage(chat_id, message_text);
             }
 
-            SendMessage message = new SendMessage() // Create a message object object
-                    .setChatId(chat_id).setText(response);
-            try {
-                execute(message); // Sending our message object to user
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+            // REFACTORING: Created this method to make it easier to reuse the
+            // reply functionality. Replaces code below it.
+            notifyPlayer(chat_id, response);
+//            SendMessage message = new SendMessage() // Create a message object object
+//                    .setChatId(chat_id).setText(response);
+//            try {
+//                execute(message); // Sending our message object to user
+//            } catch (TelegramApiException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -226,6 +241,7 @@ public class RiskyBot extends TelegramLongPollingBot {
     public String controller(String move, Player player, String command) {
         String returnMess = null;
         String[] args = command.split("\\s+"); // Split command into arguments
+        move = args[0];
         switch (move) {
             case "menu":
                 returnMess = "What would you like to do? Submit one of the following options to proceed.\n";
@@ -239,7 +255,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "Or Submit 'Menu' at anytime to view this menu again.\n";
                 break;
             case "attack":
-                if (args.length < 4) { // TODO: Update the right amount to compare argCount with.
+                if (args.length < 4) {
                     returnMess = "Here is the list of territories you can attack with:\n";
                     returnMess += player.printOffensiveTerritoriesVerbose() + "\n";
                     returnMess += "How would you like to proceed?\n";
@@ -331,8 +347,10 @@ public class RiskyBot extends TelegramLongPollingBot {
                 notifyNextPlayer(player.getId()); // Notify the next player it's their turn
                 break;
             case "surrender":
+                // TODO: Currently throws exception since it removes the player's id before sending response
                 returnMess = "Sorry to see you go. Better luck next time!";
-                playersList.remove(player); // Remove player from the player list
+                notifyPlayer(player.getId(), returnMess);
+//                playersList.remove(player); // Remove player from the player list
                 notifyNextPlayer(player.getId());
                 break;
             case "summary":
@@ -342,7 +360,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                 returnMess += "You currently have: " + player.getCardCount() + "Cards.\n";
                 break;
             default:
-                returnMess = "Invalid Option!";
+                returnMess = "Invalid Option!\n";
                 returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
                 returnMess += "For example, if you would like to choose the first one, you would submit 'attack'.\n";
                 returnMess += "1. Attack\n";
@@ -394,6 +412,6 @@ public class RiskyBot extends TelegramLongPollingBot {
         }
         nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
-        notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'ready' to view your options.");
+        notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'menu' to view your options.");
     }
 }

@@ -22,6 +22,7 @@ public class Player {
 	private boolean attackedAtLeastOnce = false;
 	private boolean itsMyTurn = false;
 	public boolean ready = false;
+	public boolean receivedUnits = true;
 	private String selectedMove = "menu";
 
 	private List<Dice> dice = new ArrayList<>();
@@ -402,6 +403,10 @@ public class Player {
 		return;
 	}
 
+	public List<String> getContinentList() {
+	    return this.cList;
+    }
+
 	public void addCard(Card c) {
 		this.cardList.add(c);
 		setCardCount(getCardCount() + 1);
@@ -554,6 +559,7 @@ public class Player {
     public String printOffensiveTerritoriesVerbose() {
 	    String summary = "";
 	    for (Territory t : tList) {
+	    	summary += "\n"; // Used to format if the preceding value is null;
 	        summary += "Territory Name: " + t.getName() + "\n";
 	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
 	        summary += "Enemy Territories:\n";
