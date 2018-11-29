@@ -221,7 +221,7 @@ public class GameEngine {
      * @return true if the command is valid; false if the command is invalid
      */
 	public static boolean verifyCommand(String move, String[] command, Player player) {
-	    boolean isValid = false;
+	    boolean isValid;
 
 	    switch (move) {
             case "attack":
@@ -320,5 +320,84 @@ public class GameEngine {
         }
 
         return isValid;
+    }
+
+    public void surrender(Player player) throws Exception {
+		for (Territory t : player.getTerritoryList()) {
+			t.setOwner(0); // Reset the territory to the default: 0
+            t.setNumOfUnits(0); // Reset the unit count back to 0
+		}
+	}
+
+	public boolean initialPhase(Player player) {
+        // Give the player new units
+        if (player.receivedUnits == false) {
+            unitDistribution(player);
+            // Let the game know that they player
+            // has received their new units
+            player.receivedUnits = true;
+        }
+
+        if (player.getArmiesCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public void endingPhase(Player player) {
+        if (player.getAttackedAtLeastOnces()) {
+            // Hand out card.
+            player.addCard(deck.get(0));
+            // Rotate the deck so the next player
+            // gets something different
+            Collections.rotate(deck, 1);
+            // Set it back to false so that it does
+            // not carry over each turn.
+            player.setAttackedAtLeastOnces(false);
+        }
+    }
+
+    public void unitDistribution(Player player) {
+	    Integer units = player.getTerritoryCount() / 3;
+
+	    // Minimum new units is three.
+	    if (units < 3)
+	        units = 3;
+
+	    // An additional amount of units will be given
+        // for each Continent owned. We will hold the
+        // player's continents and distribute based off
+        // the Continent's value.
+        
+        List<String> playerContinents = player.getContinentList();
+
+	    if (playerContinents.contains("Asia")) {
+	        units += 7;
+        }
+
+        if (playerContinents.contains("North America")) {
+            units += 5;
+        }
+
+        if (playerContinents.contains("Europe")) {
+            units += 5;
+        }
+
+        if (playerContinents.contains("Africa")) {
+            units += 3;
+        }
+
+        if (playerContinents.contains("South America")) {
+            units += 2;
+        }
+
+        if (playerContinents.contains("Australia")) {
+            units += 2;
+        }
+
+	    // Distribute units.
+        player.setArmiesCount(units);
     }
 }
