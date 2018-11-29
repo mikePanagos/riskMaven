@@ -128,7 +128,7 @@ public class Territory {
                 count++;
             }
         }
-        if(count<=0){
+        if(count<0){
         return false;
         }else{
             return true;
@@ -248,7 +248,7 @@ public class Territory {
         // Create a new ArrayList to store all valid options for this territory to attack.
         List<Territory> options = new ArrayList<Territory>();
         // String to return with the summary
-        String summary = null;
+        String summary = "";
 
         // Add in only the territories that are not owned by the same owner.
         for (Territory t : neighboringTerritories) {

@@ -173,7 +173,7 @@ public class GameEngine {
 		{
 			System.out.println(pCards.get(i).getTerritoryName()+" "+pCards.get(i).getType());
 			deck.add(pCards.get(i));
-			p.remvoeCard(pCards.get(i));
+			p.removeCard(pCards.get(i));
 		}
 
 
@@ -182,7 +182,7 @@ public class GameEngine {
 		int[] cardgroup = { 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45 };
 		p.setArmiesCount(temp + cardgroup[cardSet]);
 		String returnable = "You got " + cardgroup[cardSet] + " more units. You now have " + p.getArmiesCount()
-				+ "in total.";
+				+ " in total.";
 		if (cardSet != 12) {
 			cardSet++;
 		}
@@ -190,18 +190,20 @@ public class GameEngine {
 		return returnable;
 	}
 
-	public void fortify(Territory from, Territory to, int numUnits) {
+	public String fortify(Territory from, Territory to, int numUnits) {
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);
 		to.setNumOfUnits(to.getNumOfUnits()+numUnits);
+		return "Now "+to.getName()+" has "+to.getNumOfUnits()+" and "+from.getName()+" has "+from.getNumOfUnits();
 	}
 
 
-	public void handOutCard(Player p){
-		System.out.println("Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType());
+	public String handOutCard(Player p){
+		String returnable="Player "+p.getId()+" is getting card "+deck.get(0).getTerritoryName()+" "+deck.get(0).getType();
+		System.out.println();
 		p.addCard(deck.get(0));
 		deck.remove(0);
-
+		return returnable;
 	}
 
 	/**

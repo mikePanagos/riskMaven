@@ -47,10 +47,10 @@ public class ChatBotTest {
 
         String messages="";
         messages = "Here is the list of territories you can attack with:\n";
-        messages += "nullTerritory Name: " + "Alaska" + "\n";
+        messages += "Territory Name: " + "Alaska" + "\n";
         messages += "Army Count: " + "6" + "\n";
         messages += "Enemy Territories:\n";
-        messages += "nullTarget Territory Name: " + "Alberta" + "\n";
+        messages += "Target Territory Name: " + "Alberta" + "\n";
         messages += "Armies Count: " + "4" + "\n";
         messages += "Owned by: " + "11111" + "\n";
         messages+="\n";

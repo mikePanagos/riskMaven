@@ -272,12 +272,16 @@ public class Player {
 		// setPrevTerritoryCount(tList.size());
 	}
 
-	public void removeTerritoryByName(String name) {
+	public int removeTerritoryByName(String name) {
+		int result=0;
 		for (int i = 0; i < this.tList.size(); i++) {
 			if (name.equals(this.tList.get(i).getName())) {
 				this.tList.remove(i);
+				result=1;
+
 			}
 		}
+		return result;
 	}
 
 	/**
@@ -404,7 +408,7 @@ public class Player {
 
 	}
 
-	public void remvoeCard(Card c) {
+	public void removeCard(Card c) {
 
 		for (int i = 0; i < this.cardList.size(); i++) {
 			if (c.getTerritoryName().equals(this.cardList.get(i).getTerritoryName()))
@@ -538,7 +542,7 @@ public class Player {
      * @return verbose summary of the player's territories
      */
 	public String printTerritoriesVerbose() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	        summary += "Territory Name: " + t.getName() + "\n";
 	        summary += "Number of units allocated: " + t.getNumOfUnits() + "\n";
@@ -548,7 +552,7 @@ public class Player {
     }
 
     public String printOffensiveTerritoriesVerbose() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	    	summary += "\n"; // Used to format if the preceding value is null;
 	        summary += "Territory Name: " + t.getName() + "\n";
@@ -561,7 +565,7 @@ public class Player {
     }
 
     public String printFortifyTerritories() {
-	    String summary = null;
+	    String summary = "";
 	    for (Territory t : tList) {
 	        if (t.getNumOfUnits() > 1) {
 	            summary += "Territory Name: " + t.getName() + "\n";
