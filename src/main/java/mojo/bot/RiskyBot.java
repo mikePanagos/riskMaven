@@ -412,10 +412,9 @@ public class RiskyBot extends TelegramLongPollingBot {
                     notifyNextPlayer(player.getId()); // Notify the next player it's their turn
                     break;
                 case "surrender":
-                    // TODO: Currently throws exception since it removes the player's id before sending response
                     returnMess = "Sorry to see you go. Better luck next time!";
                     notifyPlayer(player.getId(), returnMess);
-//                playersList.remove(player); // Remove player from the player list
+                    player.quit = true;
                     notifyNextPlayer(player.getId());
                     break;
                 case "summary":
