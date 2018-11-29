@@ -33,36 +33,36 @@ public class ChatBotTest {
         // assertTrue("testing chabot",true);
     }
 
-    @Test public void chatbotController(){
-        RiskyBot r=new RiskyBot();
+    // @Test public void chatbotController(){
+    //     RiskyBot r=new RiskyBot();
 
-        Player p=new Player(32344);
-        Territory t=new Territory("Alaska","North America",32344,6);
-        Territory alberta = new Territory("Alberta", "North America", 11111, 4);
-        List<Territory> nTl=new ArrayList<>();
-        nTl.add(alberta);
-        t.setNeighboringTerritories(nTl);
-        p.addTerritory(t);
+    //     Player p=new Player(32344);
+    //     Territory t=new Territory("Alaska","North America",32344,6);
+    //     Territory alberta = new Territory("Alberta", "North America", 11111, 4);
+    //     List<Territory> nTl=new ArrayList<>();
+    //     nTl.add(alberta);
+    //     t.setNeighboringTerritories(nTl);
+    //     p.addTerritory(t);
         
 
-        String messages="";
-        messages = "Here is the list of territories you can attack with:\n";
-        messages += "Territory Name: " + "Alaska" + "\n";
-        messages += "Army Count: " + "6" + "\n";
-        messages += "Enemy Territories:\n";
-        messages += "Target Territory Name: " + "Alberta" + "\n";
-        messages += "Armies Count: " + "4" + "\n";
-        messages += "Owned by: " + "11111" + "\n";
-        messages+="\n";
-        messages += "How would you like to proceed?\n";
-        messages += "Format: Attack yourTerritory targetTerritory unitCount\n";
-        messages += "youTerritory - The territory you want to attack with.\n";
-        messages += "targetTerritory - The territory you would like to target.\n";
-        messages += "unitCount - The amount of armies you would like to attack with.\n";
+    //     String messages="";
+    //     messages = "Here is the list of territories you can attack with:\n";
+    //     messages += "Territory Name: " + "Alaska" + "\n";
+    //     messages += "Army Count: " + "6" + "\n";
+    //     messages += "Enemy Territories:\n";
+    //     messages += "Target Territory Name: " + "Alberta" + "\n";
+    //     messages += "Armies Count: " + "4" + "\n";
+    //     messages += "Owned by: " + "11111" + "\n";
+    //     messages+="\n";
+    //     messages += "How would you like to proceed?\n";
+    //     messages += "Format: Attack yourTerritory targetTerritory unitCount\n";
+    //     messages += "youTerritory - The territory you want to attack with.\n";
+    //     messages += "targetTerritory - The territory you would like to target.\n";
+    //     messages += "unitCount - The amount of armies you would like to attack with.\n";
      
-        assertTrue("testing chabot controller ",r.controller("attack",p,"").equals(messages));
-        // assertTrue("testing chabot",true);
-    }
+    //     assertTrue("testing chabot controller ",r.controller("attack",p,"").equals(messages));
+    //     // assertTrue("testing chabot",true);
+    // }
 
 
 }
