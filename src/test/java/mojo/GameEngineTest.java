@@ -306,12 +306,20 @@ public class GameEngineTest{
         Setup s=Setup.getInstances(2);
         GameEngine ge=GameEngine.getInit();
         
-        Player p=new Player(11111,3,6);
-        p.receivedUnits=false;
+        Player p=new Player(11111,0,0);
+        p.receivedUnits=true;
+        p.setAttackedAtLeastOnces(true);
+        p.addContinent("Asia");
+        p.addContinent("North America");
+        p.addContinent("Europe");
+        p.addContinent("Africa");
+        p.addContinent("South America");
+        p.addContinent("Australia");
+
         p.addTerritory(new Territory("aaa","a",11111,4));
        
 
-        assertTrue(" initialPhaseTest ",ge.initialPhase(p));
+        assertTrue(" initialPhaseTest ",!ge.initialPhase(p));
         ge.endingPhase(p);
     }
     // @Test public void fail(){
