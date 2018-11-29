@@ -511,7 +511,7 @@ public class GameEngine {
             }
         }
 
-        String update = "Player #" + player.getId() + "allocated " + units + " to " + territory + ".";
+        String update = "Player #" + player.getId() + " allocated " + units + " to " + territory + ".";
 	    twitterClient.setTweet(update);
 	    twitterClient.postTweet();
         log.updateLog(update);
