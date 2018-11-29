@@ -1,5 +1,6 @@
 package mojo;
 
+import org.glassfish.grizzly.utils.ArrayUtils;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.*;
@@ -71,6 +72,53 @@ public class GameEngineTest{
         ge.handOutCard(p);
         ge.handOutCard(p);
         assertTrue(" shuffleCardsTest ",(firstTerName!=p.getCards().get(0).getTerritoryName()&&secondTerName!=p.getCards().get(1).getTerritoryName()));
+
+    }
+    @Test public void verifyCommandAttackTest(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",444,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.setItsMyTurn(true);
+        String commands[]={"a","aa","3"};
+        assertTrue(" verifyCommandAttackTest ",GameEngine.verifyCommand("attack",commands, p));
+
+    }
+    @Test public void verifyCommandTradeTest(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",444,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.setItsMyTurn(true);
+        String commands[]={"a","aa","3"};
+        assertTrue(" verifyCommandTradeTest ",GameEngine.verifyCommand("trade",commands, p));
+
+    }
+    @Test public void verifyCommandFortifyTest(){
+        Setup s=Setup.getInstances(2);
+        GameEngine ge=GameEngine.getInit();
+        Player p=new Player(11111,3,4);
+        Territory t=new Territory("a","coun",11111,66);
+        Territory nextToT=new Territory("aa","coun",11111,5);
+        List<Territory> tlist=new ArrayList<>();
+        tlist.add(nextToT);
+        t.setNeighboringTerritories(tlist);
+        p.addTerritory(t);
+        p.addTerritory(nextToT);
+
+        p.setItsMyTurn(true);
+        String commands[]={"a","aa","3"};
+        assertTrue(" verifyCommandFortifyTest ",GameEngine.verifyCommand("fortify",commands, p));
 
     }
 }

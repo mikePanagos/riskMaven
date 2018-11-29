@@ -220,7 +220,9 @@ public class GameEngine {
      * @return true if the command is valid; false if the command is invalid
      */
 	public static boolean verifyCommand(String move, String[] command, Player player) {
-	    boolean isValid;
+		boolean isValid;
+		System.out.println("move is "+move);
+		// System.out.println("commands are"+command[0]++++);
 
 	    switch (move) {
             case "attack":
@@ -232,7 +234,7 @@ public class GameEngine {
 
                 for (Territory t : player.getTerritoryList()) {
                     // Check to see if the territory can attack
-                    if (t.getName().toLowerCase().equals(command[1]) && t.getNumOfUnits() > 2) {
+                    if (t.getName().toLowerCase().equals(command[0]) && t.getNumOfUnits() > 2) {
                         attackingTerritory = t;
                     }
                 }
@@ -246,7 +248,7 @@ public class GameEngine {
 
                 // Check to see the defending Territory is valid for the chosen attacking territory.
                 for (Territory t : attackingTerritory.getSurroundingEnemies()) {
-                    if (t.getName().toLowerCase().equals(command[2])) {
+                    if (t.getName().toLowerCase().equals(command[1])) {
                         defendingTerritory = t;
                     }
                 }
@@ -260,7 +262,7 @@ public class GameEngine {
 
                 // If the attacking territory has less units than the ones described by the player
                 // then this move was invalid.
-                if (attackingTerritory.getNumOfUnits() < Integer.parseInt(command[3])) {
+                if (attackingTerritory.getNumOfUnits() < Integer.parseInt(command[2])) {
                     isValid = false;
                     break;
                 }
@@ -281,26 +283,31 @@ public class GameEngine {
                 Territory terrA = null;
                 Territory terrB = null;
 
-                if (command[1].equals(command[2])) {
+                if (command[0].equals(command[1])) {
+					System.out.println("Found");
                     isValid = false;
                     break;
                 }
 
                 for (Territory t : player.getTerritoryList()) {
-                    if (t.getName().toLowerCase().equals(command[1])) {
+                    if (t.getName().toLowerCase().equals(command[0])) {
                         terrA = t;
                     }
-                    if (t.getName().toLowerCase().equals(command[2])) {
+                    if (t.getName().toLowerCase().equals(command[1])) {
                         terrB = t;
                     }
                 }
 
                 if (terrA == null || terrB == null) {
+					System.out.println("Found");
+
                     isValid = false;
                     break;
                 }
 
-                if (terrA.getNumOfUnits() <= 1 || (terrA.getNumOfUnits() - Integer.parseInt(command[3])) < 1) {
+                if (terrA.getNumOfUnits() <= 1 || (terrA.getNumOfUnits() - Integer.parseInt(command[2])) < 1) {
+					System.out.println("Found");
+
                     isValid = false;
                     break;
                 }
