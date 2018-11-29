@@ -36,7 +36,7 @@ public class GameEngineTest{
 
         // System.out.println(+"does this work");
 
-        assertTrue(" tradeTest ",ge.trade(p).equals("You got 3 more units. You now have 8 in total." ));
+        assertTrue(" tradeTest ",ge.trade(p).equals("You got 3 more units. You now have 8 in total.\n" ));
     }
 
     @Test public void fortifyTest(){
