@@ -1,0 +1,66 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 107.23.10.241...
+* TCP_NODELAY set
+* Connected to apps.elfi.com (107.23.10.241) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/cert.pem
+  CApath: none
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+{ [89 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [4205 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS change cipher, Client hello (1):
+{ [1 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server did not agree to a protocol
+* Server certificate:
+*  subject: businessCategory=Private Organization; 1.3.6.1.4.1.311.60.2.1.3=US; serialNumber=FDIC # 57348; street=12700 Kingston Pike; postalCode=37934; C=US; ST=Tennessee; L=Knoxville; O=SouthEast Bank; OU=ELFI; CN=apps.elfi.com
+*  start date: Mar 22 00:00:00 2017 GMT
+*  expire date: Mar 27 12:00:00 2019 GMT
+*  subjectAltName: host "apps.elfi.com" matched cert's "apps.elfi.com"
+*  issuer: C=US; O=DigiCert Inc; OU=www.digicert.com; CN=DigiCert SHA2 Extended Validation Server CA
+*  SSL certificate verify ok.
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0> GET /seb/forgetpassword?host_header=host HTTP/1.1
+> Host: host.whitehatsec.com
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 302 
+< Access-Control-Allow-Credentials: true
+< Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept,enctype,x-xsrf-token
+< Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, DELETE
+< Access-Control-Max-Age: 3600
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Date: Wed, 28 Nov 2018 19:27:47 GMT
+< Expires: 0
+< Location: http://host.whitehatsec.com/seb/login?host_header=host
+< Pragma: no-cache
+< Set-Cookie: XSRF-TOKEN=8c18208a-8266-43cf-8863-7f3de64c3f7d;path=/seb
+< Set-Cookie: JSESSIONID=C271A117EBF2A08B68228AB0FA0382E3;path=/seb;Secure;HttpOnly
+< Set-Cookie: AWSELB=99E92DD10665F5D20CB786B8E738E5AB122750D711748E5466940D9B5AC04056E20742047BCA241BC68EBF4EBB763FEB20A78F5255B399B2F867ED1B4E39CEEDB6816496BDA372CBCB00F4F6137910A075680A4678;PATH=/seb;SECURE;HTTPONLY
+< X-Content-Type-Options: nosniff
+< X-Frame-Options: SAMEORIGIN
+< X-XSS-Protection: 1; mode=block
+< Content-Length: 0
+< Connection: keep-alive
+< 
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+* Connection #0 to host apps.elfi.com left intact

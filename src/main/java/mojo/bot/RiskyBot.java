@@ -34,17 +34,6 @@ public class RiskyBot extends TelegramLongPollingBot {
     TwitterClient twitterClient = new TwitterClient();
 
     boolean done;
-    public  void startTimer(int seconds) {
-        done = false;
-        time.schedule(new TimerTask(){
-            @Override
-            public void run() {
-                System.out.println("Time's up!");
-                done = true;
-                time.cancel(); //Terminate the timer thread
-            }
-        }, seconds*1000);
-    }
 
 
     /**
@@ -431,6 +420,10 @@ public class RiskyBot extends TelegramLongPollingBot {
                     returnMess += "You currently own " + player.getContinentCount() + " Continents.\n";
                     returnMess += "You currently have: " + player.getCardCount() + " Cards.\n";
                     break;
+                case "undo":
+                    returnMess = "Not implemented yet :(\n";
+
+                    break;
                 default:
                     returnMess = "Invalid Option!\n";
                     returnMess += "What would you like to do? Submit one of the following options to proceed.\n";
@@ -489,5 +482,17 @@ public class RiskyBot extends TelegramLongPollingBot {
         twitterClient.setTweet("It is now Player #" + currentId + "'s turn.");
         twitterClient.postTweet();
         notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'menu' to view your options.");
+    }
+
+    public  void startTimer(int seconds) {
+        done = false;
+        time.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                System.out.println("Time's up!");
+                done = true;
+                time.cancel(); //Terminate the timer thread
+            }
+        }, seconds*1000);
     }
 }

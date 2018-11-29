@@ -45,6 +45,7 @@ public class ChatBotTest {
         p.addTerritory(t);
         p.receivedUnits = true;
 
+        System.out.println("PLAYER ID: " + p.getId());
         String messages="";
         messages = "Here is the list of territories you can attack with:\n";
         messages += "Territory Name: " + "Alaska" + "\n";
