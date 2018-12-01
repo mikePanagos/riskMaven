@@ -101,8 +101,8 @@ public class Undo {
     /**
      * finds a terr by name and returns that terr
      * 
-     * @param name
-     * @return
+     * @param name of territory 
+     * @return the territory obj
      */
     private Territory findTerritory(String name) {
         int i = 0;

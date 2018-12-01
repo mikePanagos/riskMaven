@@ -34,5 +34,18 @@ public class PaymentProxyTest {
         // assertTrue("condition",true);
     }
 
+    @Test public void giveCredits() {
+        Setup s = Setup.getInstances(2);
+        Setup.SetupPLayers(2);
+        List<Player> playerList = new ArrayList<>(s.getPlayers());
+
+        int [][] price ={{5,1},{10,2},{25,5},{75,7},{100,10},{1000,100}};
+        PaymentInterface pf = new PaymentProxy(price);
+      
+        System.out.println(pf.buyCredits( 5 , playerList.get(0) ) );
+        
+        assertTrue("someLibraryMethod should return 'true'", ( (pf.buyCredits( 5 , playerList.get(0) ) ) ==100));
+        // assertTrue("condition",true);
+    }
 }
    

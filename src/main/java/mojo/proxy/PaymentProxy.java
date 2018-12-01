@@ -25,7 +25,7 @@ public class PaymentProxy implements PaymentInterface {
         for (int i = 0; i < price.length; i++) {
             str += "option "+(i+1)+". $"+price[i][1]+" for "+price[i][0]+" credits\n";
         }
-
+        str+="undo cost 50\n";
         return str;
     }
 
