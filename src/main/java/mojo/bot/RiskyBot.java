@@ -92,8 +92,8 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 System.out.println("Setup Initiated!");
                             }
                             Setup.setupPlayerWithList(playersList);
-
-                            returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";
+                            
+                            returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";               
                             twitterClient.setTweet(returnMess);
                             twitterClient.postTweet();
                             for (int i = 0; i < playersList.size(); i++) {
@@ -187,7 +187,7 @@ public class RiskyBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
+        startTimer(30);
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
@@ -220,6 +220,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             // REFACTORING: Created this method to make it easier to reuse the
             // reply functionality. Replaces code below it.
             notifyPlayer(chat_id, response);
+            stopTimer();
             // Remove all players who have quit
             for (Player p : playersList) {
                 if (p.quit) {
@@ -404,6 +405,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                     break;
                 case "end":
+                    
                     returnMess = "You have ended your turn.";
                     player.setSelectedMove("menu");
                     player.setItsMyTurn(false);
@@ -495,5 +497,9 @@ public class RiskyBot extends TelegramLongPollingBot {
                 time.cancel(); //Terminate the timer thread
             }
         }, seconds*1000);
+    }
+
+    public void stopTimer(){
+        time.cancel();
     }
 }
