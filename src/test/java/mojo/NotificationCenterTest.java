@@ -27,6 +27,7 @@ public class NotificationCenterTest {
 		System.out.println("Attempting to set a notification...");
 		assertTrue("An exception occured while setting the notification!",
 				notificationCenter.setNotification(n) == true);
+				notificationCenter.setNotification(null);
 		System.out.println("The test was successful!\n");
 	}
 
