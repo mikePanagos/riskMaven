@@ -52,13 +52,6 @@ public class WebConnection {
     private final String key_name = Paths.get(file_path).getFileName().toString();
 
     public String updateS3() {
-        // final AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-        // try {
-        // s3.putObject(bucket_name, key_name, new File(file_path));
-        // } catch (AmazonServiceException e) {
-        // System.err.println(e.getErrorMessage());
-        // System.exit(1);
-        // }
         AWSCredentials credentials = null;
         try {
             
@@ -84,20 +77,9 @@ public class WebConnection {
             return "successfully added log.txt to s3 bucket";
 
         } catch (AmazonServiceException ase) {
-            System.out.println("Caught an AmazonServiceException, which means your request made it "
-                    + "to Amazon S3, but was rejected with an error response for some reason.");
-            System.out.println("Error Message:    " + ase.getMessage());
-            System.out.println("HTTP Status Code: " + ase.getStatusCode());
-            System.out.println("AWS Error Code:   " + ase.getErrorCode());
-            System.out.println("Error Type:       " + ase.getErrorType());
-            System.out.println("Request ID:       " + ase.getRequestId());
             return "failed added log.txt to s3 bucket";
 
         } catch (AmazonClientException ace) {
-            System.out.println("Caught an AmazonClientException, which means the client encountered "
-                    + "a serious internal problem while trying to communicate with S3, "
-                    + "such as not being able to access the network.");
-            System.out.println("Error Message: " + ace.getMessage());
             return "failed added log.txt to s3 bucket";
 
         }
@@ -142,20 +124,11 @@ public class WebConnection {
             
 
         } catch (AmazonServiceException ase) {
-            System.out.println("Caught an AmazonServiceException, which means your request made it "
-                    + "to Amazon S3, but was rejected with an error response for some reason.");
-            System.out.println("Error Message:    " + ase.getMessage());
-            System.out.println("HTTP Status Code: " + ase.getStatusCode());
-            System.out.println("AWS Error Code:   " + ase.getErrorCode());
-            System.out.println("Error Type:       " + ase.getErrorType());
-            System.out.println("Request ID:       " + ase.getRequestId());
+            
             return "error";
 
         } catch (AmazonClientException ace) {
-            System.out.println("Caught an AmazonClientException, which means the client encountered "
-                    + "a serious internal problem while trying to communicate with S3, "
-                    + "such as not being able to access the network.");
-            System.out.println("Error Message: " + ace.getMessage());
+            
             return "error";
 
         }
