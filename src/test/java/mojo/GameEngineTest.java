@@ -24,6 +24,23 @@ public class GameEngineTest{
         assertTrue(" giveunitsTest ",ge.giveunits(terr, 5)==5 );
     }
 
+    @Test public void allocateUnitsTest(){
+
+        GameEngine ge=GameEngine.getInit();
+
+
+        Player p=new Player(123333,5,5);
+        Territory t=new Territory("t","c",123333,6);
+        p.addTerritory(t);
+        String [] com={"5","5","t"};
+        ge.allocateUnits(com, p);
+     
+
+
+        // System.out.println(+"does this work");
+
+        assertTrue(" allocateUnitsTest ",t.getNumOfUnits()>4);
+    }
     @Test public void tradeTest(){
 
         GameEngine ge=GameEngine.getInit();
@@ -38,6 +55,7 @@ public class GameEngineTest{
 
         assertTrue(" tradeTest ",ge.trade(p).equals("You got 3 more units. You now have 8 in total.\n" ));
     }
+
 
     @Test public void fortifyTest(){
 
