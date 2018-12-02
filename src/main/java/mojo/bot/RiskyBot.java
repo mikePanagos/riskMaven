@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import mojo.risk.*;
 import mojo.twitter.TwitterClient;
 
-
 /*
  * This class will be responsible for connecting to Telegram. It will take the player's
  * commands and execute them in game.
@@ -21,6 +20,7 @@ public class RiskyBot extends TelegramLongPollingBot {
     List<Long> ids = new ArrayList<>();
     List<Player> playersList= new ArrayList<>();
     String token = System.getenv("telegramToken");
+    Player theCurrentPlayer=null;
     boolean started = false; // Has the game been signaled to start? This will only turn true if everyone's ready
 
     // Risk Core
@@ -35,7 +35,6 @@ public class RiskyBot extends TelegramLongPollingBot {
 
     boolean done;
 
-
     /**
      * This function checks the message and determines the action to take. If the action is legitimate a.k.a.
      * the player is allowed to make that move it will do so on the players behalf.
@@ -45,7 +44,7 @@ public class RiskyBot extends TelegramLongPollingBot {
      */
 
     public String checkMessage(long id, String message) {
-        int count = 3; // Hard coded due to requirement
+        int count = 2; // Hard coded due to requirement
         Player player = null; // Create a player object to reference
 
         for (int i = 0; i < playersList.size(); i++) {
@@ -92,6 +91,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 System.out.println("Setup Initiated!");
                             }
                             Setup.setupPlayerWithList(playersList);
+                            playersList=setup.getPlayers();
                             
                             returnMess = "The game's starting...prepare for battle. Leeeerrrroooyy Jenkinssssss!";               
                             twitterClient.setTweet(returnMess);
@@ -99,6 +99,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                             for (int i = 0; i < playersList.size(); i++) {
                                 // Send the starting player a message stating that they're first in queue
                                 if (playersList.get(i).getItsMyTurn()) {
+                                    theCurrentPlayer = playersList.get(i);
                                     notifyPlayer(playersList.get(i).getId(), "You've been selected to be first."
                                             + " Submit 'menu' when the game starts to view your options.");
                                 }
@@ -140,6 +141,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                             System.out.println(s);
                         }
                         move = command[0];
+                        System.out.println("move is "+move);
 
                         returnMess = controller(move, player, message);
                     } else {
@@ -187,7 +189,7 @@ public class RiskyBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        startTimer(30);
+        
         // We check if the update has a message and the message has text
         if (update.hasMessage() && update.getMessage().hasText()) {
             // Set variables
@@ -195,6 +197,11 @@ public class RiskyBot extends TelegramLongPollingBot {
             message_text = message_text.toLowerCase();
             long chat_id = update.getMessage().getChatId();
             String response = "";
+            if(started&&chat_id==theCurrentPlayer.getId())
+            {   
+                stopTimer();
+                startTimer(30);
+            }
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
             // This part might need to be refactored.
@@ -220,7 +227,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             // REFACTORING: Created this method to make it easier to reuse the
             // reply functionality. Replaces code below it.
             notifyPlayer(chat_id, response);
-            stopTimer();
+            // stopTimer();
             // Remove all players who have quit
             for (Player p : playersList) {
                 if (p.quit) {
@@ -444,7 +451,6 @@ public class RiskyBot extends TelegramLongPollingBot {
         return returnMess;
     }
 
-
     /**
      * This will send a message to a player's telegram chat.
      * @param id the chat/player id to notify
@@ -480,26 +486,39 @@ public class RiskyBot extends TelegramLongPollingBot {
             }
         }
         nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
+        notifyPlayer(currentId,"times up sorry you took too long.");
+        theCurrentPlayer=nextPlayer;
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
+        startTimer(30);
         // Update Twitter
         twitterClient.setTweet("It is now Player #" + currentId + "'s turn.");
         twitterClient.postTweet();
+        
         notifyPlayer(nextPlayer.getId(), "It is now your turn! Send 'menu' to view your options.");
     }
 
     public  void startTimer(int seconds) {
         done = false;
+        // time = new Timer();
+        System.out.println(("about to start timer"));
         time.schedule(new TimerTask(){
             @Override
             public void run() {
                 System.out.println("Time's up!");
                 done = true;
+                // time=new Timer();
+                // currentPlayer.setItsMyTurn(false);
+                notifyNextPlayer(theCurrentPlayer.getId());
                 time.cancel(); //Terminate the timer thread
+                time=new Timer();
+
             }
         }, seconds*1000);
     }
 
     public void stopTimer(){
         time.cancel();
+        time = new Timer();
+        
     }
 }

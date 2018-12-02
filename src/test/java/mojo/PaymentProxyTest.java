@@ -15,7 +15,7 @@ public class PaymentProxyTest {
         PaymentInterface pf = new PaymentProxy(price);
 
 
-        assertTrue("someLibraryMethod should return 'true'", (pf.getPriceForCredits().equals("option 1. $1 for 5 credits\noption 2. $2 for 10 credits\noption 3. $5 for 25 credits\noption 4. $7 for 75 credits\noption 5. $10 for 500 credits\noption 6. $100 for 1000 credits\n")));
+        assertTrue("someLibraryMethod should return 'true'", (pf.getPriceForCredits().equals("option 1. $1 for 5 credits\noption 2. $2 for 10 credits\noption 3. $5 for 25 credits\noption 4. $7 for 75 credits\noption 5. $10 for 500 credits\noption 6. $100 for 1000 credits\nundo cost 50\n")));
     }
     /**
      * for testing that it sets the credits and deducts money from user
