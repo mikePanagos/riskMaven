@@ -15,8 +15,16 @@ public class AmazonS3Test{
        WebConnection wc = new WebConnection();
 //
        System.out.println("\n\n\nTESTING S3\n\n\n");
-       assertTrue(" ",wc.updateS3().equals("successfully added log.txt to s3 bucket"));
+       assertTrue("sendFileTest",wc.updateS3().equals("successfully added log.txt to s3 bucket"));
        System.out.println("\n\n\nTESTING S3 PASSED WITH FLYING COLORS\n\n\n");
 
     }
+    @Test public void replayFileTest(){
+        WebConnection wc = new WebConnection();
+ //
+        System.out.println("\n\n\nTESTING S3\n\n\n");
+        assertTrue("replayFileTest",(wc.replay()!="error"));
+        System.out.println("\n\n\nTESTING S3 PASSED WITH FLYING COLORS\n\n\n");
+ 
+     }
 }
