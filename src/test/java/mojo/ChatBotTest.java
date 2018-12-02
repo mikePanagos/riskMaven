@@ -59,17 +59,17 @@ public class ChatBotTest {
 
     public void botTest() {
         RiskyBot r = new RiskyBot();
-        ApiContextInitializer.init();
+        // ApiContextInitializer.init();
 
-		// Instantiate Telegram Bots API
-		TelegramBotsApi botsApi = new TelegramBotsApi();
+		// // Instantiate Telegram Bots API
+		// TelegramBotsApi botsApi = new TelegramBotsApi();
 
-		// Register our bot
-		try {
-			botsApi.registerBot(r);
-		} catch (TelegramApiException e) {
-			e.printStackTrace();
-        }
+		// // Register our bot
+		// try {
+		// 	botsApi.registerBot(r);
+		// } catch (TelegramApiException e) {
+		// 	e.printStackTrace();
+        // }
         
         r.notifyPlayer(601063221, "this is a test ");
         r.notifyNextPlayer(601063221);
