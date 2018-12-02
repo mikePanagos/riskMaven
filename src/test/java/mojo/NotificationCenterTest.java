@@ -52,4 +52,14 @@ public class NotificationCenterTest {
 				notificationCenter.updatePlayer() == true);
 		System.out.println("The test was successful!\n");
 	}
+
+	@Test
+	public void AttackNotificationTest() {
+		AttackNotification notificationCenter = new AttackNotification();
+		
+		assertTrue("AttackNotificationTest",
+		notificationCenter.getSender()==0 );
+		System.out.println("The test was successful!\n");
+	}
+
 }
