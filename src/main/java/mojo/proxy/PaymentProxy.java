@@ -1,4 +1,6 @@
 package mojo.proxy;
+import com.amazonaws.services.kms.model.RetireGrantRequest;
+
 import mojo.Setup;
 import mojo.risk.*;
 import mojo.undo.Undo;
@@ -72,10 +74,15 @@ public class PaymentProxy implements PaymentInterface {
      * @param undo the turen number that we are going to undo to 
      * @return true or false based on if it passed or failed
      */
-    public boolean  buyUndo(int undo){
+    public boolean  buyUndo(Player p,int undo){
         Setup s=Setup.getInstances();
         Undo u=Undo.init();
-        return u.undo(s.getPlayers(),undo);
+        if(p.getCredit()>50){
+            return u.undo(s.getPlayers(),undo);
+        }else{
+            return false;
+        }
+        
 
     }
 
@@ -87,7 +94,7 @@ public class PaymentProxy implements PaymentInterface {
      * @return
      */
     public boolean giveCreditsTo(Player give,Player get,int amount){
-        if((give.getCredit()-amount)>0){
+        if((give.getCredit()-amount)<0){
             return false;
         }else{
 
