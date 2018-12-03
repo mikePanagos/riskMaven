@@ -501,7 +501,7 @@ public class Player {
 	 * @param n the Notification to send the player
 	 */
 	public void sendNotification(Notification n) {
-		n.getMessage();
+		notifications.add(n);
 	}
 	public boolean getItsMyTurn(){
 		return this.itsMyTurn;

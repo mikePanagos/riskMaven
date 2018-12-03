@@ -269,7 +269,7 @@ public class RiskyBot extends TelegramLongPollingBot {
         String[] args = command.split("\\s+"); // Split command into arguments
         move = args[0];
         if (game.initialPhase(player)) {
-            if (player.getTerritoryList().size() > 0) {
+            if (player.getNotifications().size() > 0) {
                 // Read notifications one by one to the player.
                 String notifications = "Here is the breakdown of what happened outside of your turn.\n";
                 for (int i = 0; i < player.getNotifications().size(); i++) {
