@@ -360,7 +360,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 }
                             }
                             String notification = "Notification:\n";
-                            notification += recepient.getNotifications().get(0) + "\n";
+                            notification += recepient.getNotifications().get(0).getMessage() + "\n";
                             recepient.getNotifications().clear();
                             notifyPlayer(defendingTerr.getOwner(), notification);
 
