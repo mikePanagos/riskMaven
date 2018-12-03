@@ -65,7 +65,6 @@ public class RiskyBot extends TelegramLongPollingBot {
                 // Log the total amount of players to the console. This helps to debug problems.
                 System.out.println("The total amount of players is: " + ids.size());
                 if (!started && message.equals("ready")) {
-                    try {
                         player.ready = true;
                         // Check if everyone is ready.
                         // If one person is not ready then stop checking if anyone else is not ready.
@@ -84,12 +83,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                                 2. We do not want to initialize the game every single time we receive message.
                                 3. To avoid this, we can check if the game has already been setup.
                              */
-                            if ( game == null && setup == null ) {
-                                game = GameEngine.getInit();
-                                System.out.println("Game Engine Initiated!");
-                                setup = Setup.getInstances();
-                                System.out.println("Setup Initiated!");
-                            }
+                           
                             Setup.setupPlayerWithList(playersList);
                             playersList=setup.getPlayers();
                             
@@ -107,13 +101,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                                     if (playersList.get(i).getId() != id)
                                         notifyPlayer(playersList.get(i).getId(), returnMess);
                                 }
-//                                SendMessage confirmation = new SendMessage() // Create a message object object
-//                                        .setChatId(playersList.get(i).getId()).setText(returnMess);
-//                                try {
-//                                    execute(confirmation); // Sending our message object to user
-//                                } catch (TelegramApiException e) {
-//                                    e.printStackTrace();
-//                                }
+                          
                             }
                         }
 
@@ -122,10 +110,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                         else {
                             returnMess = "We're waiting on other players to get ready";
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        returnMess = "Whoops an error occurred. Grab an adult...";
-                    }
+                    
                 }
                 else if (started) {
                     if (game == null)
@@ -199,8 +184,8 @@ public class RiskyBot extends TelegramLongPollingBot {
             String response = "";
             if(started&&chat_id==theCurrentPlayer.getId())
             {   
-//                stopTimer();
-//                startTimer(30);
+               stopTimer();
+               startTimer(30);
             }
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
