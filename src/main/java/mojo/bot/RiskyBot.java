@@ -199,8 +199,8 @@ public class RiskyBot extends TelegramLongPollingBot {
             String response = "";
             if(started&&chat_id==theCurrentPlayer.getId())
             {   
-                stopTimer();
-                startTimer(30);
+//                stopTimer();
+//                startTimer(30);
             }
             // String name= update.getMessage().getName();
             // System.out.println("name is"+name);
@@ -465,7 +465,8 @@ public class RiskyBot extends TelegramLongPollingBot {
             System.out.println("Player #" + id + " alerted with message:");
             System.out.println(content);
         } catch (TelegramApiException e) {
-            notifyPlayer(id, content);
+//            notifyPlayer(id, content);
+            System.out.println("The string is " + content.length() + " characters long.");
             e.printStackTrace();
         }
     }
