@@ -40,13 +40,13 @@ public class ContinentTest {
 
         assertTrue("testing continentTest",m.equals("Alaska\n"+
         "Alberta\n"+
-        "Central America\n"+
-        "Eastern United States\n"+
+        "Central_America\n"+
+        "Eastern_United_States\n"+
         "Greenland\n"+
         "Northwest\n"+
         "Ontario\n"+
         "Quebec\n"+
-        "Western United States\n"));
+        "Western_United_States\n"));
     }
 
 
