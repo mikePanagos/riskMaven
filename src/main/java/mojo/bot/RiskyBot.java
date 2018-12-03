@@ -458,17 +458,38 @@ public class RiskyBot extends TelegramLongPollingBot {
      */
     // This method will reduce the amount of times that we have to write the code to notify a player.
     public void notifyPlayer(long id, String content) {
+        /*
+            If the content length is greater than 4000 split it up into multiple messages.
+            This loop will exit out after the content length is 4000 or less meaning that
+            we must still send one last message at the end with the last part of the text.
+         */
+        while (content.length() > 4000) {
+            String text = content.substring(0, 4000);
+            SendMessage message = new SendMessage();
+            message.setChatId(id).setText(text);
+            try {
+                execute(message);
+                System.out.println("Player #" + id + " alerted with message:");
+                System.out.println(content);
+                content = content.substring(4000);
+            } catch (TelegramApiException e) {
+                System.out.println("The string is " + content.length() + " characters long.");
+                e.printStackTrace();
+            }
+        }
+
         SendMessage message = new SendMessage();
         message.setChatId(id).setText(content);
         try {
             execute(message);
             System.out.println("Player #" + id + " alerted with message:");
             System.out.println(content);
+            content = content.substring(4000);
         } catch (TelegramApiException e) {
-//            notifyPlayer(id, content);
             System.out.println("The string is " + content.length() + " characters long.");
             e.printStackTrace();
         }
+
     }
 
     public void notifyNextPlayer(long currentId) {
@@ -491,7 +512,7 @@ public class RiskyBot extends TelegramLongPollingBot {
         notifyPlayer(currentId,"times up sorry you took too long.");
         theCurrentPlayer=nextPlayer;
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
-        startTimer(30);
+//        startTimer(30);
         // Update Twitter
         twitterClient.setTweet("It is now Player #" + currentId + "'s turn.");
         twitterClient.postTweet();
