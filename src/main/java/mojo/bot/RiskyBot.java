@@ -355,6 +355,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                             Player recepient = null;
                             for (Player p : playersList) {
                                 if (p.getId() == defendingTerr.getOwner()) {
+                                    System.out.println("Found recepient.");
                                     recepient = p;
                                 }
                             }
