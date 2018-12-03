@@ -59,6 +59,7 @@ public class NotificationCenter {
 			if (observers.get(i).getId() == notification.getReceiver()) {
 				System.out.println("Found the player!");
 				playerToNotify = observers.get(i);
+				System.out.println(playerToNotify);
 				break;
 			}
 		}
