@@ -5,7 +5,7 @@ import mojo.risk.*;
 import mojo.notification.*;
 
 public class NotificationCenter {
-	private List<Player> observers;
+	private List<Player> observers = new ArrayList<Player>();
 	private Notification notification;
 	
 	/**
@@ -17,7 +17,9 @@ public class NotificationCenter {
 
 		// This will grab the players list and use it
         // as the list of observers.
-		observers = setup.getPlayers();
+		for (Player player : setup.getPlayers()) {
+		    observers.add(player);
+        }
 		 
 	}
 	
