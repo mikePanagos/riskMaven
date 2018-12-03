@@ -408,7 +408,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     }
                     else {
                         // Perform trade
-                        returnMess += game.trade(player); // Trade the cards
+                        returnMess = game.trade(player); // Trade the cards
                     }
                     break;
                 case "end":
@@ -509,7 +509,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             }
         }
         nextPlayer.setItsMyTurn(true); // Set the next persons turn to be true
-        notifyPlayer(currentId,"times up sorry you took too long.");
+//        notifyPlayer(currentId,"times up sorry you took too long.");
         theCurrentPlayer=nextPlayer;
         nextPlayer.setSelectedMove("menu"); // Set their default action to be the menu
 //        startTimer(30);
