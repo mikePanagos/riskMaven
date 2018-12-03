@@ -746,7 +746,7 @@ public class Setup {
     }
 
     public List<Player> getPlayers() {
-        return playersList;
+        return this.playersList;
     }
 
     public List<Card> getDeck() {
