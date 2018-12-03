@@ -180,7 +180,7 @@ public class Setup {
         Territory alberta = new Territory("Alberta", "North America", 0, 0);
         northAmericaList.add(alberta);
         board.add(alberta);
-        Territory centralAmerica = new Territory("Central America", "North America", 0, 0);
+        Territory centralAmerica = new Territory("Central_America", "North America", 0, 0);
         northAmericaList.add(centralAmerica);
         board.add(centralAmerica);
         Territory easternUnitedStates = new Territory("Eastern_United_States", "North America", 0, 0);
