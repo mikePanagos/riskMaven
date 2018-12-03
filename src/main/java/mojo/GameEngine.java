@@ -446,6 +446,7 @@ public class GameEngine {
             // not carry over each turn.
             player.setAttackedAtLeastOnces(false);
         }
+        player.receivedUnits = false;
         String update = "Player #" + player.getId() + " has ended their turn.";
         log.updateLog(update);
         twitterClient.setTweet(update);
