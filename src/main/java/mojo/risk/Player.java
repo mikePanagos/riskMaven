@@ -544,11 +544,13 @@ public class Player {
     public String printOffensiveTerritoriesVerbose() {
 	    String summary = "";
 	    for (Territory t : tList) {
-	    	summary += "\n"; // Used to format if the preceding value is null;
-	        summary += "Territory Name: " + t.getName() + "\n";
-	        summary += "Army Count: " + t.getNumOfUnits() + "\n";
-	        summary += "Enemy Territories:\n";
-	        summary += t.printEnemyTerritories();
+	    	if (t.getNumOfUnits() > 1) {
+                summary += "\n"; // Used to format if the preceding value is null;
+                summary += "Territory Name: " + t.getName() + "\n";
+                summary += "Army Count: " + t.getNumOfUnits() + "\n";
+                summary += "Enemy Territories:\n";
+                summary += t.printEnemyTerritories();
+            }
         }
 
         return summary;
