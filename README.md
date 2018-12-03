@@ -19,4 +19,5 @@
 3. java -jar risk-1.0.0.jar
 
 ## Known Bugs
-* You may have to hit 'ready' 2 or 3 times upon entering the game for the first player to be notified.
+None at this time :)
+Feel free to report any issues you come across.
