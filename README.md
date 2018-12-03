@@ -18,6 +18,11 @@
 2. mvn package
 3. java -jar target/risk-1.0.0.jar
 
+
+## to start a game all players talk to RiskyBot
+1. send 1234 //the game code
+2. send ready
+then game starts
 ## Known Bugs
 None at this time :)
 Feel free to report any issues you come across.
