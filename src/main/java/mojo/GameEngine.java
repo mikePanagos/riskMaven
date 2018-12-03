@@ -63,12 +63,12 @@ public class GameEngine {
 		for(Player player : players) {
 
 		    if (player.getId() == act.getOwner()) {
-                System.out.println("found act"+player.getId());
+                System.out.println("found act "+player.getId());
 
                 idOfAttPlayer = act.getOwner();
             }
             if (player.getId() == def.getOwner()) {
-                System.out.println("found def"+player.getId());
+                System.out.println("found def "+player.getId());
             
 
                 idOfDefPlayer = def.getOwner();
