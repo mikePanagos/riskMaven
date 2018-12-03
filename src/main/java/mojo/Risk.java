@@ -2,14 +2,12 @@
  * 
  */
 package mojo;
-import mojo.*;
+
 import mojo.bot.RiskyBot;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
+import mojo.WebConnection;
 
 /**
  * @author TeamMojo
@@ -25,6 +23,8 @@ public class Risk {
 		if (args.length > 1 && args[1].equals("replay")) {
             // Do replay here.
             System.out.println("Initializing replay!");
+            WebConnection webConnection = new WebConnection();
+            System.out.println(webConnection.replay());
         }
         else  {
             ApiContextInitializer.init();
