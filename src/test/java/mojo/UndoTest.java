@@ -13,7 +13,7 @@ public class UndoTest {
     public void territorytesting() {
         Setup s= Setup.getInstances(4);
         Setup.SetupPLayers(2);
-        Undo u = Undo.init();
+        Undo u = Undo.init(2);
         List<Territory> t=s.getTerritories();
         List<Player> p=s.getPlayers();
 
@@ -37,7 +37,7 @@ public class UndoTest {
 
         Setup s= Setup.getInstances(4);
         Setup.SetupPLayers(2);
-        Undo u = Undo.init();
+        Undo u = Undo.init(3);
         List<Territory> t=s.getTerritories();
         List<Player> p=s.getPlayers();
 
@@ -53,7 +53,7 @@ public class UndoTest {
         System.out.println("undo test 2: "+p.get(0).printableTerritories());
         System.out.println("undo test 2: "+p.get(1).printableTerritories());
 
-        assertTrue("territorytesting2 should return 'true'", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
+        assertTrue("territorytesting2 ", (p.get(0).printableTerritories().equals("0. Alaska army on 0. ")));
 
 
     }

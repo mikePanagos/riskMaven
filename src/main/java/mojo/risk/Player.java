@@ -25,7 +25,7 @@ public class Player {
 	public boolean receivedUnits = true;
 	private String selectedMove = "menu";
 	public boolean quit = false;
-	private int credit;
+	private int credit=100;
 
     private List<Notification> notifications = new ArrayList<Notification>(); // Holds the notifications for the player
 	private List<Dice> dice = new ArrayList<>();

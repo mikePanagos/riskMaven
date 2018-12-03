@@ -64,7 +64,7 @@ public class PaymentProxyTest {
       
         Setup s= Setup.getInstances(4);
         Setup.SetupPLayers(2);
-        Undo u = Undo.init();
+        Undo u = Undo.init(3);
         List<Territory> t=s.getTerritories();
         List<Player> p=s.getPlayers();
 

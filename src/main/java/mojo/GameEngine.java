@@ -4,6 +4,7 @@ import mojo.notification.*;
 import java.util.*;
 import mojo.risk.*;
 import mojo.twitter.TwitterClient;
+import mojo.undo.*;
 
 public class GameEngine {
 	private static GameEngine init = new GameEngine();
@@ -12,7 +13,8 @@ public class GameEngine {
 	private List<Card> deck = s.getDeck();
 	private NotificationCenter notificationCenter = new NotificationCenter();
 	private TwitterClient twitterClient = new TwitterClient();
-	private GameLogger log = new GameLogger();
+    private GameLogger log = new GameLogger();
+    Undo un=Undo.init();
 
 	private GameEngine() {
 
@@ -30,6 +32,7 @@ public class GameEngine {
 	}
 
 	public String attack(Territory act, Territory def, int attackingUnits) {
+        un.saveState(s.getPlayers());
 		String messageReturnable="";
 		// Scanner key = new Scanner(System.in);
 		Player attackingPlayer = null;
@@ -187,6 +190,8 @@ public class GameEngine {
 	 *         now
 	 */
 	public String trade(Player p) {
+        un.saveState(s.getPlayers());
+
 		int temp = p.getArmiesCount();
 		//
 		List<Card> pCards=p.getCards();
@@ -215,6 +220,8 @@ public class GameEngine {
 	}
 
 	public String fortify(Territory from, Territory to, int numUnits) {
+        un.saveState(s.getPlayers());
+
 		int units = from.getNumOfUnits() - numUnits;
 		from.setNumOfUnits(units);
 		to.setNumOfUnits(to.getNumOfUnits()+numUnits);
@@ -455,6 +462,7 @@ public class GameEngine {
     }
 
     public void unitDistribution(Player player) {
+        un.saveState(s.getPlayers());
 	    Integer units = player.getTerritoryCount() / 3;
 
 	    // Minimum new units is three.
@@ -501,7 +509,6 @@ public class GameEngine {
     }
 
     public void allocateUnits(String[] command, Player player) {
-
 	    String territory = command[2];
 	    Integer units = Integer.parseInt(command[1]);
 

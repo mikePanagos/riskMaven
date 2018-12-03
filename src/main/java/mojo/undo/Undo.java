@@ -23,6 +23,18 @@ public class Undo {
         }
     }
 
+    /**
+     * 
+     * @param i this is strictly for testting 
+     * @return this returns a new init everytime needed for multiple test in same file
+     */
+    public static Undo init(int i) {
+
+            init = new Undo();
+            return init;
+     
+    }
+
     private Undo() {
         // System.out.println("here");
 
@@ -55,7 +67,7 @@ public class Undo {
         // System.out.println(stateList.size()+" how many states there are ");
 
         for (int i = 0; i < stateList.size(); i++) {
-            if (stateList.get(i).getTurn() == turn) {
+            if (stateList.get(i).getTurn() == stateList.size()) {
                 // System.out.println("found the state");
                 pListPrev = stateList.get(i).getPlayerListPrev();
                 // System.out.println(pListPrev.size()+" size of player list of past");
