@@ -183,7 +183,7 @@ public class Setup {
         Territory centralAmerica = new Territory("Central America", "North America", 0, 0);
         northAmericaList.add(centralAmerica);
         board.add(centralAmerica);
-        Territory easternUnitedStates = new Territory("Eastern United States", "North America", 0, 0);
+        Territory easternUnitedStates = new Territory("Eastern_United_States", "North America", 0, 0);
         northAmericaList.add(easternUnitedStates);
         board.add(easternUnitedStates);
         Territory greenland = new Territory("Greenland", "North America", 0, 0);
@@ -198,7 +198,7 @@ public class Setup {
         Territory quebec = new Territory("Quebec", "North America", 0, 0);
         northAmericaList.add(quebec);
         board.add(quebec);
-        Territory westernUnitedStates = new Territory("Western United States", "North America", 0, 0);
+        Territory westernUnitedStates = new Territory("Western_United_States", "North America", 0, 0);
         northAmericaList.add(westernUnitedStates);
         board.add(westernUnitedStates);
 
@@ -234,19 +234,19 @@ public class Setup {
         Territory iceland = new Territory("Iceland", "Europe", 0, 0);
         europeList.add(iceland);
         board.add(iceland);
-        Territory northernEurope = new Territory("Northern Europe", "Europe", 0, 0);
+        Territory northernEurope = new Territory("Northern_Europe", "Europe", 0, 0);
         europeList.add(northernEurope);
         board.add(northernEurope);
         Territory scandinavia = new Territory("Scandinavia", "Europe", 0, 0);
         europeList.add(scandinavia);
         board.add(scandinavia);
-        Territory southernEurope = new Territory("Southern Europe", "Europe", 0, 0);
+        Territory southernEurope = new Territory("Southern_Europe", "Europe", 0, 0);
         europeList.add(southernEurope);
         board.add(southernEurope);
         Territory ukraine = new Territory("Ukraine", "Europe", 0, 0);
         europeList.add(ukraine);
         board.add(ukraine);
-        Territory westernEurope = new Territory("Western Europe", "Europe", 0, 0);
+        Territory westernEurope = new Territory("Western_Europe", "Europe", 0, 0);
         europeList.add(westernEurope);
         board.add(westernEurope);
 
@@ -260,7 +260,7 @@ public class Setup {
         Territory congo = new Territory("Congo", "Africa", 0, 0);
         afticaList.add(congo);
         board.add(congo);
-        Territory eastAfrica = new Territory("East Africa", "Africa", 0, 0);
+        Territory eastAfrica = new Territory("East_Africa", "Africa", 0, 0);
         afticaList.add(eastAfrica);
         board.add(eastAfrica);
         Territory egypt = new Territory("Egypt", "Africa", 0, 0);
@@ -269,10 +269,10 @@ public class Setup {
         Territory madagascar = new Territory("Madagascar", "Africa", 0, 0);
         afticaList.add(madagascar);
         board.add(madagascar);
-        Territory northAfrica = new Territory("North Africa", "Africa", 0, 0);
+        Territory northAfrica = new Territory("North_Africa", "Africa", 0, 0);
         afticaList.add(northAfrica);
         board.add(northAfrica);
-        Territory southAfrica = new Territory("South Africa", "Africa", 0, 0);
+        Territory southAfrica = new Territory("South_Africa", "Africa", 0, 0);
         afticaList.add(southAfrica);
         board.add(southAfrica);
 
@@ -303,7 +303,7 @@ public class Setup {
         Territory kamchatka = new Territory("Kamchatka", "Asia", 0, 0);
         asiaList.add(kamchatka);
         board.add(kamchatka);
-        Territory middleEast = new Territory("Middle East", "Asia", 0, 0);
+        Territory middleEast = new Territory("Middle_East", "Asia", 0, 0);
         asiaList.add(middleEast);
         board.add(middleEast);
         Territory mongolia = new Territory("Mongolia", "Asia", 0, 0);
@@ -329,7 +329,7 @@ public class Setup {
         // "Western Australia"};
 
         List<Territory> australiaList = new ArrayList<>();
-        Territory easternAustralia = new Territory("Eastern Australia", "Australia", 0, 0);
+        Territory easternAustralia = new Territory("Eastern_Australia", "Australia", 0, 0);
         australiaList.add(easternAustralia);
         board.add(easternAustralia);
         Territory indonesia = new Territory("Indonesia", "Australia", 0, 0);
@@ -338,7 +338,7 @@ public class Setup {
         Territory newGuinea = new Territory("New Guinea", "Australia", 0, 0);
         australiaList.add(newGuinea);
         board.add(newGuinea);
-        Territory westernAustralia = new Territory("Western Australia", "Australia", 0, 0);
+        Territory westernAustralia = new Territory("Western_Australia", "Australia", 0, 0);
         australiaList.add(westernAustralia);
         board.add(westernAustralia);
         Continent australia = new Continent("Australia", asiaList);

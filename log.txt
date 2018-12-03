@@ -1,1 +1,8 @@
-player attacked another player and won
+Player #708875543 allocated 20 to alberta.
+Player #708875543 allocated 1 to greenland.
+Player #601063221 allocated 19 to northwest.
+Player #601063221 allocated 2 to peru.
+Player #683752202 allocated 20 to china.
+Player #683752202 allocated 1 to alaska.
+Fortifying Action:
+Now Mongolia has 3 and China has 19
