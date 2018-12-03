@@ -16,7 +16,7 @@
 ## Setup
 1. git clone
 2. mvn package
-3. java -jar risk-1.0.0.jar
+3. java -jar target/risk-1.0.0.jar
 
 ## Known Bugs
 None at this time :)
