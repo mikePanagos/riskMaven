@@ -416,6 +416,7 @@ public class RiskyBot extends TelegramLongPollingBot {
                     returnMess = "You have ended your turn.";
                     player.setSelectedMove("menu");
                     player.setItsMyTurn(false);
+                    game.endingPhase(player);
                     notifyNextPlayer(player.getId()); // Notify the next player it's their turn
                     break;
                 case "surrender":
