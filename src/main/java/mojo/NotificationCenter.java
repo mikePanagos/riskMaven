@@ -5,7 +5,7 @@ import mojo.risk.*;
 import mojo.notification.*;
 
 public class NotificationCenter {
-	private List<Player> observers = new ArrayList<Player>();
+	private List<Player> observers;
 	private Notification notification;
 	Setup setup;
 	
@@ -15,10 +15,6 @@ public class NotificationCenter {
 	NotificationCenter() {
 		// This will grab the game setup singleton.
         setup = Setup.getInstances();
-
-		// This will grab the players list and use it
-        // as the list of observers.
-		observers = setup.getPlayers();
 
 	}
 	
@@ -55,11 +51,11 @@ public class NotificationCenter {
 	 */
 	public boolean updatePlayer() {
 		System.out.println("Player is in the process of being notified.");
-		Player playerToNotify = new Player();
-		for (int i = 0; i < observers.size(); i++) {
-			if (observers.get(i).getId() == notification.getReceiver()) {
+		Player playerToNotify = null;
+		for (int i = 0; i < setup.getPlayers().size(); i++) {
+			if (setup.getPlayers().get(i).getId() == notification.getReceiver()) {
 				System.out.println("Found the player!");
-				playerToNotify = observers.get(i);
+				playerToNotify = setup.getPlayers().get(i);
 				System.out.println(playerToNotify);
 				break;
 			}
