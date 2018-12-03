@@ -465,6 +465,7 @@ public class RiskyBot extends TelegramLongPollingBot {
             System.out.println("Player #" + id + " alerted with message:");
             System.out.println(content);
         } catch (TelegramApiException e) {
+            notifyPlayer(id, content);
             e.printStackTrace();
         }
     }
