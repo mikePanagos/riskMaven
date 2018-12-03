@@ -484,7 +484,6 @@ public class RiskyBot extends TelegramLongPollingBot {
             execute(message);
             System.out.println("Player #" + id + " alerted with message:");
             System.out.println(content);
-            content = content.substring(4000);
         } catch (TelegramApiException e) {
             System.out.println("The string is " + content.length() + " characters long.");
             e.printStackTrace();
