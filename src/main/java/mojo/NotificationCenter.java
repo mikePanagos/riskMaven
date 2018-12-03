@@ -18,9 +18,7 @@ public class NotificationCenter {
 
 		// This will grab the players list and use it
         // as the list of observers.
-		for (Player player : setup.getPlayers()) {
-		    observers.add(player);
-        }
+		observers = setup.getPlayers();
 
 	}
 	
