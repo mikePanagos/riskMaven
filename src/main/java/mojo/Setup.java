@@ -217,7 +217,7 @@ public class Setup {
         Territory peru = new Territory("Peru", "South America", 0, 0);
         southAmericaList.add(peru);
         board.add(peru);
-        Territory venexuela = new Territory("Venexuela", "South America", 0, 0);
+        Territory venexuela = new Territory("Venezuela", "South America", 0, 0);
         southAmericaList.add(venexuela);
         board.add(venexuela);
 
