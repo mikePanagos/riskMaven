@@ -351,6 +351,18 @@ public class RiskyBot extends TelegramLongPollingBot {
                             // Execute attack
                             game.attack(attackingTerr, defendingTerr, units);
 
+                            // Notify player attacked.
+                            Player recepient = null;
+                            for (Player p : playersList) {
+                                if (p.getId() == defendingTerr.getOwner()) {
+                                    recepient = p;
+                                }
+                            }
+                            String notification = "Notification:\n";
+                            notification += recepient.getNotifications().get(0) + "\n";
+                            recepient.getNotifications().clear();
+                            notifyPlayer(defendingTerr.getOwner(), notification);
+
                             // Send a summary of the players territories after the attack
                             returnMess = "Results\n";
                             returnMess += "-----------------------------\n";
