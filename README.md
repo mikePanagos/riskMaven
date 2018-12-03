@@ -8,9 +8,10 @@
 * Jarrad McMahan
 
 ## Abilities
-* We're rolling out Telegram support.
+* Rolling out Telegram support.
 * Twitter will now show you the game status.
-* Pay 2 Win is supported $$$
+* Pay 2 Win is supported $$$ _hint hint...UNDO_ 
+* Logging is enabled by default.
 
 ## Setup
 1. git clone
@@ -18,5 +19,4 @@
 3. java -jar risk-1.0.0.jar
 
 ## Known Bugs
-* ~~Game setup through Telegram not consistent. Will be fixed within next issue.~~
-* Game Setup is now functioning. The methods to play the full game are close to completion!
+* You may have to hit 'ready' 2 or 3 times upon entering the game for the first player to be notified.
