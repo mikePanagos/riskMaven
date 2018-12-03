@@ -21,18 +21,24 @@ public class Risk {
 	 * @param args Risk arguments
 	 */
 	public static void main(String[] args) {
+	    // Check to see if the game is in replay mode.
+		if (args.length > 1 && args[1].equals("replay")) {
+            // Do replay here.
+            System.out.println("Initializing replay!");
+        }
+        else  {
+            ApiContextInitializer.init();
 
-		ApiContextInitializer.init();
+            // Instantiate Telegram Bots API
+            TelegramBotsApi botsApi = new TelegramBotsApi();
 
-		// Instantiate Telegram Bots API
-		TelegramBotsApi botsApi = new TelegramBotsApi();
-
-		// Register our bot
-		try {
-			botsApi.registerBot(new RiskyBot());
-		} catch (TelegramApiException e) {
-			e.printStackTrace();
-		}
+            // Register our bot
+            try {
+                botsApi.registerBot(new RiskyBot());
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
 	}
 
 }
