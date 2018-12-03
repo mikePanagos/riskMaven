@@ -584,4 +584,13 @@ public class Player {
     public List<Notification> getNotifications() {
 	    return this.notifications;
     }
+
+    public String printNotifications() {
+	    String message = "Notifications:\n";
+	    for (Notification n : notifications) {
+	        message += n.getMessage() + "\n";
+        }
+        notifications.clear();
+	    return message;
+    }
 }

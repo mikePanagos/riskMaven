@@ -359,10 +359,8 @@ public class RiskyBot extends TelegramLongPollingBot {
                                     recepient = p;
                                 }
                             }
-                            String notification = "Notification:\n";
-                            notification += recepient.getNotifications().get(0).getMessage() + "\n";
-                            recepient.getNotifications().clear();
-                            notifyPlayer(defendingTerr.getOwner(), notification);
+
+                            notifyPlayer(defendingTerr.getOwner(), recepient.printNotifications());
 
                             // Send a summary of the players territories after the attack
                             returnMess = "Results\n";
